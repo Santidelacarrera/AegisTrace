@@ -42,6 +42,13 @@ describe('web app', () => {
     expect(await screen.findByText(/sam@example.com · admin/)).toBeInTheDocument();
     expect(window.location.hash).toBe('');
   });
+  it('shows a readable message when SSO is refused and clears it from the URL', async () => {
+    history.replaceState(null, '', '/ui/#sso_error=Your%20account%20has%20no%20AegisTrace%20role');
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async () => json({ password: true, oidc: true }));
+    render(<App />);
+    expect(await screen.findByRole('alert')).toHaveTextContent('SSO: Your account has no AegisTrace role');
+    expect(window.location.hash).toBe('');
+  });
   it('shows server errors on failed login', async () => {
     vi.spyOn(globalThis, 'fetch').mockImplementation(async () => json({ error: 'invalid_credentials', message: 'Invalid credentials' }, 401));
     render(<App />);

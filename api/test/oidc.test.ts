@@ -86,7 +86,8 @@ describe('OIDC single sign-on', () => {
   });
   it('refuses users with no mapped role', async () => {
     const r = await sso(mk().app, { sub: 'u-2', email: 'x@example.com', groups: ['unrelated'] });
-    expect([r.status, r.body.error]).toEqual([403, 'sso_failed']);
+    expect(r.status).toBe(302);
+    expect(decodeURIComponent(r.headers.location!)).toBe('/ui/#sso_error=Your account has no AegisTrace role');
   });
   it.each([
     ['token signed by another key', { sign: 'bad' as const }],
@@ -95,18 +96,19 @@ describe('OIDC single sign-on', () => {
     ['nonce that does not match the request', { tamper: true }],
   ])('rejects %s', async (_n, opts) => {
     const r = await sso(mk().app, { sub: 'u-3', email: 'y@example.com', groups: ['sec-admins'] }, opts);
-    expect(r.status).toBe(401);
-    expect(r.headers.location).toBeUndefined();
+    expect(r.status).toBe(302);
+    expect(r.headers.location).toMatch(/^\/ui\/#sso_error=/);           // never a token
+    expect(r.headers.location).not.toMatch(/token=/);
   });
   it('rejects an unknown/forged state and a replayed state', async () => {
     const { app } = mk();
-    expect((await sso(app, { sub: 'u', groups: ['sec-admins'] }, { state: 'forged' })).status).toBe(400);
+    expect((await sso(app, { sub: 'u', groups: ['sec-admins'] }, { state: 'forged' })).headers.location).toMatch(/sso_error=Invalid%20or%20expired/);
     const login = await request(app).get('/api/v1/auth/oidc/login');
     const authz = await fetch(login.headers.location!, { redirect: 'manual' });
     const back = new URL(authz.headers.get('location')!);
     const q = { code: back.searchParams.get('code')!, state: back.searchParams.get('state')! };
     expect((await request(app).get('/api/v1/auth/oidc/callback').query(q)).status).toBe(302);
-    expect((await request(app).get('/api/v1/auth/oidc/callback').query(q)).status).toBe(400);
+    expect((await request(app).get('/api/v1/auth/oidc/callback').query(q)).headers.location).toMatch(/sso_error=/);   // replay is refused
   });
   it('does not accept a tampered SSO token (role escalation)', async () => {
     const { app } = mk();

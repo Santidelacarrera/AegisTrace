@@ -159,7 +159,8 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
       const done = () => res.redirect(302, `/ui/#token=${token}`);       // fragment: never sent to any server or logged
       if (persistence) persistence.flush(store, u.orgId).then(done, () => res.status(500).json({ error: 'persistence_failed' })); else done();
     } catch (e) {
-      if (e instanceof OidcError) { counters.denied++; throw new HttpError(e.status, 'sso_failed', e.message); }
+      // Browser flow: send the person back to the UI with a readable message instead of a JSON error page.
+      if (e instanceof OidcError) { counters.denied++; config.log({ msg: 'sso_failed', status: e.status, reason: e.message }); return void res.redirect(302, `/ui/#sso_error=${encodeURIComponent(e.message)}`); }
       throw e;
     }
   }));

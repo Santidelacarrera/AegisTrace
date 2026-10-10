@@ -6,7 +6,8 @@ import { Users } from './Users';
 import { Badge, ErrorBox } from './ui';
 
 function Login({ onLogin }: { onLogin: (u: User) => void }) {
-  const [orgId, setOrg] = useState('org-acme'), [userId, setUser] = useState('ana'), [password, setPw] = useState(''), [code, setCode] = useState(''), [needCode, setNeedCode] = useState(false), [sso, setSso] = useState(false), [err, setErr] = useState('');
+  const initialErr = (() => { const m = window.location.hash.match(/^#sso_error=(.+)$/); if (!m) return ''; history.replaceState(null, '', window.location.pathname); try { return `SSO: ${decodeURIComponent(m[1]!)}`; } catch { return 'SSO: error'; } })();
+  const [orgId, setOrg] = useState('org-acme'), [userId, setUser] = useState('ana'), [password, setPw] = useState(''), [code, setCode] = useState(''), [needCode, setNeedCode] = useState(false), [sso, setSso] = useState(false), [err, setErr] = useState(initialErr);
   useEffect(() => { api<{ oidc: boolean }>('/auth/config').then((c) => setSso(c.oidc)).catch(() => undefined); }, []);
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setErr('');

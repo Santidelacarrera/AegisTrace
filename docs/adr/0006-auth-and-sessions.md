@@ -8,4 +8,4 @@
 
 **Servicios.** Claves API estáticas con rol `ingestor`.
 
-**Consecuencias.** Suficiente para un laboratorio o equipo pequeño. Los usuarios locales se gestionan editando configuración; no hay recuperación de contraseña ni códigos de recuperación de MFA. Una sesión SSO no se puede revocar antes de caducar (salvo rotando la clave de firma). SSO probado solo contra un IdP simulado; falta validarlo con un proveedor real. Sin SAML.
+**Consecuencias.** Suficiente para un laboratorio o equipo pequeño. Los usuarios locales se gestionan editando configuración; no hay recuperación de contraseña ni códigos de recuperación de MFA. Una sesión SSO no se puede revocar antes de caducar (salvo rotando la clave de firma). SSO probado con un IdP simulado y con Dex (un IdP real, en navegador real); falta validarlo con proveedores comerciales. Sin SAML.
