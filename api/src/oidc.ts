@@ -81,8 +81,10 @@ export function createOidc(cfg: OidcConfig, now: () => number = Date.now, fetchI
       const roles = groups.map((g) => cfg.roleMap[g]).filter((r): r is Role => !!r);
       const role = PRECEDENCE.find((r) => roles.includes(r));
       if (!role) throw new OidcError(403, 'Your account has no AegisTrace role');
-      const id = String(claims.email ?? claims.sub ?? '').toLowerCase();
-      if (!id || typeof claims.sub !== 'string') throw new OidcError(401, 'id_token has no subject');
+      if (typeof claims.sub !== 'string' || !claims.sub) throw new OidcError(401, 'id_token has no subject');
+      // Only a verified e-mail may name the user; otherwise use the subject, namespaced so it cannot collide with (or pose as) a local user.
+      const verified = typeof claims.email === 'string' && claims.email_verified !== false;
+      const id = verified ? String(claims.email).toLowerCase() : `sso:${claims.sub}`;
       return { userId: id.slice(0, 64), orgId: cfg.orgId, role };
     },
   };

@@ -126,3 +126,34 @@ describe('TOTP', () => {
     expect((await go({ password: 'demo-approver', code: totpAt(secret, stepOf(t)) })).status).toBe(200);
   });
 });
+
+describe('abuse resistance of unauthenticated endpoints', () => {
+  it('rate limits login per client IP even when every attempt targets a different user (spraying)', async () => {
+    const config = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS, loginRatePerMinute: 5 };
+    const { app } = createApp({ config });
+    const codes: number[] = [];
+    for (let i = 0; i < 8; i++) codes.push((await request(app).post('/api/v1/auth/login').send({ orgId: 'org-acme', userId: `victim${i}`, password: 'guess-guess-guess' })).status);
+    expect(codes).toEqual([401, 401, 401, 401, 401, 429, 429, 429]);
+    expect((await request(app).get('/api/v1/auth/config')).status).toBe(200);        // other routes unaffected
+  });
+  it('a captured TOTP code cannot be replayed (enforced through the shared limiter)', async () => {
+    const { MemoryLimiter } = await import('../src/limits.js');
+    const secret = newTotpSecret();
+    const cfg = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS };
+    cfg.users.find((u) => u.userId === 'alex')!.totpSecret = secret;
+    const t = Date.parse('2024-06-01T12:00:00Z'); cfg.now = () => new Date(t);
+    const shared = new MemoryLimiter(() => t);
+    const mk = () => createApp({ config: cfg, limiter: shared }).app;                  // two "instances" sharing one limiter, like Redis
+    const a = mk(), b = mk();
+    const body = { orgId: 'org-acme', userId: 'alex', password: 'demo-approver', code: totpAt(secret, stepOf(t)) };
+    expect((await request(a).post('/api/v1/auth/login').send(body)).status).toBe(200);
+    expect((await request(b).post('/api/v1/auth/login').send(body)).status).toBe(401);
+  });
+  it('protects /metrics with a token when configured', async () => {
+    const config = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS, metricsToken: 'm3trics-token' };
+    const { app } = createApp({ config });
+    expect((await request(app).get('/metrics')).status).toBe(401);
+    expect((await request(app).get('/metrics').set('Authorization', 'Bearer wrong')).status).toBe(401);
+    expect((await request(app).get('/metrics').set('Authorization', 'Bearer m3trics-token')).status).toBe(200);
+  });
+});

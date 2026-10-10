@@ -28,6 +28,7 @@ export class PgPersistence {
   async load(store: Store): Promise<void> {
     const docs = await this.db.query('SELECT organization_id, collection, id, body FROM aegis_doc');
     for (const r of docs.rows) {
+      if (r.collection !== 'lab' && r.collection !== 'events' && !(COLLECTIONS as readonly string[]).includes(r.collection)) continue;   // never index into an object with a name that came from the database
       const org = store.org(r.organization_id);
       if (r.collection === 'lab') {
         org.lab.blockedIps = new Set(r.body.blockedIps); org.lab.disabledUsers = new Set(r.body.disabledUsers);

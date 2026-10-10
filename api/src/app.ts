@@ -91,7 +91,8 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
     const ok = Object.values(checks).every((v) => v === 'ok');
     res.status(ok ? 200 : 503).json({ status: ok ? 'ready' : 'degraded', checks });
   }));
-  app.get('/metrics', (_req, res) => {
+  app.get('/metrics', (req, res) => {
+    if (config.metricsToken && req.header('authorization') !== `Bearer ${config.metricsToken}`) return void res.status(401).type('text/plain').send('unauthorized\n');
     const lines = Object.entries(counters).map(([k, v]) => `aegistrace_${k}_total ${v}`);
     res.type('text/plain').send([...lines, ...latency.render('aegistrace_request_duration_ms'), `aegistrace_events_stored ${[...store.all()].reduce((n, o) => n + o.events.size, 0)}`].join('\n') + '\n');
   });
@@ -111,10 +112,15 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
     return c && { userId, orgId, role: c.role, passwordHash: c.passwordHash, totpSecret: c.totpSecret, mustChangePassword: false, changedAtSec: 0, source: 'config' };
   };
   const throttle = new LoginThrottle(limiter);
-  const lastTotpStep = new Map<string, number>();
   const dummyHash = config.users[0]?.passwordHash ?? hashPassword('x');
 
-  api.post('/auth/login', wrap(async (req, res) => {
+  /** Unauthenticated endpoints cost real work (scrypt, IdP round-trips): cap them per client IP, independently of per-user lockout. */
+  const ipLimit = (name: string): RequestHandler => wrap(async (req, _res, next) => {
+    if ((await limiter.hit(`ip:${name}:${req.ip}`, 60_000)) > config.loginRatePerMinute) { counters.rateLimited++; return next(new HttpError(429, 'rate_limited', 'Too many requests from this address')); }
+    next();
+  });
+
+  api.post('/auth/login', ipLimit('login'), wrap(async (req, res) => {
     const { orgId, userId, password, code } = z.object({ orgId: z.string().max(64), userId: z.string().max(64), password: z.string().max(200), code: z.string().max(16).optional() }).parse(req.body);
     const id = `${orgId}|${userId}`, now = config.now().getTime();
     const user = findUser(orgId, userId);
@@ -129,9 +135,10 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
       let used = 'totp';
       if (looksLikeRecoveryCode(code) && user.rec && consumeRecoveryCode(user.rec, code)) used = 'recovery-code';
       else {
-        const step = verifyTotp(user.totpSecret, code, now, lastTotpStep.get(id) ?? -1);
-        if (step === undefined) { await throttle.fail(id); logFail('bad MFA code'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
-        lastTotpStep.set(id, step);   // a code can be used once
+        const step = verifyTotp(user.totpSecret, code, now);
+        // One use per time step, enforced through the shared limiter so replay is blocked across instances too.
+        const replay = step !== undefined && (await limiter.hit(`totp:${id}:${step}`, 120_000)) > 1;
+        if (step === undefined || replay) { await throttle.fail(id); logFail(replay ? 'MFA code replay' : 'bad MFA code'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
       }
       mfaUsed = used;
     }
@@ -144,11 +151,11 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
   // --- SSO (OIDC) -------------------------------------------------------------
   const oidc = config.oidc ? createOidc(config.oidc, () => config.now().getTime(), fetchImpl) : undefined;
   api.get('/auth/config', (_req, res) => { res.json({ password: true, oidc: !!oidc }); });
-  api.get('/auth/oidc/login', wrap(async (_req, res) => {
+  api.get('/auth/oidc/login', ipLimit('sso'), wrap(async (_req, res) => {
     if (!oidc) throw new HttpError(404, 'not_found', 'SSO is not configured');
     res.redirect(302, await oidc.start());
   }));
-  api.get('/auth/oidc/callback', wrap(async (req, res) => {
+  api.get('/auth/oidc/callback', ipLimit('sso'), wrap(async (req, res) => {
     if (!oidc) throw new HttpError(404, 'not_found', 'SSO is not configured');
     const { code, state } = z.object({ code: z.string().max(2000), state: z.string().max(200) }).parse(req.query);
     const now = config.now().getTime();

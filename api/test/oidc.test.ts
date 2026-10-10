@@ -84,6 +84,23 @@ describe('OIDC single sign-on', () => {
     const audit = (await request(app).get('/api/v1/audit').set('Authorization', `Bearer ${token}`)).body.items;
     expect(audit.find((a: { action: string; detail?: string }) => a.action === 'auth.login' && a.detail === 'oidc')).toBeTruthy();
   });
+  it('names the user by a verified e-mail, otherwise by a namespaced subject so it cannot pose as a local user', async () => {
+    const who = async (claims: Record<string, unknown>) => {
+      const { app } = mk();
+      const token = (await sso(app, { groups: ['everyone'], ...claims })).headers.location!.match(/#token=(.+)$/)![1]!;
+      return (await request(app).get('/api/v1/auth/me').set('Authorization', `Bearer ${token}`)).body.userId;
+    };
+    expect(await who({ sub: 's1', email: 'real@example.com', email_verified: true })).toBe('real@example.com');
+    expect(await who({ sub: 's2', email: 'ana', email_verified: false })).toBe('sso:s2');       // unverified e-mail must not claim "ana"
+    expect(await who({ sub: 's3' })).toBe('sso:s3');
+  });
+  it('rate limits the unauthenticated SSO entry points per IP', async () => {
+    const config = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS, loginRatePerMinute: 3, oidc: { issuer, clientId: 'aegis-client', clientSecret: 'shh', redirectUri: 'http://app/cb', orgId: 'org-acme', roleMap: {} as never } };
+    const { app } = createApp({ config });
+    const codes: number[] = [];
+    for (let i = 0; i < 5; i++) codes.push((await request(app).get('/api/v1/auth/oidc/login')).status);
+    expect(codes).toEqual([302, 302, 302, 429, 429]);
+  });
   it('refuses users with no mapped role', async () => {
     const r = await sso(mk().app, { sub: 'u-2', email: 'x@example.com', groups: ['unrelated'] });
     expect(r.status).toBe(302);
