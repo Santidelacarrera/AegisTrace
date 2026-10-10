@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+*.log
+.graph-indexer/
+api/public/
+.venv/
+__pycache__/
+.pytest_cache/
+docs/media/*.tmp
+docs/media/video-tmp/

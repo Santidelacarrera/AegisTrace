@@ -1,0 +1,2032 @@
+[
+ {
+  "id": "s-00001",
+  "timestamp": "2024-06-01T08:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00002",
+  "timestamp": "2024-06-01T08:00:20.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00003",
+  "timestamp": "2024-06-01T08:00:26.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00004",
+  "timestamp": "2024-06-01T08:00:45.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00005",
+  "timestamp": "2024-06-01T08:02:36.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00006",
+  "timestamp": "2024-06-01T08:01:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00007",
+  "timestamp": "2024-06-01T08:03:06.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00008",
+  "timestamp": "2024-06-01T08:00:56.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00009",
+  "timestamp": "2024-06-01T08:03:44.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00010",
+  "timestamp": "2024-06-01T08:04:39.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.240"
+ },
+ {
+  "id": "s-00011",
+  "timestamp": "2024-06-01T10:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00012",
+  "timestamp": "2024-06-01T10:00:31.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00013",
+  "timestamp": "2024-06-01T10:01:04.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00014",
+  "timestamp": "2024-06-01T10:01:09.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00015",
+  "timestamp": "2024-06-01T10:00:44.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00016",
+  "timestamp": "2024-06-01T10:01:05.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00017",
+  "timestamp": "2024-06-01T10:02:48.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00018",
+  "timestamp": "2024-06-01T10:00:42.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00019",
+  "timestamp": "2024-06-01T10:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.35"
+ },
+ {
+  "id": "s-00020",
+  "timestamp": "2024-06-01T12:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.165"
+ },
+ {
+  "id": "s-00021",
+  "timestamp": "2024-06-01T12:00:27.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.165"
+ },
+ {
+  "id": "s-00022",
+  "timestamp": "2024-06-01T12:00:26.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.165"
+ },
+ {
+  "id": "s-00023",
+  "timestamp": "2024-06-01T12:01:48.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.165"
+ },
+ {
+  "id": "s-00024",
+  "timestamp": "2024-06-01T12:02:36.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.165"
+ },
+ {
+  "id": "s-00025",
+  "timestamp": "2024-06-01T12:02:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.165"
+ },
+ {
+  "id": "s-00026",
+  "timestamp": "2024-06-01T14:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00027",
+  "timestamp": "2024-06-01T14:00:18.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00028",
+  "timestamp": "2024-06-01T14:00:34.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00029",
+  "timestamp": "2024-06-01T14:01:03.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00030",
+  "timestamp": "2024-06-01T14:01:16.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00031",
+  "timestamp": "2024-06-01T14:02:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00032",
+  "timestamp": "2024-06-01T14:01:18.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00033",
+  "timestamp": "2024-06-01T14:00:56.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00034",
+  "timestamp": "2024-06-01T14:03:28.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.102"
+ },
+ {
+  "id": "s-00035",
+  "timestamp": "2024-06-01T16:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.243"
+ },
+ {
+  "id": "s-00036",
+  "timestamp": "2024-06-01T16:00:20.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.243"
+ },
+ {
+  "id": "s-00037",
+  "timestamp": "2024-06-01T16:00:40.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.243"
+ },
+ {
+  "id": "s-00038",
+  "timestamp": "2024-06-01T16:01:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.243"
+ },
+ {
+  "id": "s-00039",
+  "timestamp": "2024-06-01T16:01:20.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.243"
+ },
+ {
+  "id": "s-00040",
+  "timestamp": "2024-06-01T16:01:40.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.243"
+ },
+ {
+  "id": "s-00041",
+  "timestamp": "2024-06-01T16:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.243"
+ },
+ {
+  "id": "s-00042",
+  "timestamp": "2024-06-01T16:03:20.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.erin",
+  "ip": "203.0.113.243"
+ },
+ {
+  "id": "s-00043",
+  "timestamp": "2024-06-01T18:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.40"
+ },
+ {
+  "id": "s-00044",
+  "timestamp": "2024-06-01T18:00:20.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.40"
+ },
+ {
+  "id": "s-00045",
+  "timestamp": "2024-06-01T18:00:40.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.40"
+ },
+ {
+  "id": "s-00046",
+  "timestamp": "2024-06-01T18:01:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.40"
+ },
+ {
+  "id": "s-00047",
+  "timestamp": "2024-06-01T18:01:20.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.40"
+ },
+ {
+  "id": "s-00048",
+  "timestamp": "2024-06-01T18:01:40.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.40"
+ },
+ {
+  "id": "s-00049",
+  "timestamp": "2024-06-01T18:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.40"
+ },
+ {
+  "id": "s-00050",
+  "timestamp": "2024-06-01T18:03:20.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.frank",
+  "ip": "203.0.113.40"
+ },
+ {
+  "id": "s-00051",
+  "timestamp": "2024-06-01T20:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.79"
+ },
+ {
+  "id": "s-00052",
+  "timestamp": "2024-06-01T20:00:20.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.79"
+ },
+ {
+  "id": "s-00053",
+  "timestamp": "2024-06-01T20:00:40.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.79"
+ },
+ {
+  "id": "s-00054",
+  "timestamp": "2024-06-01T20:01:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.79"
+ },
+ {
+  "id": "s-00055",
+  "timestamp": "2024-06-01T20:01:20.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.79"
+ },
+ {
+  "id": "s-00056",
+  "timestamp": "2024-06-01T20:01:40.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.79"
+ },
+ {
+  "id": "s-00057",
+  "timestamp": "2024-06-01T20:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.79"
+ },
+ {
+  "id": "s-00058",
+  "timestamp": "2024-06-01T20:03:20.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.carol",
+  "ip": "203.0.113.79"
+ },
+ {
+  "id": "s-00059",
+  "timestamp": "2024-06-01T22:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00060",
+  "timestamp": "2024-06-01T22:00:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00061",
+  "timestamp": "2024-06-01T22:00:30.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00062",
+  "timestamp": "2024-06-01T22:00:45.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00063",
+  "timestamp": "2024-06-01T22:01:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00064",
+  "timestamp": "2024-06-01T22:01:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00065",
+  "timestamp": "2024-06-01T22:01:30.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00066",
+  "timestamp": "2024-06-01T22:01:45.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00067",
+  "timestamp": "2024-06-01T22:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00068",
+  "timestamp": "2024-06-01T22:02:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00069",
+  "timestamp": "2024-06-02T00:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00070",
+  "timestamp": "2024-06-02T00:00:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00071",
+  "timestamp": "2024-06-02T00:00:30.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00072",
+  "timestamp": "2024-06-02T00:00:45.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00073",
+  "timestamp": "2024-06-02T00:01:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00074",
+  "timestamp": "2024-06-02T00:01:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00075",
+  "timestamp": "2024-06-02T00:01:30.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00076",
+  "timestamp": "2024-06-02T00:01:45.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00077",
+  "timestamp": "2024-06-02T00:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00078",
+  "timestamp": "2024-06-02T00:02:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.29"
+ },
+ {
+  "id": "s-00079",
+  "timestamp": "2024-06-02T02:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00080",
+  "timestamp": "2024-06-02T02:00:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00081",
+  "timestamp": "2024-06-02T02:00:30.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00082",
+  "timestamp": "2024-06-02T02:00:45.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00083",
+  "timestamp": "2024-06-02T02:01:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00084",
+  "timestamp": "2024-06-02T02:01:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.alice",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00085",
+  "timestamp": "2024-06-02T02:01:30.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00086",
+  "timestamp": "2024-06-02T02:01:45.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00087",
+  "timestamp": "2024-06-02T02:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00088",
+  "timestamp": "2024-06-02T02:02:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.245"
+ },
+ {
+  "id": "s-00089",
+  "timestamp": "2024-06-02T04:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.214",
+  "resource": "/api/payroll"
+ },
+ {
+  "id": "s-00090",
+  "timestamp": "2024-06-02T04:00:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.214",
+  "resource": "/api/admin/users"
+ },
+ {
+  "id": "s-00091",
+  "timestamp": "2024-06-02T04:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.214",
+  "resource": "/api/billing"
+ },
+ {
+  "id": "s-00092",
+  "timestamp": "2024-06-02T04:01:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.214",
+  "resource": "/api/reports"
+ },
+ {
+  "id": "s-00093",
+  "timestamp": "2024-06-02T04:02:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.214",
+  "resource": "/api/keys"
+ },
+ {
+  "id": "s-00094",
+  "timestamp": "2024-06-02T06:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.carol",
+  "ip": "203.0.113.138",
+  "resource": "/api/payroll"
+ },
+ {
+  "id": "s-00095",
+  "timestamp": "2024-06-02T06:00:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.carol",
+  "ip": "203.0.113.138",
+  "resource": "/api/admin/users"
+ },
+ {
+  "id": "s-00096",
+  "timestamp": "2024-06-02T06:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.carol",
+  "ip": "203.0.113.138",
+  "resource": "/api/billing"
+ },
+ {
+  "id": "s-00097",
+  "timestamp": "2024-06-02T06:01:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.carol",
+  "ip": "203.0.113.138",
+  "resource": "/api/reports"
+ },
+ {
+  "id": "s-00098",
+  "timestamp": "2024-06-02T08:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.37",
+  "resource": "/api/payroll"
+ },
+ {
+  "id": "s-00099",
+  "timestamp": "2024-06-02T08:00:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.37",
+  "resource": "/api/admin/users"
+ },
+ {
+  "id": "s-00100",
+  "timestamp": "2024-06-02T08:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.37",
+  "resource": "/api/billing"
+ },
+ {
+  "id": "s-00101",
+  "timestamp": "2024-06-02T08:01:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.37",
+  "resource": "/api/reports"
+ },
+ {
+  "id": "s-00102",
+  "timestamp": "2024-06-02T08:02:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.37",
+  "resource": "/api/keys"
+ },
+ {
+  "id": "s-00103",
+  "timestamp": "2024-06-02T08:02:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.37",
+  "resource": "/api/export"
+ },
+ {
+  "id": "s-00104",
+  "timestamp": "2024-06-02T10:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.frank",
+  "ip": "203.0.113.249",
+  "resource": "/api/payroll"
+ },
+ {
+  "id": "s-00105",
+  "timestamp": "2024-06-02T10:00:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.frank",
+  "ip": "203.0.113.249",
+  "resource": "/api/admin/users"
+ },
+ {
+  "id": "s-00106",
+  "timestamp": "2024-06-02T10:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.frank",
+  "ip": "203.0.113.249",
+  "resource": "/api/billing"
+ },
+ {
+  "id": "s-00107",
+  "timestamp": "2024-06-02T10:01:30.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.frank",
+  "ip": "203.0.113.249",
+  "resource": "/api/reports"
+ },
+ {
+  "id": "s-00108",
+  "timestamp": "2024-06-02T12:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.dave",
+  "ip": "203.0.113.73",
+  "actor": "lab.dave",
+  "new_role": "admin"
+ },
+ {
+  "id": "s-00109",
+  "timestamp": "2024-06-02T14:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.alice",
+  "ip": "203.0.113.81",
+  "actor": "lab.alice",
+  "new_role": "admin"
+ },
+ {
+  "id": "s-00110",
+  "timestamp": "2024-06-02T16:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.dave",
+  "ip": "203.0.113.136",
+  "actor": "lab.dave",
+  "new_role": "admin"
+ },
+ {
+  "id": "s-00111",
+  "timestamp": "2024-06-02T18:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.209"
+ },
+ {
+  "id": "s-00112",
+  "timestamp": "2024-06-02T18:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.209"
+ },
+ {
+  "id": "s-00113",
+  "timestamp": "2024-06-02T18:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.209"
+ },
+ {
+  "id": "s-00114",
+  "timestamp": "2024-06-02T20:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.91"
+ },
+ {
+  "id": "s-00115",
+  "timestamp": "2024-06-02T20:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.91"
+ },
+ {
+  "id": "s-00116",
+  "timestamp": "2024-06-02T20:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.91"
+ },
+ {
+  "id": "s-00117",
+  "timestamp": "2024-06-02T20:01:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.91"
+ },
+ {
+  "id": "s-00118",
+  "timestamp": "2024-06-02T20:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.91"
+ },
+ {
+  "id": "s-00119",
+  "timestamp": "2024-06-02T22:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.31"
+ },
+ {
+  "id": "s-00120",
+  "timestamp": "2024-06-02T22:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.31"
+ },
+ {
+  "id": "s-00121",
+  "timestamp": "2024-06-02T22:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.31"
+ },
+ {
+  "id": "s-00122",
+  "timestamp": "2024-06-02T22:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.31"
+ },
+ {
+  "id": "s-00123",
+  "timestamp": "2024-06-03T00:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.12"
+ },
+ {
+  "id": "s-00124",
+  "timestamp": "2024-06-03T00:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.12"
+ },
+ {
+  "id": "s-00125",
+  "timestamp": "2024-06-03T00:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.12"
+ },
+ {
+  "id": "s-00126",
+  "timestamp": "2024-06-03T00:01:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.12"
+ },
+ {
+  "id": "s-00127",
+  "timestamp": "2024-06-03T00:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.12"
+ },
+ {
+  "id": "s-00128",
+  "timestamp": "2024-06-03T02:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.194"
+ },
+ {
+  "id": "s-00129",
+  "timestamp": "2024-06-03T02:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.194"
+ },
+ {
+  "id": "s-00130",
+  "timestamp": "2024-06-03T02:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.194"
+ },
+ {
+  "id": "s-00131",
+  "timestamp": "2024-06-03T02:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.194"
+ },
+ {
+  "id": "s-00132",
+  "timestamp": "2024-06-03T04:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.193"
+ },
+ {
+  "id": "s-00133",
+  "timestamp": "2024-06-03T04:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.193"
+ },
+ {
+  "id": "s-00134",
+  "timestamp": "2024-06-03T04:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.193"
+ },
+ {
+  "id": "s-00135",
+  "timestamp": "2024-06-03T04:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.heidi",
+  "ip": "203.0.113.193"
+ },
+ {
+  "id": "s-00136",
+  "timestamp": "2024-06-03T06:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.104"
+ },
+ {
+  "id": "s-00137",
+  "timestamp": "2024-06-03T06:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.104"
+ },
+ {
+  "id": "s-00138",
+  "timestamp": "2024-06-03T06:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.104"
+ },
+ {
+  "id": "s-00139",
+  "timestamp": "2024-06-03T06:01:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.bob",
+  "ip": "203.0.113.104"
+ },
+ {
+  "id": "s-00140",
+  "timestamp": "2024-06-03T06:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.104"
+ },
+ {
+  "id": "s-00141",
+  "timestamp": "2024-06-03T08:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.131"
+ },
+ {
+  "id": "s-00142",
+  "timestamp": "2024-06-03T08:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.131"
+ },
+ {
+  "id": "s-00143",
+  "timestamp": "2024-06-03T08:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.131"
+ },
+ {
+  "id": "s-00144",
+  "timestamp": "2024-06-03T08:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.frank",
+  "ip": "203.0.113.131"
+ },
+ {
+  "id": "s-00145",
+  "timestamp": "2024-06-03T10:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.26"
+ },
+ {
+  "id": "s-00146",
+  "timestamp": "2024-06-03T10:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.26"
+ },
+ {
+  "id": "s-00147",
+  "timestamp": "2024-06-03T10:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.frank",
+  "ip": "203.0.113.26"
+ },
+ {
+  "id": "s-00148",
+  "timestamp": "2024-06-03T10:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.frank",
+  "ip": "203.0.113.26"
+ },
+ {
+  "id": "s-00149",
+  "timestamp": "2024-06-03T12:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.76"
+ },
+ {
+  "id": "s-00150",
+  "timestamp": "2024-06-03T12:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.76"
+ },
+ {
+  "id": "s-00151",
+  "timestamp": "2024-06-03T12:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.76"
+ },
+ {
+  "id": "s-00152",
+  "timestamp": "2024-06-03T12:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.erin",
+  "ip": "203.0.113.76"
+ },
+ {
+  "id": "s-00153",
+  "timestamp": "2024-06-03T14:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.72"
+ },
+ {
+  "id": "s-00154",
+  "timestamp": "2024-06-03T14:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.72"
+ },
+ {
+  "id": "s-00155",
+  "timestamp": "2024-06-03T14:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.72"
+ },
+ {
+  "id": "s-00156",
+  "timestamp": "2024-06-03T14:01:15.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.72"
+ },
+ {
+  "id": "s-00157",
+  "timestamp": "2024-06-03T14:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.72"
+ },
+ {
+  "id": "s-00158",
+  "timestamp": "2024-06-03T16:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.129"
+ },
+ {
+  "id": "s-00159",
+  "timestamp": "2024-06-03T16:00:25.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.129"
+ },
+ {
+  "id": "s-00160",
+  "timestamp": "2024-06-03T16:00:50.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.129"
+ },
+ {
+  "id": "s-00161",
+  "timestamp": "2024-06-03T16:02:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.erin",
+  "ip": "203.0.113.129"
+ },
+ {
+  "id": "s-00162",
+  "timestamp": "2024-06-03T18:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.carol",
+  "ip": "203.0.113.207",
+  "resource": "/api/billing"
+ },
+ {
+  "id": "s-00163",
+  "timestamp": "2024-06-03T20:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.alice",
+  "ip": "203.0.113.119",
+  "resource": "/api/keys"
+ },
+ {
+  "id": "s-00164",
+  "timestamp": "2024-06-03T20:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.erin",
+  "ip": "203.0.113.122",
+  "resource": "/api/billing"
+ },
+ {
+  "id": "s-00165",
+  "timestamp": "2024-06-03T22:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.frank",
+  "ip": "203.0.113.239",
+  "resource": "/api/export"
+ },
+ {
+  "id": "s-00166",
+  "timestamp": "2024-06-03T22:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.erin",
+  "ip": "203.0.113.88",
+  "resource": "/api/export"
+ },
+ {
+  "id": "s-00167",
+  "timestamp": "2024-06-04T00:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.bob",
+  "ip": "203.0.113.79",
+  "resource": "/api/admin/users"
+ },
+ {
+  "id": "s-00168",
+  "timestamp": "2024-06-04T00:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.erin",
+  "ip": "203.0.113.96",
+  "resource": "/api/export"
+ },
+ {
+  "id": "s-00169",
+  "timestamp": "2024-06-04T02:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.94",
+  "resource": "/api/reports"
+ },
+ {
+  "id": "s-00170",
+  "timestamp": "2024-06-04T02:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.174",
+  "resource": "/api/admin/users"
+ },
+ {
+  "id": "s-00171",
+  "timestamp": "2024-06-04T04:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.grace",
+  "ip": "203.0.113.140",
+  "resource": "/api/keys"
+ },
+ {
+  "id": "s-00172",
+  "timestamp": "2024-06-04T06:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.heidi",
+  "ip": "203.0.113.204",
+  "resource": "/api/reports"
+ },
+ {
+  "id": "s-00173",
+  "timestamp": "2024-06-04T06:01:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.dave",
+  "ip": "203.0.113.162",
+  "resource": "/api/payroll"
+ },
+ {
+  "id": "s-00174",
+  "timestamp": "2024-06-04T08:00:00.000Z",
+  "source": "api-gateway",
+  "type": "authz_denied",
+  "user": "lab.grace",
+  "ip": "203.0.113.94",
+  "resource": "/api/keys"
+ },
+ {
+  "id": "s-00175",
+  "timestamp": "2024-06-04T10:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00176",
+  "timestamp": "2024-06-04T10:12:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00177",
+  "timestamp": "2024-06-04T10:24:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00178",
+  "timestamp": "2024-06-04T10:36:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00179",
+  "timestamp": "2024-06-04T10:48:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00180",
+  "timestamp": "2024-06-04T11:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00181",
+  "timestamp": "2024-06-04T12:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.55"
+ },
+ {
+  "id": "s-00182",
+  "timestamp": "2024-06-04T12:12:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.55"
+ },
+ {
+  "id": "s-00183",
+  "timestamp": "2024-06-04T12:24:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.55"
+ },
+ {
+  "id": "s-00184",
+  "timestamp": "2024-06-04T12:36:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.55"
+ },
+ {
+  "id": "s-00185",
+  "timestamp": "2024-06-04T12:48:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.55"
+ },
+ {
+  "id": "s-00186",
+  "timestamp": "2024-06-04T13:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.dave",
+  "ip": "203.0.113.55"
+ },
+ {
+  "id": "s-00187",
+  "timestamp": "2024-06-04T14:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00188",
+  "timestamp": "2024-06-04T14:12:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00189",
+  "timestamp": "2024-06-04T14:24:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00190",
+  "timestamp": "2024-06-04T14:36:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00191",
+  "timestamp": "2024-06-04T14:48:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00192",
+  "timestamp": "2024-06-04T15:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.heidi",
+  "ip": "203.0.113.146"
+ },
+ {
+  "id": "s-00193",
+  "timestamp": "2024-06-04T16:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.67"
+ },
+ {
+  "id": "s-00194",
+  "timestamp": "2024-06-04T16:12:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.67"
+ },
+ {
+  "id": "s-00195",
+  "timestamp": "2024-06-04T16:24:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.67"
+ },
+ {
+  "id": "s-00196",
+  "timestamp": "2024-06-04T16:36:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.67"
+ },
+ {
+  "id": "s-00197",
+  "timestamp": "2024-06-04T16:48:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.67"
+ },
+ {
+  "id": "s-00198",
+  "timestamp": "2024-06-04T17:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.carol",
+  "ip": "203.0.113.67"
+ },
+ {
+  "id": "s-00199",
+  "timestamp": "2024-06-04T18:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.221"
+ },
+ {
+  "id": "s-00200",
+  "timestamp": "2024-06-04T18:12:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.221"
+ },
+ {
+  "id": "s-00201",
+  "timestamp": "2024-06-04T18:24:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.221"
+ },
+ {
+  "id": "s-00202",
+  "timestamp": "2024-06-04T18:36:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.221"
+ },
+ {
+  "id": "s-00203",
+  "timestamp": "2024-06-04T18:48:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.221"
+ },
+ {
+  "id": "s-00204",
+  "timestamp": "2024-06-04T19:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.erin",
+  "ip": "203.0.113.221"
+ },
+ {
+  "id": "s-00205",
+  "timestamp": "2024-06-04T20:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.56"
+ },
+ {
+  "id": "s-00206",
+  "timestamp": "2024-06-04T20:12:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.56"
+ },
+ {
+  "id": "s-00207",
+  "timestamp": "2024-06-04T20:24:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.56"
+ },
+ {
+  "id": "s-00208",
+  "timestamp": "2024-06-04T20:36:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.56"
+ },
+ {
+  "id": "s-00209",
+  "timestamp": "2024-06-04T20:48:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.56"
+ },
+ {
+  "id": "s-00210",
+  "timestamp": "2024-06-04T21:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_failed",
+  "user": "lab.grace",
+  "ip": "203.0.113.56"
+ },
+ {
+  "id": "s-00211",
+  "timestamp": "2024-06-04T22:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.heidi",
+  "actor": "lab.admin",
+  "new_role": "viewer"
+ },
+ {
+  "id": "s-00212",
+  "timestamp": "2024-06-05T00:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.carol",
+  "actor": "lab.admin",
+  "new_role": "viewer"
+ },
+ {
+  "id": "s-00213",
+  "timestamp": "2024-06-05T02:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.bob",
+  "actor": "lab.admin",
+  "new_role": "viewer"
+ },
+ {
+  "id": "s-00214",
+  "timestamp": "2024-06-05T04:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.bob",
+  "actor": "lab.admin",
+  "new_role": "viewer"
+ },
+ {
+  "id": "s-00215",
+  "timestamp": "2024-06-05T06:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.dave",
+  "actor": "lab.admin",
+  "new_role": "viewer"
+ },
+ {
+  "id": "s-00216",
+  "timestamp": "2024-06-05T08:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.frank",
+  "actor": "lab.admin",
+  "new_role": "viewer"
+ },
+ {
+  "id": "s-00217",
+  "timestamp": "2024-06-05T10:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.bob",
+  "actor": "lab.admin",
+  "new_role": "viewer"
+ },
+ {
+  "id": "s-00218",
+  "timestamp": "2024-06-05T12:00:00.000Z",
+  "source": "iam",
+  "type": "permission_change",
+  "user": "lab.bob",
+  "actor": "lab.admin",
+  "new_role": "viewer"
+ },
+ {
+  "id": "s-00219",
+  "timestamp": "2024-06-05T14:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.175"
+ },
+ {
+  "id": "s-00220",
+  "timestamp": "2024-06-05T16:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.carol",
+  "ip": "203.0.113.127"
+ },
+ {
+  "id": "s-00221",
+  "timestamp": "2024-06-05T18:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.196"
+ },
+ {
+  "id": "s-00222",
+  "timestamp": "2024-06-05T20:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.37"
+ },
+ {
+  "id": "s-00223",
+  "timestamp": "2024-06-05T22:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.17"
+ },
+ {
+  "id": "s-00224",
+  "timestamp": "2024-06-06T00:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.26"
+ },
+ {
+  "id": "s-00225",
+  "timestamp": "2024-06-06T02:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.215"
+ },
+ {
+  "id": "s-00226",
+  "timestamp": "2024-06-06T04:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.alice",
+  "ip": "203.0.113.225"
+ },
+ {
+  "id": "s-00227",
+  "timestamp": "2024-06-06T06:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.erin",
+  "ip": "203.0.113.238"
+ },
+ {
+  "id": "s-00228",
+  "timestamp": "2024-06-06T08:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.42"
+ },
+ {
+  "id": "s-00229",
+  "timestamp": "2024-06-06T10:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.grace",
+  "ip": "203.0.113.88"
+ },
+ {
+  "id": "s-00230",
+  "timestamp": "2024-06-06T12:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.carol",
+  "ip": "203.0.113.2"
+ },
+ {
+  "id": "s-00231",
+  "timestamp": "2024-06-06T14:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.grace",
+  "ip": "203.0.113.67"
+ },
+ {
+  "id": "s-00232",
+  "timestamp": "2024-06-06T16:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.frank",
+  "ip": "203.0.113.109"
+ },
+ {
+  "id": "s-00233",
+  "timestamp": "2024-06-06T18:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.heidi",
+  "ip": "203.0.113.8"
+ },
+ {
+  "id": "s-00234",
+  "timestamp": "2024-06-06T20:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.21"
+ },
+ {
+  "id": "s-00235",
+  "timestamp": "2024-06-06T22:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.grace",
+  "ip": "203.0.113.234"
+ },
+ {
+  "id": "s-00236",
+  "timestamp": "2024-06-07T00:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.alice",
+  "ip": "203.0.113.110"
+ },
+ {
+  "id": "s-00237",
+  "timestamp": "2024-06-07T02:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.erin",
+  "ip": "203.0.113.58"
+ },
+ {
+  "id": "s-00238",
+  "timestamp": "2024-06-07T04:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.heidi",
+  "ip": "203.0.113.98"
+ },
+ {
+  "id": "s-00239",
+  "timestamp": "2024-06-07T06:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.7"
+ },
+ {
+  "id": "s-00240",
+  "timestamp": "2024-06-07T08:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.80"
+ },
+ {
+  "id": "s-00241",
+  "timestamp": "2024-06-07T10:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.179"
+ },
+ {
+  "id": "s-00242",
+  "timestamp": "2024-06-07T12:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.heidi",
+  "ip": "203.0.113.242"
+ },
+ {
+  "id": "s-00243",
+  "timestamp": "2024-06-07T14:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.erin",
+  "ip": "203.0.113.86"
+ },
+ {
+  "id": "s-00244",
+  "timestamp": "2024-06-07T16:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.heidi",
+  "ip": "203.0.113.132"
+ },
+ {
+  "id": "s-00245",
+  "timestamp": "2024-06-07T18:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.39"
+ },
+ {
+  "id": "s-00246",
+  "timestamp": "2024-06-07T20:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.dave",
+  "ip": "203.0.113.8"
+ },
+ {
+  "id": "s-00247",
+  "timestamp": "2024-06-07T22:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.bob",
+  "ip": "203.0.113.63"
+ },
+ {
+  "id": "s-00248",
+  "timestamp": "2024-06-08T00:00:00.000Z",
+  "source": "auth-service",
+  "type": "login_success",
+  "user": "lab.erin",
+  "ip": "203.0.113.152"
+ }
+]

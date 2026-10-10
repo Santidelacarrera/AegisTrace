@@ -1,0 +1,578 @@
+{
+ "scenarios": {
+  "brute-0": {
+   "kind": "brute_force",
+   "malicious": true
+  },
+  "brute-1": {
+   "kind": "brute_force",
+   "malicious": true
+  },
+  "brute-2": {
+   "kind": "brute_force",
+   "malicious": true
+  },
+  "brute-3": {
+   "kind": "brute_force",
+   "malicious": true
+  },
+  "compromise-0": {
+   "kind": "compromise",
+   "malicious": true
+  },
+  "compromise-1": {
+   "kind": "compromise",
+   "malicious": true
+  },
+  "compromise-2": {
+   "kind": "compromise",
+   "malicious": true
+  },
+  "spray-0": {
+   "kind": "spraying",
+   "malicious": true
+  },
+  "spray-1": {
+   "kind": "spraying",
+   "malicious": true
+  },
+  "spray-2": {
+   "kind": "spraying",
+   "malicious": true
+  },
+  "probe-0": {
+   "kind": "authz_probe",
+   "malicious": true
+  },
+  "probe-1": {
+   "kind": "authz_probe",
+   "malicious": true
+  },
+  "probe-2": {
+   "kind": "authz_probe",
+   "malicious": true
+  },
+  "probe-3": {
+   "kind": "authz_probe",
+   "malicious": true
+  },
+  "priv-0": {
+   "kind": "privilege_escalation",
+   "malicious": true
+  },
+  "priv-1": {
+   "kind": "privilege_escalation",
+   "malicious": true
+  },
+  "priv-2": {
+   "kind": "privilege_escalation",
+   "malicious": true
+  },
+  "typo-0": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-1": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-2": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-3": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-4": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-5": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-6": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-7": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-8": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-9": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-10": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-11": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "denied-0": {
+   "kind": "single_denial",
+   "malicious": false
+  },
+  "denied-1": {
+   "kind": "single_denial",
+   "malicious": false
+  },
+  "denied-2": {
+   "kind": "single_denial",
+   "malicious": false
+  },
+  "denied-3": {
+   "kind": "single_denial",
+   "malicious": false
+  },
+  "denied-4": {
+   "kind": "single_denial",
+   "malicious": false
+  },
+  "denied-5": {
+   "kind": "single_denial",
+   "malicious": false
+  },
+  "denied-6": {
+   "kind": "single_denial",
+   "malicious": false
+  },
+  "denied-7": {
+   "kind": "single_denial",
+   "malicious": false
+  },
+  "slow-0": {
+   "kind": "slow_failures",
+   "malicious": false
+  },
+  "slow-1": {
+   "kind": "slow_failures",
+   "malicious": false
+  },
+  "slow-2": {
+   "kind": "slow_failures",
+   "malicious": false
+  },
+  "slow-3": {
+   "kind": "slow_failures",
+   "malicious": false
+  },
+  "slow-4": {
+   "kind": "slow_failures",
+   "malicious": false
+  },
+  "slow-5": {
+   "kind": "slow_failures",
+   "malicious": false
+  },
+  "rolechg-0": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "rolechg-1": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "rolechg-2": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "rolechg-3": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "rolechg-4": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "rolechg-5": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "rolechg-6": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "rolechg-7": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "ok-0": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-1": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-2": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-3": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-4": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-5": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-6": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-7": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-8": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-9": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-10": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-11": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-12": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-13": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-14": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-15": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-16": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-17": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-18": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-19": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-20": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-21": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-22": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-23": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-24": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-25": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-26": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-27": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-28": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-29": {
+   "kind": "normal_login",
+   "malicious": false
+  }
+ },
+ "events": {
+  "s-00001": "brute-0",
+  "s-00002": "brute-0",
+  "s-00003": "brute-0",
+  "s-00004": "brute-0",
+  "s-00005": "brute-0",
+  "s-00006": "brute-0",
+  "s-00007": "brute-0",
+  "s-00008": "brute-0",
+  "s-00009": "brute-0",
+  "s-00010": "brute-0",
+  "s-00011": "brute-1",
+  "s-00012": "brute-1",
+  "s-00013": "brute-1",
+  "s-00014": "brute-1",
+  "s-00015": "brute-1",
+  "s-00016": "brute-1",
+  "s-00017": "brute-1",
+  "s-00018": "brute-1",
+  "s-00019": "brute-1",
+  "s-00020": "brute-2",
+  "s-00021": "brute-2",
+  "s-00022": "brute-2",
+  "s-00023": "brute-2",
+  "s-00024": "brute-2",
+  "s-00025": "brute-2",
+  "s-00026": "brute-3",
+  "s-00027": "brute-3",
+  "s-00028": "brute-3",
+  "s-00029": "brute-3",
+  "s-00030": "brute-3",
+  "s-00031": "brute-3",
+  "s-00032": "brute-3",
+  "s-00033": "brute-3",
+  "s-00034": "brute-3",
+  "s-00035": "compromise-0",
+  "s-00036": "compromise-0",
+  "s-00037": "compromise-0",
+  "s-00038": "compromise-0",
+  "s-00039": "compromise-0",
+  "s-00040": "compromise-0",
+  "s-00041": "compromise-0",
+  "s-00042": "compromise-0",
+  "s-00043": "compromise-1",
+  "s-00044": "compromise-1",
+  "s-00045": "compromise-1",
+  "s-00046": "compromise-1",
+  "s-00047": "compromise-1",
+  "s-00048": "compromise-1",
+  "s-00049": "compromise-1",
+  "s-00050": "compromise-1",
+  "s-00051": "compromise-2",
+  "s-00052": "compromise-2",
+  "s-00053": "compromise-2",
+  "s-00054": "compromise-2",
+  "s-00055": "compromise-2",
+  "s-00056": "compromise-2",
+  "s-00057": "compromise-2",
+  "s-00058": "compromise-2",
+  "s-00059": "spray-0",
+  "s-00060": "spray-0",
+  "s-00061": "spray-0",
+  "s-00062": "spray-0",
+  "s-00063": "spray-0",
+  "s-00064": "spray-0",
+  "s-00065": "spray-0",
+  "s-00066": "spray-0",
+  "s-00067": "spray-0",
+  "s-00068": "spray-0",
+  "s-00069": "spray-1",
+  "s-00070": "spray-1",
+  "s-00071": "spray-1",
+  "s-00072": "spray-1",
+  "s-00073": "spray-1",
+  "s-00074": "spray-1",
+  "s-00075": "spray-1",
+  "s-00076": "spray-1",
+  "s-00077": "spray-1",
+  "s-00078": "spray-1",
+  "s-00079": "spray-2",
+  "s-00080": "spray-2",
+  "s-00081": "spray-2",
+  "s-00082": "spray-2",
+  "s-00083": "spray-2",
+  "s-00084": "spray-2",
+  "s-00085": "spray-2",
+  "s-00086": "spray-2",
+  "s-00087": "spray-2",
+  "s-00088": "spray-2",
+  "s-00089": "probe-0",
+  "s-00090": "probe-0",
+  "s-00091": "probe-0",
+  "s-00092": "probe-0",
+  "s-00093": "probe-0",
+  "s-00094": "probe-1",
+  "s-00095": "probe-1",
+  "s-00096": "probe-1",
+  "s-00097": "probe-1",
+  "s-00098": "probe-2",
+  "s-00099": "probe-2",
+  "s-00100": "probe-2",
+  "s-00101": "probe-2",
+  "s-00102": "probe-2",
+  "s-00103": "probe-2",
+  "s-00104": "probe-3",
+  "s-00105": "probe-3",
+  "s-00106": "probe-3",
+  "s-00107": "probe-3",
+  "s-00108": "priv-0",
+  "s-00109": "priv-1",
+  "s-00110": "priv-2",
+  "s-00111": "typo-0",
+  "s-00112": "typo-0",
+  "s-00113": "typo-0",
+  "s-00114": "typo-1",
+  "s-00115": "typo-1",
+  "s-00116": "typo-1",
+  "s-00117": "typo-1",
+  "s-00118": "typo-1",
+  "s-00119": "typo-2",
+  "s-00120": "typo-2",
+  "s-00121": "typo-2",
+  "s-00122": "typo-2",
+  "s-00123": "typo-3",
+  "s-00124": "typo-3",
+  "s-00125": "typo-3",
+  "s-00126": "typo-3",
+  "s-00127": "typo-3",
+  "s-00128": "typo-4",
+  "s-00129": "typo-4",
+  "s-00130": "typo-4",
+  "s-00131": "typo-4",
+  "s-00132": "typo-5",
+  "s-00133": "typo-5",
+  "s-00134": "typo-5",
+  "s-00135": "typo-5",
+  "s-00136": "typo-6",
+  "s-00137": "typo-6",
+  "s-00138": "typo-6",
+  "s-00139": "typo-6",
+  "s-00140": "typo-6",
+  "s-00141": "typo-7",
+  "s-00142": "typo-7",
+  "s-00143": "typo-7",
+  "s-00144": "typo-7",
+  "s-00145": "typo-8",
+  "s-00146": "typo-8",
+  "s-00147": "typo-8",
+  "s-00148": "typo-8",
+  "s-00149": "typo-9",
+  "s-00150": "typo-9",
+  "s-00151": "typo-9",
+  "s-00152": "typo-9",
+  "s-00153": "typo-10",
+  "s-00154": "typo-10",
+  "s-00155": "typo-10",
+  "s-00156": "typo-10",
+  "s-00157": "typo-10",
+  "s-00158": "typo-11",
+  "s-00159": "typo-11",
+  "s-00160": "typo-11",
+  "s-00161": "typo-11",
+  "s-00162": "denied-0",
+  "s-00163": "denied-1",
+  "s-00164": "denied-1",
+  "s-00165": "denied-2",
+  "s-00166": "denied-2",
+  "s-00167": "denied-3",
+  "s-00168": "denied-3",
+  "s-00169": "denied-4",
+  "s-00170": "denied-4",
+  "s-00171": "denied-5",
+  "s-00172": "denied-6",
+  "s-00173": "denied-6",
+  "s-00174": "denied-7",
+  "s-00175": "slow-0",
+  "s-00176": "slow-0",
+  "s-00177": "slow-0",
+  "s-00178": "slow-0",
+  "s-00179": "slow-0",
+  "s-00180": "slow-0",
+  "s-00181": "slow-1",
+  "s-00182": "slow-1",
+  "s-00183": "slow-1",
+  "s-00184": "slow-1",
+  "s-00185": "slow-1",
+  "s-00186": "slow-1",
+  "s-00187": "slow-2",
+  "s-00188": "slow-2",
+  "s-00189": "slow-2",
+  "s-00190": "slow-2",
+  "s-00191": "slow-2",
+  "s-00192": "slow-2",
+  "s-00193": "slow-3",
+  "s-00194": "slow-3",
+  "s-00195": "slow-3",
+  "s-00196": "slow-3",
+  "s-00197": "slow-3",
+  "s-00198": "slow-3",
+  "s-00199": "slow-4",
+  "s-00200": "slow-4",
+  "s-00201": "slow-4",
+  "s-00202": "slow-4",
+  "s-00203": "slow-4",
+  "s-00204": "slow-4",
+  "s-00205": "slow-5",
+  "s-00206": "slow-5",
+  "s-00207": "slow-5",
+  "s-00208": "slow-5",
+  "s-00209": "slow-5",
+  "s-00210": "slow-5",
+  "s-00211": "rolechg-0",
+  "s-00212": "rolechg-1",
+  "s-00213": "rolechg-2",
+  "s-00214": "rolechg-3",
+  "s-00215": "rolechg-4",
+  "s-00216": "rolechg-5",
+  "s-00217": "rolechg-6",
+  "s-00218": "rolechg-7",
+  "s-00219": "ok-0",
+  "s-00220": "ok-1",
+  "s-00221": "ok-2",
+  "s-00222": "ok-3",
+  "s-00223": "ok-4",
+  "s-00224": "ok-5",
+  "s-00225": "ok-6",
+  "s-00226": "ok-7",
+  "s-00227": "ok-8",
+  "s-00228": "ok-9",
+  "s-00229": "ok-10",
+  "s-00230": "ok-11",
+  "s-00231": "ok-12",
+  "s-00232": "ok-13",
+  "s-00233": "ok-14",
+  "s-00234": "ok-15",
+  "s-00235": "ok-16",
+  "s-00236": "ok-17",
+  "s-00237": "ok-18",
+  "s-00238": "ok-19",
+  "s-00239": "ok-20",
+  "s-00240": "ok-21",
+  "s-00241": "ok-22",
+  "s-00242": "ok-23",
+  "s-00243": "ok-24",
+  "s-00244": "ok-25",
+  "s-00245": "ok-26",
+  "s-00246": "ok-27",
+  "s-00247": "ok-28",
+  "s-00248": "ok-29"
+ }
+}

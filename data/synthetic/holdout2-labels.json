@@ -1,0 +1,903 @@
+{
+ "scenarios": {
+  "dist-bf-0": {
+   "kind": "distributed_brute_force",
+   "malicious": true
+  },
+  "dist-bf-1": {
+   "kind": "distributed_brute_force",
+   "malicious": true
+  },
+  "dist-bf-2": {
+   "kind": "distributed_brute_force",
+   "malicious": true
+  },
+  "dist-bf-3": {
+   "kind": "distributed_brute_force",
+   "malicious": true
+  },
+  "slow-bf-0": {
+   "kind": "slow_brute_force_3min",
+   "malicious": true
+  },
+  "slow-bf-1": {
+   "kind": "slow_brute_force_3min",
+   "malicious": true
+  },
+  "slow-bf-2": {
+   "kind": "slow_brute_force_3min",
+   "malicious": true
+  },
+  "glacial-bf-0": {
+   "kind": "glacial_brute_force_9min",
+   "malicious": true
+  },
+  "glacial-bf-1": {
+   "kind": "glacial_brute_force_9min",
+   "malicious": true
+  },
+  "glacial-bf-2": {
+   "kind": "glacial_brute_force_9min",
+   "malicious": true
+  },
+  "stuff-big-0": {
+   "kind": "credential_stuffing",
+   "malicious": true
+  },
+  "stuff-big-1": {
+   "kind": "credential_stuffing",
+   "malicious": true
+  },
+  "stuff-big-2": {
+   "kind": "credential_stuffing",
+   "malicious": true
+  },
+  "stuff-small-0": {
+   "kind": "credential_stuffing_small",
+   "malicious": true
+  },
+  "stuff-small-1": {
+   "kind": "credential_stuffing_small",
+   "malicious": true
+  },
+  "stuff-small-2": {
+   "kind": "credential_stuffing_small",
+   "malicious": true
+  },
+  "spray-0": {
+   "kind": "slow_spraying",
+   "malicious": true
+  },
+  "spray-1": {
+   "kind": "slow_spraying",
+   "malicious": true
+  },
+  "spray-2": {
+   "kind": "slow_spraying",
+   "malicious": true
+  },
+  "takeover-0": {
+   "kind": "account_takeover",
+   "malicious": true
+  },
+  "takeover-1": {
+   "kind": "account_takeover",
+   "malicious": true
+  },
+  "takeover-2": {
+   "kind": "account_takeover",
+   "malicious": true
+  },
+  "takeover-late-0": {
+   "kind": "takeover_success_after_15min",
+   "malicious": true
+  },
+  "takeover-late-1": {
+   "kind": "takeover_success_after_15min",
+   "malicious": true
+  },
+  "takeover-late-2": {
+   "kind": "takeover_success_after_15min",
+   "malicious": true
+  },
+  "enum-0": {
+   "kind": "authz_enumeration",
+   "malicious": true
+  },
+  "enum-1": {
+   "kind": "authz_enumeration",
+   "malicious": true
+  },
+  "enum-2": {
+   "kind": "authz_enumeration",
+   "malicious": true
+  },
+  "priv-0": {
+   "kind": "privilege_escalation_org_super_admin",
+   "malicious": true
+  },
+  "priv-1": {
+   "kind": "privilege_escalation_devops-lead",
+   "malicious": true
+  },
+  "priv-2": {
+   "kind": "privilege_escalation_billing_manager",
+   "malicious": true
+  },
+  "priv-3": {
+   "kind": "privilege_escalation_break-glass",
+   "malicious": true
+  },
+  "svc-batch-0": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "svc-batch-1": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "ci-runner-0": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "ci-runner-1": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "svc-reports-0": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "svc-reports-1": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "etl-bot-0": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "etl-bot-1": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "lockout-reset-0": {
+   "kind": "forgotten_password_reset",
+   "malicious": false
+  },
+  "lockout-reset-1": {
+   "kind": "forgotten_password_reset",
+   "malicious": false
+  },
+  "lockout-reset-2": {
+   "kind": "forgotten_password_reset",
+   "malicious": false
+  },
+  "lockout-reset-3": {
+   "kind": "forgotten_password_reset",
+   "malicious": false
+  },
+  "deploy-wave-0": {
+   "kind": "deployment_permission_wave",
+   "malicious": false
+  },
+  "deploy-wave-1": {
+   "kind": "deployment_permission_wave",
+   "malicious": false
+  },
+  "deploy-wave-2": {
+   "kind": "deployment_permission_wave",
+   "malicious": false
+  },
+  "deploy-wave-3": {
+   "kind": "deployment_permission_wave",
+   "malicious": false
+  },
+  "typo-0": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-1": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-2": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-3": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-4": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-5": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-6": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-7": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "approved-promo-0": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "approved-promo-1": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "approved-promo-2": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "approved-promo-3": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "approved-promo-4": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "member-0": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "member-1": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "member-2": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "member-3": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "member-4": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "member-5": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "custom-ok-0": {
+   "kind": "benign_custom_role",
+   "malicious": false
+  },
+  "custom-ok-1": {
+   "kind": "benign_custom_role",
+   "malicious": false
+  },
+  "custom-ok-2": {
+   "kind": "benign_custom_role",
+   "malicious": false
+  },
+  "custom-ok-3": {
+   "kind": "benign_custom_role",
+   "malicious": false
+  },
+  "ok-0": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-1": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-2": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-3": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-4": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-5": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-6": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-7": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-8": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-9": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-10": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-11": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-12": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-13": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-14": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-15": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-16": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-17": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-18": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-19": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-20": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-21": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-22": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-23": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-24": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-25": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-26": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-27": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-28": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-29": {
+   "kind": "normal_login",
+   "malicious": false
+  }
+ },
+ "events": {
+  "k-00001": "dist-bf-0",
+  "k-00002": "dist-bf-0",
+  "k-00003": "dist-bf-0",
+  "k-00004": "dist-bf-0",
+  "k-00005": "dist-bf-0",
+  "k-00006": "dist-bf-0",
+  "k-00007": "dist-bf-0",
+  "k-00008": "dist-bf-0",
+  "k-00009": "dist-bf-1",
+  "k-00010": "dist-bf-1",
+  "k-00011": "dist-bf-1",
+  "k-00012": "dist-bf-1",
+  "k-00013": "dist-bf-1",
+  "k-00014": "dist-bf-1",
+  "k-00015": "dist-bf-1",
+  "k-00016": "dist-bf-1",
+  "k-00017": "dist-bf-2",
+  "k-00018": "dist-bf-2",
+  "k-00019": "dist-bf-2",
+  "k-00020": "dist-bf-2",
+  "k-00021": "dist-bf-2",
+  "k-00022": "dist-bf-2",
+  "k-00023": "dist-bf-2",
+  "k-00024": "dist-bf-2",
+  "k-00025": "dist-bf-3",
+  "k-00026": "dist-bf-3",
+  "k-00027": "dist-bf-3",
+  "k-00028": "dist-bf-3",
+  "k-00029": "dist-bf-3",
+  "k-00030": "dist-bf-3",
+  "k-00031": "dist-bf-3",
+  "k-00032": "dist-bf-3",
+  "k-00033": "slow-bf-0",
+  "k-00034": "slow-bf-0",
+  "k-00035": "slow-bf-0",
+  "k-00036": "slow-bf-0",
+  "k-00037": "slow-bf-0",
+  "k-00038": "slow-bf-0",
+  "k-00039": "slow-bf-0",
+  "k-00040": "slow-bf-0",
+  "k-00041": "slow-bf-0",
+  "k-00042": "slow-bf-0",
+  "k-00043": "slow-bf-0",
+  "k-00044": "slow-bf-1",
+  "k-00045": "slow-bf-1",
+  "k-00046": "slow-bf-1",
+  "k-00047": "slow-bf-1",
+  "k-00048": "slow-bf-1",
+  "k-00049": "slow-bf-1",
+  "k-00050": "slow-bf-1",
+  "k-00051": "slow-bf-1",
+  "k-00052": "slow-bf-1",
+  "k-00053": "slow-bf-1",
+  "k-00054": "slow-bf-1",
+  "k-00055": "slow-bf-2",
+  "k-00056": "slow-bf-2",
+  "k-00057": "slow-bf-2",
+  "k-00058": "slow-bf-2",
+  "k-00059": "slow-bf-2",
+  "k-00060": "slow-bf-2",
+  "k-00061": "slow-bf-2",
+  "k-00062": "slow-bf-2",
+  "k-00063": "slow-bf-2",
+  "k-00064": "slow-bf-2",
+  "k-00065": "slow-bf-2",
+  "k-00066": "glacial-bf-0",
+  "k-00067": "glacial-bf-0",
+  "k-00068": "glacial-bf-0",
+  "k-00069": "glacial-bf-0",
+  "k-00070": "glacial-bf-0",
+  "k-00071": "glacial-bf-0",
+  "k-00072": "glacial-bf-0",
+  "k-00073": "glacial-bf-0",
+  "k-00074": "glacial-bf-0",
+  "k-00075": "glacial-bf-1",
+  "k-00076": "glacial-bf-1",
+  "k-00077": "glacial-bf-1",
+  "k-00078": "glacial-bf-1",
+  "k-00079": "glacial-bf-1",
+  "k-00080": "glacial-bf-1",
+  "k-00081": "glacial-bf-1",
+  "k-00082": "glacial-bf-1",
+  "k-00083": "glacial-bf-1",
+  "k-00084": "glacial-bf-2",
+  "k-00085": "glacial-bf-2",
+  "k-00086": "glacial-bf-2",
+  "k-00087": "glacial-bf-2",
+  "k-00088": "glacial-bf-2",
+  "k-00089": "glacial-bf-2",
+  "k-00090": "glacial-bf-2",
+  "k-00091": "glacial-bf-2",
+  "k-00092": "glacial-bf-2",
+  "k-00093": "stuff-big-0",
+  "k-00094": "stuff-big-0",
+  "k-00095": "stuff-big-0",
+  "k-00096": "stuff-big-0",
+  "k-00097": "stuff-big-0",
+  "k-00098": "stuff-big-0",
+  "k-00099": "stuff-big-0",
+  "k-00100": "stuff-big-0",
+  "k-00101": "stuff-big-0",
+  "k-00102": "stuff-big-0",
+  "k-00103": "stuff-big-0",
+  "k-00104": "stuff-big-0",
+  "k-00105": "stuff-big-0",
+  "k-00106": "stuff-big-0",
+  "k-00107": "stuff-big-0",
+  "k-00108": "stuff-big-0",
+  "k-00109": "stuff-big-0",
+  "k-00110": "stuff-big-0",
+  "k-00111": "stuff-big-1",
+  "k-00112": "stuff-big-1",
+  "k-00113": "stuff-big-1",
+  "k-00114": "stuff-big-1",
+  "k-00115": "stuff-big-1",
+  "k-00116": "stuff-big-1",
+  "k-00117": "stuff-big-1",
+  "k-00118": "stuff-big-1",
+  "k-00119": "stuff-big-1",
+  "k-00120": "stuff-big-1",
+  "k-00121": "stuff-big-1",
+  "k-00122": "stuff-big-1",
+  "k-00123": "stuff-big-1",
+  "k-00124": "stuff-big-1",
+  "k-00125": "stuff-big-1",
+  "k-00126": "stuff-big-1",
+  "k-00127": "stuff-big-1",
+  "k-00128": "stuff-big-1",
+  "k-00129": "stuff-big-2",
+  "k-00130": "stuff-big-2",
+  "k-00131": "stuff-big-2",
+  "k-00132": "stuff-big-2",
+  "k-00133": "stuff-big-2",
+  "k-00134": "stuff-big-2",
+  "k-00135": "stuff-big-2",
+  "k-00136": "stuff-big-2",
+  "k-00137": "stuff-big-2",
+  "k-00138": "stuff-big-2",
+  "k-00139": "stuff-big-2",
+  "k-00140": "stuff-big-2",
+  "k-00141": "stuff-big-2",
+  "k-00142": "stuff-big-2",
+  "k-00143": "stuff-big-2",
+  "k-00144": "stuff-big-2",
+  "k-00145": "stuff-big-2",
+  "k-00146": "stuff-big-2",
+  "k-00147": "stuff-small-0",
+  "k-00148": "stuff-small-0",
+  "k-00149": "stuff-small-0",
+  "k-00150": "stuff-small-0",
+  "k-00151": "stuff-small-0",
+  "k-00152": "stuff-small-0",
+  "k-00153": "stuff-small-0",
+  "k-00154": "stuff-small-0",
+  "k-00155": "stuff-small-0",
+  "k-00156": "stuff-small-1",
+  "k-00157": "stuff-small-1",
+  "k-00158": "stuff-small-1",
+  "k-00159": "stuff-small-1",
+  "k-00160": "stuff-small-1",
+  "k-00161": "stuff-small-1",
+  "k-00162": "stuff-small-1",
+  "k-00163": "stuff-small-1",
+  "k-00164": "stuff-small-1",
+  "k-00165": "stuff-small-2",
+  "k-00166": "stuff-small-2",
+  "k-00167": "stuff-small-2",
+  "k-00168": "stuff-small-2",
+  "k-00169": "stuff-small-2",
+  "k-00170": "stuff-small-2",
+  "k-00171": "stuff-small-2",
+  "k-00172": "stuff-small-2",
+  "k-00173": "stuff-small-2",
+  "k-00174": "spray-0",
+  "k-00175": "spray-0",
+  "k-00176": "spray-0",
+  "k-00177": "spray-0",
+  "k-00178": "spray-0",
+  "k-00179": "spray-0",
+  "k-00180": "spray-0",
+  "k-00181": "spray-0",
+  "k-00182": "spray-0",
+  "k-00183": "spray-1",
+  "k-00184": "spray-1",
+  "k-00185": "spray-1",
+  "k-00186": "spray-1",
+  "k-00187": "spray-1",
+  "k-00188": "spray-1",
+  "k-00189": "spray-1",
+  "k-00190": "spray-1",
+  "k-00191": "spray-1",
+  "k-00192": "spray-2",
+  "k-00193": "spray-2",
+  "k-00194": "spray-2",
+  "k-00195": "spray-2",
+  "k-00196": "spray-2",
+  "k-00197": "spray-2",
+  "k-00198": "spray-2",
+  "k-00199": "spray-2",
+  "k-00200": "spray-2",
+  "k-00201": "takeover-0",
+  "k-00202": "takeover-0",
+  "k-00203": "takeover-0",
+  "k-00204": "takeover-0",
+  "k-00205": "takeover-0",
+  "k-00206": "takeover-0",
+  "k-00207": "takeover-0",
+  "k-00208": "takeover-0",
+  "k-00209": "takeover-1",
+  "k-00210": "takeover-1",
+  "k-00211": "takeover-1",
+  "k-00212": "takeover-1",
+  "k-00213": "takeover-1",
+  "k-00214": "takeover-1",
+  "k-00215": "takeover-1",
+  "k-00216": "takeover-1",
+  "k-00217": "takeover-2",
+  "k-00218": "takeover-2",
+  "k-00219": "takeover-2",
+  "k-00220": "takeover-2",
+  "k-00221": "takeover-2",
+  "k-00222": "takeover-2",
+  "k-00223": "takeover-2",
+  "k-00224": "takeover-2",
+  "k-00225": "takeover-late-0",
+  "k-00226": "takeover-late-0",
+  "k-00227": "takeover-late-0",
+  "k-00228": "takeover-late-0",
+  "k-00229": "takeover-late-0",
+  "k-00230": "takeover-late-0",
+  "k-00231": "takeover-late-0",
+  "k-00232": "takeover-late-1",
+  "k-00233": "takeover-late-1",
+  "k-00234": "takeover-late-1",
+  "k-00235": "takeover-late-1",
+  "k-00236": "takeover-late-1",
+  "k-00237": "takeover-late-1",
+  "k-00238": "takeover-late-1",
+  "k-00239": "takeover-late-2",
+  "k-00240": "takeover-late-2",
+  "k-00241": "takeover-late-2",
+  "k-00242": "takeover-late-2",
+  "k-00243": "takeover-late-2",
+  "k-00244": "takeover-late-2",
+  "k-00245": "takeover-late-2",
+  "k-00246": "enum-0",
+  "k-00247": "enum-0",
+  "k-00248": "enum-0",
+  "k-00249": "enum-0",
+  "k-00250": "enum-0",
+  "k-00251": "enum-0",
+  "k-00252": "enum-0",
+  "k-00253": "enum-0",
+  "k-00254": "enum-0",
+  "k-00255": "enum-0",
+  "k-00256": "enum-0",
+  "k-00257": "enum-0",
+  "k-00258": "enum-1",
+  "k-00259": "enum-1",
+  "k-00260": "enum-1",
+  "k-00261": "enum-1",
+  "k-00262": "enum-1",
+  "k-00263": "enum-1",
+  "k-00264": "enum-1",
+  "k-00265": "enum-1",
+  "k-00266": "enum-1",
+  "k-00267": "enum-1",
+  "k-00268": "enum-1",
+  "k-00269": "enum-1",
+  "k-00270": "enum-2",
+  "k-00271": "enum-2",
+  "k-00272": "enum-2",
+  "k-00273": "enum-2",
+  "k-00274": "enum-2",
+  "k-00275": "enum-2",
+  "k-00276": "enum-2",
+  "k-00277": "enum-2",
+  "k-00278": "enum-2",
+  "k-00279": "enum-2",
+  "k-00280": "enum-2",
+  "k-00281": "enum-2",
+  "k-00282": "priv-0",
+  "k-00283": "priv-1",
+  "k-00284": "priv-2",
+  "k-00285": "priv-3",
+  "k-00286": "svc-batch-0",
+  "k-00287": "svc-batch-0",
+  "k-00288": "svc-batch-0",
+  "k-00289": "svc-batch-0",
+  "k-00290": "svc-batch-0",
+  "k-00291": "svc-batch-0",
+  "k-00292": "svc-batch-0",
+  "k-00293": "svc-batch-0",
+  "k-00294": "svc-batch-0",
+  "k-00295": "svc-batch-1",
+  "k-00296": "svc-batch-1",
+  "k-00297": "svc-batch-1",
+  "k-00298": "svc-batch-1",
+  "k-00299": "svc-batch-1",
+  "k-00300": "svc-batch-1",
+  "k-00301": "svc-batch-1",
+  "k-00302": "svc-batch-1",
+  "k-00303": "svc-batch-1",
+  "k-00304": "ci-runner-0",
+  "k-00305": "ci-runner-0",
+  "k-00306": "ci-runner-0",
+  "k-00307": "ci-runner-0",
+  "k-00308": "ci-runner-0",
+  "k-00309": "ci-runner-0",
+  "k-00310": "ci-runner-0",
+  "k-00311": "ci-runner-0",
+  "k-00312": "ci-runner-0",
+  "k-00313": "ci-runner-1",
+  "k-00314": "ci-runner-1",
+  "k-00315": "ci-runner-1",
+  "k-00316": "ci-runner-1",
+  "k-00317": "ci-runner-1",
+  "k-00318": "ci-runner-1",
+  "k-00319": "ci-runner-1",
+  "k-00320": "ci-runner-1",
+  "k-00321": "ci-runner-1",
+  "k-00322": "svc-reports-0",
+  "k-00323": "svc-reports-0",
+  "k-00324": "svc-reports-0",
+  "k-00325": "svc-reports-0",
+  "k-00326": "svc-reports-0",
+  "k-00327": "svc-reports-0",
+  "k-00328": "svc-reports-0",
+  "k-00329": "svc-reports-0",
+  "k-00330": "svc-reports-0",
+  "k-00331": "svc-reports-1",
+  "k-00332": "svc-reports-1",
+  "k-00333": "svc-reports-1",
+  "k-00334": "svc-reports-1",
+  "k-00335": "svc-reports-1",
+  "k-00336": "svc-reports-1",
+  "k-00337": "svc-reports-1",
+  "k-00338": "svc-reports-1",
+  "k-00339": "svc-reports-1",
+  "k-00340": "etl-bot-0",
+  "k-00341": "etl-bot-0",
+  "k-00342": "etl-bot-0",
+  "k-00343": "etl-bot-0",
+  "k-00344": "etl-bot-0",
+  "k-00345": "etl-bot-0",
+  "k-00346": "etl-bot-0",
+  "k-00347": "etl-bot-0",
+  "k-00348": "etl-bot-0",
+  "k-00349": "etl-bot-1",
+  "k-00350": "etl-bot-1",
+  "k-00351": "etl-bot-1",
+  "k-00352": "etl-bot-1",
+  "k-00353": "etl-bot-1",
+  "k-00354": "etl-bot-1",
+  "k-00355": "etl-bot-1",
+  "k-00356": "etl-bot-1",
+  "k-00357": "etl-bot-1",
+  "k-00358": "lockout-reset-0",
+  "k-00359": "lockout-reset-0",
+  "k-00360": "lockout-reset-0",
+  "k-00361": "lockout-reset-0",
+  "k-00362": "lockout-reset-0",
+  "k-00363": "lockout-reset-0",
+  "k-00364": "lockout-reset-0",
+  "k-00365": "lockout-reset-1",
+  "k-00366": "lockout-reset-1",
+  "k-00367": "lockout-reset-1",
+  "k-00368": "lockout-reset-1",
+  "k-00369": "lockout-reset-1",
+  "k-00370": "lockout-reset-1",
+  "k-00371": "lockout-reset-1",
+  "k-00372": "lockout-reset-2",
+  "k-00373": "lockout-reset-2",
+  "k-00374": "lockout-reset-2",
+  "k-00375": "lockout-reset-2",
+  "k-00376": "lockout-reset-2",
+  "k-00377": "lockout-reset-2",
+  "k-00378": "lockout-reset-2",
+  "k-00379": "lockout-reset-3",
+  "k-00380": "lockout-reset-3",
+  "k-00381": "lockout-reset-3",
+  "k-00382": "lockout-reset-3",
+  "k-00383": "lockout-reset-3",
+  "k-00384": "lockout-reset-3",
+  "k-00385": "lockout-reset-3",
+  "k-00386": "deploy-wave-0",
+  "k-00387": "deploy-wave-0",
+  "k-00388": "deploy-wave-0",
+  "k-00389": "deploy-wave-0",
+  "k-00390": "deploy-wave-0",
+  "k-00391": "deploy-wave-0",
+  "k-00392": "deploy-wave-0",
+  "k-00393": "deploy-wave-0",
+  "k-00394": "deploy-wave-0",
+  "k-00395": "deploy-wave-1",
+  "k-00396": "deploy-wave-1",
+  "k-00397": "deploy-wave-1",
+  "k-00398": "deploy-wave-1",
+  "k-00399": "deploy-wave-1",
+  "k-00400": "deploy-wave-1",
+  "k-00401": "deploy-wave-1",
+  "k-00402": "deploy-wave-1",
+  "k-00403": "deploy-wave-1",
+  "k-00404": "deploy-wave-2",
+  "k-00405": "deploy-wave-2",
+  "k-00406": "deploy-wave-2",
+  "k-00407": "deploy-wave-2",
+  "k-00408": "deploy-wave-2",
+  "k-00409": "deploy-wave-2",
+  "k-00410": "deploy-wave-2",
+  "k-00411": "deploy-wave-2",
+  "k-00412": "deploy-wave-2",
+  "k-00413": "deploy-wave-3",
+  "k-00414": "deploy-wave-3",
+  "k-00415": "deploy-wave-3",
+  "k-00416": "deploy-wave-3",
+  "k-00417": "deploy-wave-3",
+  "k-00418": "deploy-wave-3",
+  "k-00419": "deploy-wave-3",
+  "k-00420": "deploy-wave-3",
+  "k-00421": "deploy-wave-3",
+  "k-00422": "typo-0",
+  "k-00423": "typo-0",
+  "k-00424": "typo-0",
+  "k-00425": "typo-0",
+  "k-00426": "typo-1",
+  "k-00427": "typo-1",
+  "k-00428": "typo-1",
+  "k-00429": "typo-1",
+  "k-00430": "typo-2",
+  "k-00431": "typo-2",
+  "k-00432": "typo-2",
+  "k-00433": "typo-3",
+  "k-00434": "typo-3",
+  "k-00435": "typo-3",
+  "k-00436": "typo-4",
+  "k-00437": "typo-4",
+  "k-00438": "typo-4",
+  "k-00439": "typo-5",
+  "k-00440": "typo-5",
+  "k-00441": "typo-5",
+  "k-00442": "typo-6",
+  "k-00443": "typo-6",
+  "k-00444": "typo-6",
+  "k-00445": "typo-6",
+  "k-00446": "typo-7",
+  "k-00447": "typo-7",
+  "k-00448": "typo-7",
+  "k-00449": "approved-promo-0",
+  "k-00450": "approved-promo-1",
+  "k-00451": "approved-promo-2",
+  "k-00452": "approved-promo-3",
+  "k-00453": "approved-promo-4",
+  "k-00454": "member-0",
+  "k-00455": "member-1",
+  "k-00456": "member-2",
+  "k-00457": "member-3",
+  "k-00458": "member-4",
+  "k-00459": "member-5",
+  "k-00460": "custom-ok-0",
+  "k-00461": "custom-ok-1",
+  "k-00462": "custom-ok-2",
+  "k-00463": "custom-ok-3",
+  "k-00464": "ok-0",
+  "k-00465": "ok-1",
+  "k-00466": "ok-2",
+  "k-00467": "ok-3",
+  "k-00468": "ok-4",
+  "k-00469": "ok-5",
+  "k-00470": "ok-6",
+  "k-00471": "ok-7",
+  "k-00472": "ok-8",
+  "k-00473": "ok-9",
+  "k-00474": "ok-10",
+  "k-00475": "ok-11",
+  "k-00476": "ok-12",
+  "k-00477": "ok-13",
+  "k-00478": "ok-14",
+  "k-00479": "ok-15",
+  "k-00480": "ok-16",
+  "k-00481": "ok-17",
+  "k-00482": "ok-18",
+  "k-00483": "ok-19",
+  "k-00484": "ok-20",
+  "k-00485": "ok-21",
+  "k-00486": "ok-22",
+  "k-00487": "ok-23",
+  "k-00488": "ok-24",
+  "k-00489": "ok-25",
+  "k-00490": "ok-26",
+  "k-00491": "ok-27",
+  "k-00492": "ok-28",
+  "k-00493": "ok-29"
+ }
+}

@@ -1,0 +1,117 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+permissions: { contents: read }
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_PASSWORD: ci, POSTGRES_DB: aegis_test }
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-retries 10
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 5s --health-retries 10
+    env:
+      TEST_DATABASE_URL: "postgres://postgres:ci@localhost:5432/aegis_test"
+      TEST_REDIS_URL: "redis://localhost:6379"
+    defaults: { run: { working-directory: api } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: api/package-lock.json }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run eval
+      - run: npm run build
+      - run: npm audit --omit=dev --audit-level=high
+  web:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: web } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm audit --omit=dev --audit-level=high
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci && npm run build
+        working-directory: api
+      - run: npm ci && npm run build        # emits ../api/public
+        working-directory: web
+      - name: Start API with the synthetic dataset
+        run: |
+          NODE_ENV=development PORT=3000 node api/dist/server.js > api.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf localhost:3000/health && break; sleep 1; done
+          node -e "console.log(JSON.stringify(require('./data/synthetic/events.json')))" > /tmp/events.json
+          curl -sf -X POST -H 'x-api-key: demo-ingestor' -H 'content-type: application/json' --data @/tmp/events.json localhost:3000/api/v1/events | head -c 80
+      - run: npx playwright-core install --with-deps chromium
+        working-directory: web
+      - run: npm run e2e
+        working-directory: web
+      - if: failure()
+        run: cat api.log
+  sso-e2e:
+    # SSO against a real OIDC provider (Dex) in a real browser.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci && npm run build
+        working-directory: api
+      - run: npm ci && npm run build        # emits ../api/public
+        working-directory: web
+      - run: deploy/sso-test/run.sh
+      - name: Start API with OIDC pointing at Dex
+        run: |
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:5556/dex/.well-known/openid-configuration >/dev/null && break; sleep 1; done
+          OIDC_ISSUER=http://127.0.0.1:5556/dex OIDC_CLIENT_ID=aegis OIDC_CLIENT_SECRET=aegis-test-secret \
+          OIDC_REDIRECT_URI=http://localhost:3000/api/v1/auth/oidc/callback OIDC_ORG_ID=org-acme \
+          OIDC_GROUPS_CLAIM=email OIDC_ROLE_MAP='{"admin@example.com":"admin"}' NODE_ENV=development PORT=3000 \
+          node api/dist/server.js > api.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf localhost:3000/health && break; sleep 1; done
+      - run: npx playwright-core install --with-deps chromium
+        working-directory: web
+      - run: node e2e/sso.mjs
+        working-directory: web
+      - if: failure()
+        run: cat api.log; docker logs aegis-dex
+  analytics:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: analytics } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13", cache: pip, cache-dependency-path: analytics/requirements-dev.txt }
+      - run: pip install -r requirements-dev.txt
+      - run: pytest -q
+      - run: pip install pip-audit && pip-audit -r requirements.txt
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f api/Dockerfile -t aegistrace-api .
+      - run: docker build -t aegistrace-analytics ./analytics
+  dependency-review:
+    # Needs the repository's Dependency graph enabled (Settings > Code security). Set the repo variable
+    # DEPENDENCY_REVIEW=true once it is, otherwise this job is skipped instead of failing.
+    if: github.event_name == 'pull_request' && vars.DEPENDENCY_REVIEW == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4

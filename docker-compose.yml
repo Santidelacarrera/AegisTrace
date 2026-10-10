@@ -1,0 +1,44 @@
+# Development stack: API + React UI (served at /ui/), PostgreSQL, FastAPI analytics.
+# Demo credentials/passwords are active only because NODE_ENV is not "production".
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: aegis-dev-only
+      POSTGRES_DB: aegis
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d aegis"]
+      interval: 5s
+      retries: 10
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+  analytics:
+    build: ./analytics
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+  api:
+    build: { context: ., dockerfile: api/Dockerfile }
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      analytics: { condition: service_started }
+    ports: ["3000:3000"]
+    environment:
+      NODE_ENV: development
+      PORT: "3000"
+      DATABASE_URL: postgres://postgres:aegis-dev-only@db:5432/aegis
+      ANALYTICS_URL: http://analytics:8000
+      REDIS_URL: redis://redis:6379          # shared rate limits and login lockout across API instances
+      # SSO (optional): OIDC_ISSUER, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET, OIDC_REDIRECT_URI, OIDC_ORG_ID, OIDC_ROLE_MAP='{"sec-admins":"admin"}'
+      AEGIS_AUDIT_ANCHOR_FILE: /anchor/audit-anchor.log      # in production, point this at storage the app cannot rewrite
+      # AEGIS_ANALYSIS_PROVIDER: openai   # or anthropic. openai needs OPENAI_API_KEY + AEGIS_LLM_MODEL; anthropic needs ANTHROPIC_API_KEY
+    volumes: ["anchor:/anchor"]
+volumes:
+  pgdata: {}
+  anchor: {}

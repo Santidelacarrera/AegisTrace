@@ -1,0 +1,725 @@
+{
+ "scenarios": {
+  "distributed-bf-0": {
+   "kind": "distributed_brute_force",
+   "malicious": true
+  },
+  "distributed-bf-1": {
+   "kind": "distributed_brute_force",
+   "malicious": true
+  },
+  "distributed-bf-2": {
+   "kind": "distributed_brute_force",
+   "malicious": true
+  },
+  "distributed-bf-3": {
+   "kind": "distributed_brute_force",
+   "malicious": true
+  },
+  "slow-bf-0": {
+   "kind": "low_and_slow_brute_force",
+   "malicious": true
+  },
+  "slow-bf-1": {
+   "kind": "low_and_slow_brute_force",
+   "malicious": true
+  },
+  "slow-bf-2": {
+   "kind": "low_and_slow_brute_force",
+   "malicious": true
+  },
+  "stuffing-0": {
+   "kind": "credential_stuffing",
+   "malicious": true
+  },
+  "stuffing-1": {
+   "kind": "credential_stuffing",
+   "malicious": true
+  },
+  "stuffing-2": {
+   "kind": "credential_stuffing",
+   "malicious": true
+  },
+  "spray-0": {
+   "kind": "password_spraying",
+   "malicious": true
+  },
+  "spray-1": {
+   "kind": "password_spraying",
+   "malicious": true
+  },
+  "spray-2": {
+   "kind": "password_spraying",
+   "malicious": true
+  },
+  "takeover-0": {
+   "kind": "account_takeover",
+   "malicious": true
+  },
+  "takeover-1": {
+   "kind": "account_takeover",
+   "malicious": true
+  },
+  "takeover-2": {
+   "kind": "account_takeover",
+   "malicious": true
+  },
+  "idor-0": {
+   "kind": "authz_probing",
+   "malicious": true
+  },
+  "idor-1": {
+   "kind": "authz_probing",
+   "malicious": true
+  },
+  "idor-2": {
+   "kind": "authz_probing",
+   "malicious": true
+  },
+  "priv-owner-0": {
+   "kind": "privilege_escalation",
+   "malicious": true
+  },
+  "priv-owner-1": {
+   "kind": "privilege_escalation",
+   "malicious": true
+  },
+  "priv-custom-0": {
+   "kind": "privilege_escalation_custom_role",
+   "malicious": true
+  },
+  "priv-custom-1": {
+   "kind": "privilege_escalation_custom_role",
+   "malicious": true
+  },
+  "svc-retry-0": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "svc-retry-1": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "svc-retry-2": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "svc-retry-3": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "svc-retry-4": {
+   "kind": "service_account_retries",
+   "malicious": false
+  },
+  "vacation-0": {
+   "kind": "forgotten_password",
+   "malicious": false
+  },
+  "vacation-1": {
+   "kind": "forgotten_password",
+   "malicious": false
+  },
+  "vacation-2": {
+   "kind": "forgotten_password",
+   "malicious": false
+  },
+  "vacation-3": {
+   "kind": "forgotten_password",
+   "malicious": false
+  },
+  "deploy-denials-0": {
+   "kind": "deployment_permission_errors",
+   "malicious": false
+  },
+  "deploy-denials-1": {
+   "kind": "deployment_permission_errors",
+   "malicious": false
+  },
+  "deploy-denials-2": {
+   "kind": "deployment_permission_errors",
+   "malicious": false
+  },
+  "deploy-denials-3": {
+   "kind": "deployment_permission_errors",
+   "malicious": false
+  },
+  "typo-0": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-1": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-2": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-3": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-4": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-5": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-6": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-7": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-8": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "typo-9": {
+   "kind": "typo",
+   "malicious": false
+  },
+  "onboarding-0": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "onboarding-1": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "onboarding-2": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "onboarding-3": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "onboarding-4": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "onboarding-5": {
+   "kind": "routine_role_change",
+   "malicious": false
+  },
+  "admin-promo-0": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "admin-promo-1": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "admin-promo-2": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "admin-promo-3": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "admin-promo-4": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "admin-promo-5": {
+   "kind": "approved_admin_promotion",
+   "malicious": false
+  },
+  "ok-0": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-1": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-2": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-3": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-4": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-5": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-6": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-7": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-8": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-9": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-10": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-11": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-12": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-13": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-14": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-15": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-16": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-17": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-18": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-19": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-20": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-21": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-22": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-23": {
+   "kind": "normal_login",
+   "malicious": false
+  },
+  "ok-24": {
+   "kind": "normal_login",
+   "malicious": false
+  }
+ },
+ "events": {
+  "h-00001": "distributed-bf-0",
+  "h-00002": "distributed-bf-0",
+  "h-00003": "distributed-bf-0",
+  "h-00004": "distributed-bf-0",
+  "h-00005": "distributed-bf-0",
+  "h-00006": "distributed-bf-0",
+  "h-00007": "distributed-bf-0",
+  "h-00008": "distributed-bf-0",
+  "h-00009": "distributed-bf-0",
+  "h-00010": "distributed-bf-1",
+  "h-00011": "distributed-bf-1",
+  "h-00012": "distributed-bf-1",
+  "h-00013": "distributed-bf-1",
+  "h-00014": "distributed-bf-1",
+  "h-00015": "distributed-bf-1",
+  "h-00016": "distributed-bf-1",
+  "h-00017": "distributed-bf-1",
+  "h-00018": "distributed-bf-1",
+  "h-00019": "distributed-bf-2",
+  "h-00020": "distributed-bf-2",
+  "h-00021": "distributed-bf-2",
+  "h-00022": "distributed-bf-2",
+  "h-00023": "distributed-bf-2",
+  "h-00024": "distributed-bf-2",
+  "h-00025": "distributed-bf-2",
+  "h-00026": "distributed-bf-2",
+  "h-00027": "distributed-bf-2",
+  "h-00028": "distributed-bf-3",
+  "h-00029": "distributed-bf-3",
+  "h-00030": "distributed-bf-3",
+  "h-00031": "distributed-bf-3",
+  "h-00032": "distributed-bf-3",
+  "h-00033": "distributed-bf-3",
+  "h-00034": "distributed-bf-3",
+  "h-00035": "distributed-bf-3",
+  "h-00036": "distributed-bf-3",
+  "h-00037": "slow-bf-0",
+  "h-00038": "slow-bf-0",
+  "h-00039": "slow-bf-0",
+  "h-00040": "slow-bf-0",
+  "h-00041": "slow-bf-0",
+  "h-00042": "slow-bf-0",
+  "h-00043": "slow-bf-0",
+  "h-00044": "slow-bf-0",
+  "h-00045": "slow-bf-0",
+  "h-00046": "slow-bf-0",
+  "h-00047": "slow-bf-0",
+  "h-00048": "slow-bf-0",
+  "h-00049": "slow-bf-1",
+  "h-00050": "slow-bf-1",
+  "h-00051": "slow-bf-1",
+  "h-00052": "slow-bf-1",
+  "h-00053": "slow-bf-1",
+  "h-00054": "slow-bf-1",
+  "h-00055": "slow-bf-1",
+  "h-00056": "slow-bf-1",
+  "h-00057": "slow-bf-1",
+  "h-00058": "slow-bf-1",
+  "h-00059": "slow-bf-1",
+  "h-00060": "slow-bf-1",
+  "h-00061": "slow-bf-2",
+  "h-00062": "slow-bf-2",
+  "h-00063": "slow-bf-2",
+  "h-00064": "slow-bf-2",
+  "h-00065": "slow-bf-2",
+  "h-00066": "slow-bf-2",
+  "h-00067": "slow-bf-2",
+  "h-00068": "slow-bf-2",
+  "h-00069": "slow-bf-2",
+  "h-00070": "slow-bf-2",
+  "h-00071": "slow-bf-2",
+  "h-00072": "slow-bf-2",
+  "h-00073": "stuffing-0",
+  "h-00074": "stuffing-0",
+  "h-00075": "stuffing-0",
+  "h-00076": "stuffing-0",
+  "h-00077": "stuffing-0",
+  "h-00078": "stuffing-0",
+  "h-00079": "stuffing-0",
+  "h-00080": "stuffing-0",
+  "h-00081": "stuffing-0",
+  "h-00082": "stuffing-0",
+  "h-00083": "stuffing-0",
+  "h-00084": "stuffing-0",
+  "h-00085": "stuffing-0",
+  "h-00086": "stuffing-0",
+  "h-00087": "stuffing-0",
+  "h-00088": "stuffing-0",
+  "h-00089": "stuffing-0",
+  "h-00090": "stuffing-0",
+  "h-00091": "stuffing-0",
+  "h-00092": "stuffing-0",
+  "h-00093": "stuffing-1",
+  "h-00094": "stuffing-1",
+  "h-00095": "stuffing-1",
+  "h-00096": "stuffing-1",
+  "h-00097": "stuffing-1",
+  "h-00098": "stuffing-1",
+  "h-00099": "stuffing-1",
+  "h-00100": "stuffing-1",
+  "h-00101": "stuffing-1",
+  "h-00102": "stuffing-1",
+  "h-00103": "stuffing-1",
+  "h-00104": "stuffing-1",
+  "h-00105": "stuffing-1",
+  "h-00106": "stuffing-1",
+  "h-00107": "stuffing-1",
+  "h-00108": "stuffing-1",
+  "h-00109": "stuffing-1",
+  "h-00110": "stuffing-1",
+  "h-00111": "stuffing-1",
+  "h-00112": "stuffing-1",
+  "h-00113": "stuffing-2",
+  "h-00114": "stuffing-2",
+  "h-00115": "stuffing-2",
+  "h-00116": "stuffing-2",
+  "h-00117": "stuffing-2",
+  "h-00118": "stuffing-2",
+  "h-00119": "stuffing-2",
+  "h-00120": "stuffing-2",
+  "h-00121": "stuffing-2",
+  "h-00122": "stuffing-2",
+  "h-00123": "stuffing-2",
+  "h-00124": "stuffing-2",
+  "h-00125": "stuffing-2",
+  "h-00126": "stuffing-2",
+  "h-00127": "stuffing-2",
+  "h-00128": "stuffing-2",
+  "h-00129": "stuffing-2",
+  "h-00130": "stuffing-2",
+  "h-00131": "stuffing-2",
+  "h-00132": "stuffing-2",
+  "h-00133": "spray-0",
+  "h-00134": "spray-0",
+  "h-00135": "spray-0",
+  "h-00136": "spray-0",
+  "h-00137": "spray-0",
+  "h-00138": "spray-0",
+  "h-00139": "spray-0",
+  "h-00140": "spray-0",
+  "h-00141": "spray-0",
+  "h-00142": "spray-0",
+  "h-00143": "spray-0",
+  "h-00144": "spray-0",
+  "h-00145": "spray-1",
+  "h-00146": "spray-1",
+  "h-00147": "spray-1",
+  "h-00148": "spray-1",
+  "h-00149": "spray-1",
+  "h-00150": "spray-1",
+  "h-00151": "spray-1",
+  "h-00152": "spray-1",
+  "h-00153": "spray-1",
+  "h-00154": "spray-1",
+  "h-00155": "spray-1",
+  "h-00156": "spray-1",
+  "h-00157": "spray-2",
+  "h-00158": "spray-2",
+  "h-00159": "spray-2",
+  "h-00160": "spray-2",
+  "h-00161": "spray-2",
+  "h-00162": "spray-2",
+  "h-00163": "spray-2",
+  "h-00164": "spray-2",
+  "h-00165": "spray-2",
+  "h-00166": "spray-2",
+  "h-00167": "spray-2",
+  "h-00168": "spray-2",
+  "h-00169": "takeover-0",
+  "h-00170": "takeover-0",
+  "h-00171": "takeover-0",
+  "h-00172": "takeover-0",
+  "h-00173": "takeover-0",
+  "h-00174": "takeover-0",
+  "h-00175": "takeover-0",
+  "h-00176": "takeover-1",
+  "h-00177": "takeover-1",
+  "h-00178": "takeover-1",
+  "h-00179": "takeover-1",
+  "h-00180": "takeover-1",
+  "h-00181": "takeover-1",
+  "h-00182": "takeover-1",
+  "h-00183": "takeover-2",
+  "h-00184": "takeover-2",
+  "h-00185": "takeover-2",
+  "h-00186": "takeover-2",
+  "h-00187": "takeover-2",
+  "h-00188": "takeover-2",
+  "h-00189": "takeover-2",
+  "h-00190": "idor-0",
+  "h-00191": "idor-0",
+  "h-00192": "idor-0",
+  "h-00193": "idor-0",
+  "h-00194": "idor-0",
+  "h-00195": "idor-0",
+  "h-00196": "idor-0",
+  "h-00197": "idor-0",
+  "h-00198": "idor-0",
+  "h-00199": "idor-0",
+  "h-00200": "idor-0",
+  "h-00201": "idor-0",
+  "h-00202": "idor-0",
+  "h-00203": "idor-0",
+  "h-00204": "idor-0",
+  "h-00205": "idor-1",
+  "h-00206": "idor-1",
+  "h-00207": "idor-1",
+  "h-00208": "idor-1",
+  "h-00209": "idor-1",
+  "h-00210": "idor-1",
+  "h-00211": "idor-1",
+  "h-00212": "idor-1",
+  "h-00213": "idor-1",
+  "h-00214": "idor-1",
+  "h-00215": "idor-1",
+  "h-00216": "idor-1",
+  "h-00217": "idor-1",
+  "h-00218": "idor-1",
+  "h-00219": "idor-1",
+  "h-00220": "idor-2",
+  "h-00221": "idor-2",
+  "h-00222": "idor-2",
+  "h-00223": "idor-2",
+  "h-00224": "idor-2",
+  "h-00225": "idor-2",
+  "h-00226": "idor-2",
+  "h-00227": "idor-2",
+  "h-00228": "idor-2",
+  "h-00229": "idor-2",
+  "h-00230": "idor-2",
+  "h-00231": "idor-2",
+  "h-00232": "idor-2",
+  "h-00233": "idor-2",
+  "h-00234": "idor-2",
+  "h-00235": "priv-owner-0",
+  "h-00236": "priv-owner-1",
+  "h-00237": "priv-custom-0",
+  "h-00238": "priv-custom-1",
+  "h-00239": "svc-retry-0",
+  "h-00240": "svc-retry-0",
+  "h-00241": "svc-retry-0",
+  "h-00242": "svc-retry-0",
+  "h-00243": "svc-retry-0",
+  "h-00244": "svc-retry-0",
+  "h-00245": "svc-retry-0",
+  "h-00246": "svc-retry-0",
+  "h-00247": "svc-retry-1",
+  "h-00248": "svc-retry-1",
+  "h-00249": "svc-retry-1",
+  "h-00250": "svc-retry-1",
+  "h-00251": "svc-retry-1",
+  "h-00252": "svc-retry-1",
+  "h-00253": "svc-retry-1",
+  "h-00254": "svc-retry-1",
+  "h-00255": "svc-retry-2",
+  "h-00256": "svc-retry-2",
+  "h-00257": "svc-retry-2",
+  "h-00258": "svc-retry-2",
+  "h-00259": "svc-retry-2",
+  "h-00260": "svc-retry-2",
+  "h-00261": "svc-retry-2",
+  "h-00262": "svc-retry-2",
+  "h-00263": "svc-retry-3",
+  "h-00264": "svc-retry-3",
+  "h-00265": "svc-retry-3",
+  "h-00266": "svc-retry-3",
+  "h-00267": "svc-retry-3",
+  "h-00268": "svc-retry-3",
+  "h-00269": "svc-retry-3",
+  "h-00270": "svc-retry-3",
+  "h-00271": "svc-retry-4",
+  "h-00272": "svc-retry-4",
+  "h-00273": "svc-retry-4",
+  "h-00274": "svc-retry-4",
+  "h-00275": "svc-retry-4",
+  "h-00276": "svc-retry-4",
+  "h-00277": "svc-retry-4",
+  "h-00278": "svc-retry-4",
+  "h-00279": "vacation-0",
+  "h-00280": "vacation-0",
+  "h-00281": "vacation-0",
+  "h-00282": "vacation-0",
+  "h-00283": "vacation-0",
+  "h-00284": "vacation-0",
+  "h-00285": "vacation-0",
+  "h-00286": "vacation-1",
+  "h-00287": "vacation-1",
+  "h-00288": "vacation-1",
+  "h-00289": "vacation-1",
+  "h-00290": "vacation-1",
+  "h-00291": "vacation-1",
+  "h-00292": "vacation-1",
+  "h-00293": "vacation-2",
+  "h-00294": "vacation-2",
+  "h-00295": "vacation-2",
+  "h-00296": "vacation-2",
+  "h-00297": "vacation-2",
+  "h-00298": "vacation-2",
+  "h-00299": "vacation-2",
+  "h-00300": "vacation-3",
+  "h-00301": "vacation-3",
+  "h-00302": "vacation-3",
+  "h-00303": "vacation-3",
+  "h-00304": "vacation-3",
+  "h-00305": "vacation-3",
+  "h-00306": "vacation-3",
+  "h-00307": "deploy-denials-0",
+  "h-00308": "deploy-denials-0",
+  "h-00309": "deploy-denials-0",
+  "h-00310": "deploy-denials-0",
+  "h-00311": "deploy-denials-1",
+  "h-00312": "deploy-denials-1",
+  "h-00313": "deploy-denials-1",
+  "h-00314": "deploy-denials-1",
+  "h-00315": "deploy-denials-2",
+  "h-00316": "deploy-denials-2",
+  "h-00317": "deploy-denials-2",
+  "h-00318": "deploy-denials-2",
+  "h-00319": "deploy-denials-3",
+  "h-00320": "deploy-denials-3",
+  "h-00321": "deploy-denials-3",
+  "h-00322": "deploy-denials-3",
+  "h-00323": "typo-0",
+  "h-00324": "typo-0",
+  "h-00325": "typo-0",
+  "h-00326": "typo-1",
+  "h-00327": "typo-1",
+  "h-00328": "typo-1",
+  "h-00329": "typo-2",
+  "h-00330": "typo-2",
+  "h-00331": "typo-2",
+  "h-00332": "typo-2",
+  "h-00333": "typo-3",
+  "h-00334": "typo-3",
+  "h-00335": "typo-3",
+  "h-00336": "typo-4",
+  "h-00337": "typo-4",
+  "h-00338": "typo-5",
+  "h-00339": "typo-5",
+  "h-00340": "typo-5",
+  "h-00341": "typo-6",
+  "h-00342": "typo-6",
+  "h-00343": "typo-7",
+  "h-00344": "typo-7",
+  "h-00345": "typo-7",
+  "h-00346": "typo-8",
+  "h-00347": "typo-8",
+  "h-00348": "typo-8",
+  "h-00349": "typo-9",
+  "h-00350": "typo-9",
+  "h-00351": "onboarding-0",
+  "h-00352": "onboarding-1",
+  "h-00353": "onboarding-2",
+  "h-00354": "onboarding-3",
+  "h-00355": "onboarding-4",
+  "h-00356": "onboarding-5",
+  "h-00357": "admin-promo-0",
+  "h-00358": "admin-promo-1",
+  "h-00359": "admin-promo-2",
+  "h-00360": "admin-promo-3",
+  "h-00361": "admin-promo-4",
+  "h-00362": "admin-promo-5",
+  "h-00363": "ok-0",
+  "h-00364": "ok-1",
+  "h-00365": "ok-2",
+  "h-00366": "ok-3",
+  "h-00367": "ok-4",
+  "h-00368": "ok-5",
+  "h-00369": "ok-6",
+  "h-00370": "ok-7",
+  "h-00371": "ok-8",
+  "h-00372": "ok-9",
+  "h-00373": "ok-10",
+  "h-00374": "ok-11",
+  "h-00375": "ok-12",
+  "h-00376": "ok-13",
+  "h-00377": "ok-14",
+  "h-00378": "ok-15",
+  "h-00379": "ok-16",
+  "h-00380": "ok-17",
+  "h-00381": "ok-18",
+  "h-00382": "ok-19",
+  "h-00383": "ok-20",
+  "h-00384": "ok-21",
+  "h-00385": "ok-22",
+  "h-00386": "ok-23",
+  "h-00387": "ok-24"
+ }
+}

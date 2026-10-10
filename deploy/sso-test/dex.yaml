@@ -1,0 +1,21 @@
+# A real OIDC provider (Dex) for exercising SSO end to end. Test credentials only: admin@example.com / password
+issuer: http://127.0.0.1:5556/dex
+storage: { type: memory }
+web: { http: 0.0.0.0:5556 }
+oauth2: { skipApprovalScreen: true }
+enablePasswordDB: true
+staticClients:
+  - id: aegis
+    secret: aegis-test-secret
+    name: AegisTrace
+    redirectURIs: ["http://localhost:3000/api/v1/auth/oidc/callback"]
+staticPasswords:
+  - email: admin@example.com
+    # bcrypt of "password"
+    hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
+    username: admin
+    userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+  - email: nobody@example.com
+    hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
+    username: nobody
+    userID: "41331323-6f44-45e6-b3b9-2c4b60c02be5"
