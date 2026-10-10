@@ -1,11 +1,13 @@
 import express, { NextFunction, Request, RequestHandler, Response } from 'express';
 import { z } from 'zod';
-import { appendAudit, verifyAudit } from './audit.js';
+import { appendAudit as appendAuditBase, readAnchor, verifyAudit } from './audit.js';
 import { Config, hashKey } from './config.js';
+import { LoginThrottle, signToken, verifyPassword, verifyToken } from './auth.js';
 import { normalizeEvent, parseCsv } from './normalize.js';
 import { runDetection } from './pipeline.js';
 import { can, Permission } from './rbac.js';
 import { Store } from './store.js';
+import { PgPersistence } from './persistence.js';
 import { AnalysisProvider, AnalysisValidationError, buildAnalysis, inLabScope, ruleBasedProvider } from './analysis.js';
 import {
   ActionType, INCIDENT_STATUSES, Incident, IncidentStatus, Principal, ResponseAction, SEVERITIES, Severity, sevRank,
@@ -35,10 +37,11 @@ const wrap = (fn: (req: Request, res: Response) => Promise<void> | void): Reques
   Promise.resolve(fn(req, res)).catch(next);
 };
 
-export interface AppOptions { config: Config; store?: Store; provider?: AnalysisProvider }
+export interface AppOptions { config: Config; store?: Store; provider?: AnalysisProvider; persistence?: PgPersistence }
 
-export function createApp({ config, store = new Store(), provider = ruleBasedProvider }: AppOptions) {
+export function createApp({ config, store = new Store(), provider = ruleBasedProvider, persistence }: AppOptions) {
   const app = express();
+  const appendAudit: typeof appendAuditBase = (org, key, at, e) => appendAuditBase(org, key, at, e, config.anchorFile);
   app.disable('x-powered-by');
   const keyIndex = new Map(config.keys.map((k) => [hashKey(k.key), { userId: k.userId, orgId: k.orgId, role: k.role } as Principal]));
   const counters = { requests: 0, denied: 0, eventsIngested: 0, rateLimited: 0 };
@@ -66,18 +69,56 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
 
   // --- authentication + rate limiting ---------------------------------------
   const api = express.Router();
+  const findUser = (orgId: string, userId: string) => config.users.find((u) => u.orgId === orgId && u.userId === userId);   // live lookup: removing a user revokes their sessions
+  const throttle = new LoginThrottle();
+  const dummyHash = config.users[0]?.passwordHash;
+
+  api.post('/auth/login', wrap((req, res) => {
+    const { orgId, userId, password } = z.object({ orgId: z.string().max(64), userId: z.string().max(64), password: z.string().max(200) }).parse(req.body);
+    const id = `${orgId}|${userId}`, now = config.now().getTime();
+    const user = findUser(orgId, userId);
+    const logFail = (why: string) => { if (user) appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: userId, role: user.role, action: 'auth.login', resourceType: 'session', resourceId: userId, outcome: 'denied', detail: why }); };
+    if (throttle.locked(id, now)) { logFail('locked out'); throw new HttpError(429, 'locked', 'Too many failed attempts; try again later'); }
+    const ok = user ? verifyPassword(password, user.passwordHash) : (dummyHash ? verifyPassword(password, dummyHash) && false : false);   // constant-ish work for unknown users
+    if (!user || !ok) { throttle.fail(id, now); logFail('bad credentials'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
+    throttle.reset(id);
+    appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: userId, role: user.role, action: 'auth.login', resourceType: 'session', resourceId: userId, outcome: 'success' });
+    const finish = () => res.json({ token: signToken(user, config.sessionKey, config.tokenTtlSec, now), expiresInSec: config.tokenTtlSec, user: { userId, orgId, role: user.role } });
+    if (persistence) persistence.flush(store, orgId).then(finish, () => res.status(500).json({ error: 'persistence_failed' })); else finish();
+  }));
+
   api.use((req, res, next) => {
     const key = req.header('x-api-key');
-    const principal = key ? keyIndex.get(hashKey(key)) : undefined;
-    if (!principal) { counters.denied++; return next(new HttpError(401, 'unauthenticated', 'Missing or invalid API key')); }
+    const bearer = req.header('authorization')?.match(/^Bearer (.+)$/i)?.[1];
+    let principal: Principal | undefined;
+    let limitId = '';
+    if (bearer) {
+      const t = verifyToken(bearer, config.sessionKey, config.now().getTime());
+      const u = t && findUser(t.org, t.sub);
+      if (u) principal = { userId: u.userId, orgId: u.orgId, role: u.role };
+      limitId = hashKey(bearer);
+    } else if (key) { principal = keyIndex.get(hashKey(key)); limitId = hashKey(key); }
+    if (!principal) { counters.denied++; return next(new HttpError(401, 'unauthenticated', 'Missing or invalid credentials')); }
     req.principal = principal;
-    const id = hashKey(key!);
+    const id = limitId;
     const now = config.now().getTime();
     const w = windows.get(id);
     if (!w || now - w.start >= 60_000) windows.set(id, { start: now, n: 1 });
     else if (++w.n > config.rateLimitPerMinute) { counters.rateLimited++; res.setHeader('Retry-After', '60'); return next(new HttpError(429, 'rate_limited', 'Too many requests')); }
     next();
   });
+
+  // Durability: flush state to PostgreSQL before any mutating response (or audited read) leaves the server.
+  if (persistence) {
+    api.use((req, res, next) => {
+      const send = res.json.bind(res);
+      res.json = ((body: unknown) => {
+        persistence.flush(store, req.principal!.orgId).then(() => send(body), (err) => { config.log({ msg: 'persist_failed', error: String(err) }); res.status(500); send({ error: 'persistence_failed', message: 'Could not persist state' }); });
+        return res;
+      }) as typeof res.json;
+      next();
+    });
+  }
 
   const audit = (req: Request, action: string, resourceType: string, resourceId: string, outcome: 'success' | 'denied' | 'error' = 'success', detail?: string) => {
     const p = req.principal!;
@@ -336,7 +377,8 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
   }));
   api.get('/audit/verify', need('audit:read', 'audit.verify'), wrap((req, res) => {
     const head = qs(req, 'anchorHead'), n = Number(qs(req, 'anchorEntries'));
-    res.json(verifyAudit(org(req), config.auditKey, head && Number.isInteger(n) ? { head, entries: n } : undefined));
+    const anchor = head && Number.isInteger(n) ? { head, entries: n } : config.anchorFile ? readAnchor(config.anchorFile, req.principal!.orgId) : undefined;
+    res.json(verifyAudit(org(req), config.auditKey, anchor));
   }));
 
   // --- dashboard ----------------------------------------------------------------

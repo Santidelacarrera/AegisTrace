@@ -1,4 +1,5 @@
 import { createHmac } from 'node:crypto';
+import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { AuditEntry } from './types.js';
 import { OrgData } from './store.js';
 
@@ -13,11 +14,15 @@ function digest(key: string, e: Omit<AuditEntry, 'hash'>): string {
 export function appendAudit(
   org: OrgData, key: string, at: string,
   e: Pick<AuditEntry, 'orgId' | 'actor' | 'role' | 'action' | 'resourceType' | 'resourceId' | 'outcome' | 'detail'>,
+  anchorFile?: string,
 ): AuditEntry {
   const prev = org.audit[org.audit.length - 1];
   const base = { seq: (prev?.seq ?? 0) + 1, at, ...e, prevHash: prev?.hash ?? GENESIS };
   const entry: AuditEntry = { ...base, hash: digest(key, base) };
   org.audit.push(entry);
+  // External anchor: an append-only line per entry, meant to live on storage the app cannot rewrite
+  // (syslog forwarder, WORM bucket, separate host). It is what makes tail truncation detectable.
+  if (anchorFile) appendFileSync(anchorFile, `${e.orgId} ${entry.seq} ${entry.hash}\n`);
   return entry;
 }
 
@@ -39,4 +44,15 @@ export function verifyAudit(org: OrgData, key: string, anchor?: { head: string; 
     if (!out.anchorMatch) out.valid = false;
   }
   return out;
+}
+
+/** Latest anchored (seq, hash) for an org, or undefined when no anchor exists for it. */
+export function readAnchor(file: string, orgId: string): { head: string; entries: number } | undefined {
+  if (!existsSync(file)) return undefined;
+  let last: { head: string; entries: number } | undefined;
+  for (const line of readFileSync(file, 'utf8').split('\n')) {
+    const [o, seq, hash] = line.split(' ');
+    if (o === orgId && seq && hash) last = { entries: Number(seq), head: hash };
+  }
+  return last;
 }
