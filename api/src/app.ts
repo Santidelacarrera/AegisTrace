@@ -43,10 +43,10 @@ export interface AppOptions { config: Config; store?: Store; provider?: Analysis
 
 export function createApp({ config, store = new Store(), provider = ruleBasedProvider, persistence, analytics }: AppOptions) {
   const app = express();
-  const appendAudit: typeof appendAuditBase = (org, key, at, e) => appendAuditBase(org, key, at, e, config.anchorFile);
+  const appendAudit: typeof appendAuditBase = (org, key, at, e) => appendAuditBase(org, key, at, e, config.anchorFile, (err) => { counters.anchorErrors++; config.log({ msg: 'audit_anchor_write_failed', error: String(err) }); });
   app.disable('x-powered-by');
   const keyIndex = new Map(config.keys.map((k) => [hashKey(k.key), { userId: k.userId, orgId: k.orgId, role: k.role } as Principal]));
-  const counters = { requests: 0, denied: 0, eventsIngested: 0, rateLimited: 0 };
+  const counters = { requests: 0, denied: 0, eventsIngested: 0, rateLimited: 0, anchorErrors: 0 };
   const windows = new Map<string, { start: number; n: number }>();
   const nowIso = () => config.now().toISOString();
 

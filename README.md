@@ -133,7 +133,6 @@ Implementado: ingesta, reglas, analítica estadística, correlación, análisis 
 - **PostgreSQL**: persistencia por documentos JSONB con escritura antes de responder, no el esquema relacional de `db/schema.sql` (que queda como diseño objetivo). Cada petición que modifica datos recorre las colecciones de la organización (O(n)); la memoria sigue siendo el conjunto de trabajo, así que no escala a volúmenes grandes ni a varias instancias. Sin RLS.
 - **LLM**: los proveedores Anthropic y OpenAI están probados con respuestas simuladas, **no contra la API real** (no hay clave en este entorno). El validador garantiza que las citas existan, no que respalden la afirmación.
 - **Auditoría**: el ancla externa solo protege si `AEGIS_AUDIT_ANCHOR_FILE` está en almacenamiento que la aplicación no pueda reescribir; quien tenga la clave HMAC y escriba en la base de datos puede rehacer la cadena.
-- **Docker**: `docker compose up --build` y los `docker build` del CI **no se han ejecutado aquí** (no hay daemon). La pila se probó arrancando PostgreSQL 16, uvicorn y la API directamente.
 - **Interfaz**: cubre el flujo principal; sin paginación visual, sin gestión de etiquetas/comentarios más allá de lo básico, sin pruebas E2E automáticas en CI (la captura es manual).
 - Sin trazas distribuidas; las métricas son contadores simples.
 

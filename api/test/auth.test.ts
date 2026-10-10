@@ -74,3 +74,14 @@ describe('external audit anchor', () => {
     expect((await get('/audit/verify')).body).toMatchObject({ valid: false, anchorMatch: false });
   });
 });
+
+describe('audit anchor failures', () => {
+  it('does not take the API down, is counted, and verify reports the gap', async () => {
+    const config = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS, anchorFile: '/nonexistent-dir/anchor.log' };
+    const { app } = createApp({ config });
+    expect((await request(app).post('/api/v1/events').set('x-api-key', 'demo-ingestor').send(bruteForceEvents())).status).toBe(202);
+    const v = (await request(app).get('/api/v1/audit/verify').set('x-api-key', 'demo-auditor')).body;
+    expect(v.valid).toBe(true);                       // no anchor exists yet, so nothing to compare against
+    expect((await request(app).get('/metrics')).text).toMatch(/aegistrace_anchorErrors_total [1-9]/);
+  });
+});

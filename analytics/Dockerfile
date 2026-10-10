@@ -1,4 +1,6 @@
-FROM python:3.13-slim
+# Base-image registry is overridable (e.g. --build-arg REGISTRY=mirror.gcr.io/library when Docker Hub rate-limits).
+ARG REGISTRY=docker.io/library
+FROM ${REGISTRY}/python:3.13-slim
 WORKDIR /srv
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 COPY requirements.txt .

@@ -15,6 +15,7 @@ export function appendAudit(
   org: OrgData, key: string, at: string,
   e: Pick<AuditEntry, 'orgId' | 'actor' | 'role' | 'action' | 'resourceType' | 'resourceId' | 'outcome' | 'detail'>,
   anchorFile?: string,
+  onAnchorError?: (e: unknown) => void,
 ): AuditEntry {
   const prev = org.audit[org.audit.length - 1];
   const base = { seq: (prev?.seq ?? 0) + 1, at, ...e, prevHash: prev?.hash ?? GENESIS };
@@ -22,7 +23,10 @@ export function appendAudit(
   org.audit.push(entry);
   // External anchor: an append-only line per entry, meant to live on storage the app cannot rewrite
   // (syslog forwarder, WORM bucket, separate host). It is what makes tail truncation detectable.
-  if (anchorFile) appendFileSync(anchorFile, `${e.orgId} ${entry.seq} ${entry.hash}\n`);
+  if (anchorFile) {
+    try { appendFileSync(anchorFile, `${e.orgId} ${entry.seq} ${entry.hash}\n`); }
+    catch (err) { if (!onAnchorError) throw err; onAnchorError(err); }   // fail-open but loud: verify() will report the gap
+  }
   return entry;
 }
 
