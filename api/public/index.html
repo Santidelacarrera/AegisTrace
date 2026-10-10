@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AegisTrace</title>
+<style>
+  :root { --bg:#0f1419; --fg:#e6edf3; --muted:#8b98a5; --card:#18202a; --line:#2a3542; --accent:#4cc2ff; }
+  body { margin:0; font:14px/1.5 system-ui,sans-serif; background:var(--bg); color:var(--fg); }
+  header { padding:12px 16px; border-bottom:1px solid var(--line); display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  h1 { font-size:16px; margin:0 12px 0 0; } main { padding:16px; display:grid; gap:16px; }
+  input, button { background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:6px 10px; font:inherit; }
+  button { cursor:pointer; } button:hover { border-color:var(--accent); }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
+  .card b { display:block; font-size:22px; } .muted { color:var(--muted); }
+  table { width:100%; border-collapse:collapse; } th,td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tr.row { cursor:pointer; } tr.row:hover { background:var(--card); }
+  .sev { font-weight:600; padding:1px 8px; border-radius:10px; border:1px solid currentColor; }
+  .critical{color:#ff6b6b}.high{color:#ffa94d}.medium{color:#ffd43b}.low{color:#74c0fc}.info{color:var(--muted)}
+  pre { background:var(--card); padding:10px; border-radius:8px; overflow:auto; white-space:pre-wrap; }
+  #err { color:#ff6b6b; }
+</style>
+</head>
+<body>
+<header>
+  <h1>AegisTrace</h1>
+  <label for="key" class="muted">API key</label>
+  <input id="key" type="password" value="demo-analyst" size="16" autocomplete="off">
+  <button id="load">Cargar</button><span id="err" role="alert"></span>
+</header>
+<main>
+  <section><div class="cards" id="cards"></div></section>
+  <section><h2>Incidentes</h2>
+    <table><thead><tr><th>Severidad</th><th>Estado</th><th>Título</th><th>Eventos</th></tr></thead><tbody id="inc"></tbody></table></section>
+  <section id="detail" hidden><h2>Detalle</h2><pre id="detailBody"></pre></section>
+</main>
+<script>
+// All log-derived text is inserted with textContent: events are untrusted data.
+const $ = (id) => document.getElementById(id);
+const api = async (p) => {
+  const r = await fetch('/api/v1' + p, { headers: { 'x-api-key': $('key').value } });
+  if (!r.ok) throw new Error(p + ' → ' + r.status);
+  return r.json();
+};
+const el = (tag, text, cls) => { const e = document.createElement(tag); if (text !== undefined) e.textContent = text; if (cls) e.className = cls; return e; };
+async function load() {
+  $('err').textContent = '';
+  try {
+    const d = await api('/dashboard');
+    const cards = [['Eventos', d.events], ['Alertas', d.alerts], ['Incidentes abiertos', d.openIncidents], ['Acciones pendientes', d.pendingActions],
+      ['Triage mediano (min)', d.medianTriageMinutes === null ? '—' : d.medianTriageMinutes.toFixed(1)],
+      ['Falsos positivos', d.falsePositiveRate === null ? '—' : (d.falsePositiveRate * 100).toFixed(0) + '%'],
+      ...Object.entries(d.alertsBySeverity).map(([k, v]) => ['Alertas ' + k, v])];
+    $('cards').replaceChildren(...cards.map(([k, v]) => { const c = el('div', undefined, 'card'); c.append(el('b', String(v)), el('span', k, 'muted')); return c; }));
+    const list = await api('/incidents?limit=100');
+    $('inc').replaceChildren(...list.items.map((i) => {
+      const tr = el('tr', undefined, 'row');
+      const sev = el('td'); sev.append(el('span', i.severity, 'sev ' + i.severity));
+      tr.append(sev, el('td', i.status), el('td', i.title), el('td', String(i.eventIds.length)));
+      tr.onclick = async () => { const x = await api('/incidents/' + i.id); $('detail').hidden = false; $('detailBody').textContent = JSON.stringify({ incident: x.incident, timeline: x.timeline, actions: x.actions }, null, 2); };
+      return tr;
+    }));
+  } catch (e) { $('err').textContent = e.message; }
+}
+$('load').onclick = load; load();
+</script>
+</body>
+</html>

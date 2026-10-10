@@ -1,0 +1,11 @@
+# Development stack. Demo credentials are used only because NODE_ENV is not "production".
+services:
+  api:
+    build: ./api
+    ports: ["3000:3000"]
+    environment:
+      NODE_ENV: development
+      PORT: "3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"]
+      interval: 10s
