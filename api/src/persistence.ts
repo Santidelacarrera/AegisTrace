@@ -4,7 +4,7 @@ import { OrgData, Store } from './store.js';
 
 export interface Queryable { query(text: string, params?: unknown[]): Promise<{ rows: any[] }> }
 
-const COLLECTIONS = ['alerts', 'incidents', 'analyses', 'recommendations', 'actions'] as const;
+const COLLECTIONS = ['users', 'alerts', 'incidents', 'analyses', 'recommendations', 'actions'] as const;
 const sha = (s: string) => createHash('sha256').update(s).digest('hex');
 
 /**
@@ -66,6 +66,20 @@ export class PgPersistence {
       chunk.forEach(([id]) => saved.add(id));
     }
     for (const c of COLLECTIONS) for (const [id, body] of (org as any)[c] as Map<string, unknown>) await write(c, id, body);
+    // Deletions (retention): documents we persisted earlier that no longer exist in memory.
+    for (const key of [...this.seen.keys()]) {
+      const [o, collection, id] = key.split('|');
+      if (o !== orgId || !collection || !id || collection === 'lab') continue;
+      if (!((org as any)[collection] as Map<string, unknown> | undefined)?.has(id)) {
+        await this.db.query('DELETE FROM aegis_doc WHERE organization_id=$1 AND collection=$2 AND id=$3', [orgId, collection, id]);
+        this.seen.delete(key);
+      }
+    }
+    while (org.pendingEventDeletes.length) {
+      const chunk = org.pendingEventDeletes.splice(0, 500);
+      await this.db.query(`DELETE FROM aegis_doc WHERE organization_id=$1 AND collection='events' AND id = ANY($2::text[])`, [orgId, chunk]);
+      chunk.forEach((id) => saved.delete(id));
+    }
     await write('lab', 'state', { blockedIps: [...org.lab.blockedIps], disabledUsers: [...org.lab.disabledUsers] });
     const last = this.auditSeq.get(orgId) ?? 0;
     for (const e of org.audit.filter((a) => a.seq > last)) {

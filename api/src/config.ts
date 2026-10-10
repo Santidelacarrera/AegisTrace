@@ -10,8 +10,10 @@ export interface Config {
   keys: KeyEntry[];
   users: UserEntry[];
   sessionKey: string;
+  dataKey: string;
   tokenTtlSec: number;
   anchorFile?: string;
+  retention?: { eventDays: number; incidentDays: number };
   rules: RuleContext;
   hsts: boolean;
   trustProxy: boolean;
@@ -50,10 +52,12 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   else users = prod ? [] : demoUsers();
   const sessionKey = env.AEGIS_SESSION_KEY ?? (prod ? '' : 'dev-only-session-key');
   if (!sessionKey) throw new Error('AEGIS_SESSION_KEY is required when NODE_ENV=production');
+  const dataKey = env.AEGIS_DATA_KEY ?? (prod ? '' : 'dev-only-data-key');
+  if (!dataKey) throw new Error('AEGIS_DATA_KEY is required when NODE_ENV=production');
   const auditKey = env.AEGIS_AUDIT_KEY ?? (prod ? '' : 'dev-only-audit-key');
   if (!auditKey) throw new Error('AEGIS_AUDIT_KEY is required when NODE_ENV=production');
   return {
-    keys, users, sessionKey, tokenTtlSec: Number(env.AEGIS_TOKEN_TTL ?? 8 * 3600), anchorFile: env.AEGIS_AUDIT_ANCHOR_FILE, rules: { serviceAccounts: csv(env.AEGIS_SERVICE_ACCOUNTS), changeApprovers: csv(env.AEGIS_CHANGE_APPROVERS) }, hsts: env.AEGIS_HSTS === '1', trustProxy: env.AEGIS_TRUST_PROXY === '1', oidc: oidcConfigFromEnv(env), ssoTokenTtlSec: Number(env.AEGIS_SSO_TOKEN_TTL ?? 3600),
+    keys, users, sessionKey, dataKey, tokenTtlSec: Number(env.AEGIS_TOKEN_TTL ?? 8 * 3600), anchorFile: env.AEGIS_AUDIT_ANCHOR_FILE, retention: env.AEGIS_RETENTION_DAYS ? { eventDays: Number(env.AEGIS_RETENTION_DAYS), incidentDays: Number(env.AEGIS_INCIDENT_RETENTION_DAYS ?? Number(env.AEGIS_RETENTION_DAYS) * 3) } : undefined, rules: { serviceAccounts: csv(env.AEGIS_SERVICE_ACCOUNTS), changeApprovers: csv(env.AEGIS_CHANGE_APPROVERS) }, hsts: env.AEGIS_HSTS === '1', trustProxy: env.AEGIS_TRUST_PROXY === '1', oidc: oidcConfigFromEnv(env), ssoTokenTtlSec: Number(env.AEGIS_SSO_TOKEN_TTL ?? 3600),
     auditKey,
     rateLimitPerMinute: Number(env.AEGIS_RATE_LIMIT ?? 600),
     maxBatch: Number(env.AEGIS_MAX_BATCH ?? 1000),

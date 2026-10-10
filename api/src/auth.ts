@@ -6,11 +6,12 @@ export interface UserEntry extends Principal { passwordHash: string; /** base32 
 
 export function hashPassword(password: string): string {
   const salt = randomBytes(16);
-  return `scrypt$${salt.toString('base64url')}$${scryptSync(password, salt, 32).toString('base64url')}`;
+  // ':' separators, not '$': hashes get pasted into .env files, where docker compose would interpolate '$salt'.
+  return `scrypt:${salt.toString('base64url')}:${scryptSync(password, salt, 32).toString('base64url')}`;
 }
 
 export function verifyPassword(password: string, stored: string): boolean {
-  const [alg, salt, hash] = stored.split('$');
+  const [alg, salt, hash] = stored.split(/[$:]/);   // legacy 'scrypt$salt$hash' still verifies
   if (alg !== 'scrypt' || !salt || !hash) return false;
   const expected = Buffer.from(hash, 'base64url');
   const actual = scryptSync(password, Buffer.from(salt, 'base64url'), expected.length);
@@ -18,13 +19,13 @@ export function verifyPassword(password: string, stored: string): boolean {
 }
 
 /** Compact signed session token: base64url(payload).base64url(HMAC-SHA256). Stateless; revocation = removing the user. */
-export function signToken(p: Principal, key: string, ttlSec: number, nowMs: number, sso = false): string {
+export function signToken(p: Principal, key: string, ttlSec: number, nowMs: number, sso = false, mustChangePassword = false): string {
   // SSO tokens carry the role (the IdP is the source of truth, there is no local user row to look up), so keep their TTL short.
-  const payload = Buffer.from(JSON.stringify({ sub: p.userId, org: p.orgId, exp: Math.floor(nowMs / 1000) + ttlSec, ...(sso ? { sso: 1, role: p.role } : {}) })).toString('base64url');
+  const payload = Buffer.from(JSON.stringify({ sub: p.userId, org: p.orgId, iat: Math.floor(nowMs / 1000), exp: Math.floor(nowMs / 1000) + ttlSec, ...(sso ? { sso: 1, role: p.role } : {}), ...(mustChangePassword ? { pwc: 1 } : {}) })).toString('base64url');
   return `${payload}.${createHmac('sha256', key).update(payload).digest('base64url')}`;
 }
 
-export function verifyToken(token: string, key: string, nowMs: number): { sub: string; org: string; sso?: boolean; role?: Role } | undefined {
+export function verifyToken(token: string, key: string, nowMs: number): { sub: string; org: string; iat: number; sso?: boolean; role?: Role; pwc?: boolean } | undefined {
   const [payload, sig] = token.split('.');
   if (!payload || !sig) return undefined;
   const good = createHmac('sha256', key).update(payload).digest();
@@ -33,7 +34,7 @@ export function verifyToken(token: string, key: string, nowMs: number): { sub: s
   try {
     const body = JSON.parse(Buffer.from(payload, 'base64url').toString());
     if (typeof body.exp !== 'number' || body.exp * 1000 < nowMs) return undefined;
-    return { sub: String(body.sub), org: String(body.org), ...(body.sso ? { sso: true, role: body.role as Role } : {}) };
+    return { sub: String(body.sub), org: String(body.org), iat: Number(body.iat ?? 0), ...(body.sso ? { sso: true, role: body.role as Role } : {}), ...(body.pwc ? { pwc: true } : {}) };
   } catch { return undefined; }
 }
 

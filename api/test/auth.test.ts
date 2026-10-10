@@ -19,10 +19,13 @@ describe('password + session auth', () => {
     expect(verifyPassword('hunter2-secret', h)).toBe(true);
     expect(verifyPassword('nope', h)).toBe(false);
     expect(verifyPassword('hunter2-secret', 'garbage')).toBe(false);
+    expect(h).toMatch(/^scrypt:[\w-]+:[\w-]+$/);                                   // no '$': safe to paste into .env
+    const legacy = h.replace(/:/g, '$');                                            // old stored format keeps working
+    expect(verifyPassword('hunter2-secret', legacy)).toBe(true);
   });
   it('signs tokens that expire and reject tampering', () => {
     const t = signToken({ userId: 'u', orgId: 'o', role: 'admin' }, 'k', 60, 0);
-    expect(verifyToken(t, 'k', 1000)).toEqual({ sub: 'u', org: 'o' });
+    expect(verifyToken(t, 'k', 1000)).toEqual({ sub: 'u', org: 'o', iat: 0 });
     expect(verifyToken(t, 'k', 61_000)).toBeUndefined();
     expect(verifyToken(t, 'other', 1000)).toBeUndefined();
     const [p, s] = t.split('.');
@@ -57,7 +60,7 @@ describe('password + session auth', () => {
     expect((await request(app).get('/api/v1/alerts').set('Authorization', `Bearer ${token}`)).status).toBe(401);
   });
   it('requires AEGIS_SESSION_KEY and users in production config', () => {
-    expect(() => loadConfig({ NODE_ENV: 'production', AEGIS_API_KEYS: '[]', AEGIS_AUDIT_KEY: 'a' } as NodeJS.ProcessEnv)).toThrow(/AEGIS_SESSION_KEY/);
+    expect(() => loadConfig({ NODE_ENV: 'production', AEGIS_API_KEYS: '[]', AEGIS_AUDIT_KEY: 'a', AEGIS_DATA_KEY: 'd' } as NodeJS.ProcessEnv)).toThrow(/AEGIS_SESSION_KEY/);
   });
 });
 

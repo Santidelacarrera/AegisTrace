@@ -70,6 +70,28 @@ const rows = await page.locator('tbody').innerText();
 for (const a of ['action.propose', 'action.approve', 'action.execute', 'auth.login']) assert.match(rows, new RegExp(a));
 step('audit trail intact and complete');
 
+await logout();
+
+// admin creates a user; the new user is forced to change the temporary password
+await login('root-admin', 'admin');
+await page.getByRole('button', { name: 'Usuarios' }).click();
+await page.getByLabel('Identificador').fill('e2e-user');
+await page.getByRole('button', { name: 'Crear con contraseña temporal' }).click();
+const temp = (await page.locator('[role=status] pre').innerText()).trim();
+assert.equal(temp.length, 20);
+await logout();
+await page.goto(BASE);
+await page.getByLabel('Usuario').fill('e2e-user');
+await page.getByLabel('Contraseña').fill(temp);
+await page.getByRole('button', { name: 'Entrar' }).click();
+await page.getByText(/contraseña temporal/i).first().waitFor();
+assert.equal(await page.getByRole('button', { name: 'Incidentes' }).count(), 0, 'no navigation while the password change is pending');
+await page.getByLabel('Contraseña actual').fill(temp);
+await page.getByLabel(/Nueva contraseña/).fill('an e2e long passphrase 1');
+await page.getByRole('button', { name: 'Cambiar', exact: true }).click();
+await page.getByText('Incidentes abiertos').waitFor();
+step('admin creates user; temporary password forces a change');
+
 assert.deepEqual(errors, [], 'no uncaught page errors');
 await browser.close();
 console.log('E2E passed');

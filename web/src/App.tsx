@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { api, ApiError, can, Dashboard as Dash, hasToken, Incident, setToken, User, Action } from './api';
+import { Account } from './Account';
 import { IncidentDetail } from './IncidentDetail';
+import { Users } from './Users';
 import { Badge, ErrorBox } from './ui';
 
 function Login({ onLogin }: { onLogin: (u: User) => void }) {
@@ -8,7 +10,7 @@ function Login({ onLogin }: { onLogin: (u: User) => void }) {
   useEffect(() => { api<{ oidc: boolean }>('/auth/config').then((c) => setSso(c.oidc)).catch(() => undefined); }, []);
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setErr('');
-    try { const r = await api<{ token: string; user: User }>('/auth/login', { method: 'POST', body: { orgId, userId, password, ...(code ? { code } : {}) } }); setToken(r.token); onLogin(r.user); }
+    try { const r = await api<{ token: string; user: User }>('/auth/login', { method: 'POST', body: { orgId, userId, password, ...(code ? { code } : {}) } }); setToken(r.token); onLogin(await api<User>('/auth/me').catch(() => r.user)); }
     catch (x) { if (x instanceof ApiError && x.code === 'mfa_required') { setNeedCode(true); setErr('Introduce el código de tu app de autenticación.'); } else setErr((x as Error).message); }
   };
   return (
@@ -103,7 +105,7 @@ function AuditView() {
 }
 
 export function App() {
-  const [user, setUser] = useState<User>(); const [tab, setTab] = useState<'dash' | 'inc' | 'appr' | 'audit'>('dash'); const [open, setOpen] = useState<string>();
+  const [user, setUser] = useState<User>(); const [tab, setTab] = useState<'dash' | 'inc' | 'appr' | 'audit' | 'users' | 'acct'>('dash'); const [open, setOpen] = useState<string>();
   useEffect(() => {
     // SSO callback returns to /ui/#token=...; take it, clear it from the address bar, and load who we are.
     const m = window.location.hash.match(/^#token=(.+)$/);
@@ -117,8 +119,10 @@ export function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const login = (u: User) => { try { sessionStorage.setItem('aegis.user', JSON.stringify(u)); } catch { /* ignore */ } setUser(u); };
+  const refresh = () => { api<User>('/auth/me').then(login).catch(() => undefined); };
   if (!user) return <Login onLogin={login} />;
-  const tabs: [typeof tab, string][] = [['dash', 'Panel'], ['inc', 'Incidentes'], ['appr', 'Aprobaciones'], ...(can(user.role, 'audit') ? [['audit', 'Auditoría'] as [typeof tab, string]] : [])];
+  if (user.mustChangePassword) return <main><h1>AegisTrace</h1><Account me={user} forced onChanged={refresh} /></main>;
+  const tabs: [typeof tab, string][] = [['dash', 'Panel'], ['inc', 'Incidentes'], ['appr', 'Aprobaciones'], ...(can(user.role, 'audit') ? [['audit', 'Auditoría'] as [typeof tab, string]] : []), ...(can(user.role, 'users') ? [['users', 'Usuarios'] as [typeof tab, string]] : []), ['acct', 'Mi cuenta']];
   return (
     <>
       <header><h1>AegisTrace</h1>
@@ -127,7 +131,7 @@ export function App() {
         <button onClick={() => { setToken(''); setUser(undefined); }}>Salir</button></header>
       <main>
         {open ? <IncidentDetail id={open} me={user} onBack={() => setOpen(undefined)} />
-          : tab === 'dash' ? <DashboardView /> : tab === 'inc' ? <IncidentsView onOpen={setOpen} /> : tab === 'appr' ? <ApprovalsView me={user} /> : <AuditView />}
+          : tab === 'dash' ? <DashboardView /> : tab === 'inc' ? <IncidentsView onOpen={setOpen} /> : tab === 'appr' ? <ApprovalsView me={user} /> : tab === 'users' ? <Users me={user} /> : tab === 'acct' ? <Account me={user} onChanged={refresh} /> : <AuditView />}
       </main>
     </>
   );

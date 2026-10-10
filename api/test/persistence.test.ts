@@ -65,3 +65,40 @@ describe.skipIf(!process.env.TEST_DATABASE_URL)('readiness with a database', () 
     expect((await request(app).get('/health')).status).toBe(200);          // liveness is independent
   });
 });
+
+describe.skipIf(!process.env.TEST_DATABASE_URL)('users and retention in PostgreSQL', () => {
+  it('managed users (with sealed MFA seed) survive a restart, and retention deletes rows from the database', async () => {
+    const { default: pg } = await import('pg');
+    const pool = new pg.Pool({ connectionString: process.env.TEST_DATABASE_URL });
+    await pool.query('DROP TABLE IF EXISTS aegis_doc, aegis_audit');
+    const { totpAt, stepOf } = await import('../src/totp.js');
+    const day = 86_400_000, T = Date.parse('2025-01-01T00:00:00Z');
+    const boot2 = async () => {
+      const persistence = new PgPersistence(pool); await persistence.migrate();
+      const store = new Store(); await persistence.load(store);
+      const config = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS, retention: { eventDays: 30, incidentDays: 60 }, now: () => new Date(T) };
+      return { app: createApp({ config, store, persistence }).app, store };
+    };
+    const a = await boot2();
+    const call = (app: typeof a.app, key: string, path: string, body?: object) => request(app).post('/api/v1' + path).set('x-api-key', key).send(body);
+    await call(a.app, 'demo-admin', '/users', { userId: 'persisted', role: 'analyst', password: 'a long enough phrase 1' });
+    const t0 = (await request(a.app).post('/api/v1/auth/login').send({ orgId: 'org-acme', userId: 'persisted', password: 'a long enough phrase 1' })).body.token;
+    const t1 = (await request(a.app).post('/api/v1/auth/password').set('Authorization', `Bearer ${t0}`).send({ currentPassword: 'a long enough phrase 1', newPassword: 'a different long phrase 2' })).body.token;
+    const secret = (await request(a.app).post('/api/v1/auth/mfa/enroll').set('Authorization', `Bearer ${t1}`).send({ password: 'a different long phrase 2' })).body.secret;
+    await request(a.app).post('/api/v1/auth/mfa/confirm').set('Authorization', `Bearer ${t1}`).send({ code: totpAt(secret, stepOf(T)) });
+    await call(a.app, 'demo-ingestor', '/events', Array.from({ length: 5 }, (_, i) => ({ id: `old${i}`, timestamp: new Date(T - 100 * day + i).toISOString(), source: 's', type: 'login_success', user: 'u' })));
+    const count = async (c: string) => Number((await pool.query('SELECT count(*) FROM aegis_doc WHERE collection=$1', [c])).rows[0].count);
+    expect(await count('events')).toBe(5);
+
+    const b = await boot2();                                                    // restart
+    const login = await request(b.app).post('/api/v1/auth/login').send({ orgId: 'org-acme', userId: 'persisted', password: 'a different long phrase 2' });
+    expect(login.body.error).toBe('mfa_required');                              // MFA state came back
+    const ok = await request(b.app).post('/api/v1/auth/login').send({ orgId: 'org-acme', userId: 'persisted', password: 'a different long phrase 2', code: totpAt(secret, stepOf(T)) });
+    expect(ok.status).toBe(200);
+    expect((await pool.query("SELECT body FROM aegis_doc WHERE collection='users'")).rows[0].body.totpSecret).toMatch(/^enc:v1:/);
+
+    expect((await call(b.app, 'demo-admin', '/admin/retention/run', { dryRun: false })).body.events).toBe(5);
+    expect(await count('events')).toBe(0);                                      // gone from the database, not just memory
+    await pool.end();
+  });
+});

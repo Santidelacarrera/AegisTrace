@@ -2,11 +2,14 @@ import express, { NextFunction, Request, RequestHandler, Response } from 'expres
 import { z } from 'zod';
 import { appendAudit as appendAuditBase, readAnchor, verifyAudit } from './audit.js';
 import { Config, hashKey } from './config.js';
-import { stepOf, verifyTotp } from './totp.js';
+import { newTotpSecret, otpauthUri, stepOf, verifyTotp } from './totp.js';
 import { createOidc, OidcError } from './oidc.js';
+import { applyRetention } from './retention.js';
 import { Limiter, MemoryLimiter } from './limits.js';
 import { Histogram } from './metrics.js';
-import { LoginThrottle, signToken, verifyPassword, verifyToken } from './auth.js';
+import { hashPassword, LoginThrottle, signToken, verifyPassword, verifyToken } from './auth.js';
+import { open as unseal, seal } from './box.js';
+import { checkPasswordPolicy, consumeRecoveryCode, looksLikeRecoveryCode, newRecoveryCodes, tempPassword, USER_ID, UserRecord } from './users.js';
 import { normalizeEvent, parseCsv } from './normalize.js';
 import { runDetection } from './pipeline.js';
 import { can, Permission } from './rbac.js';
@@ -16,6 +19,7 @@ import { ProviderError } from './llm.js';
 import { AnalyticsClient } from './analytics.js';
 import { AnalysisProvider, AnalysisValidationError, buildAnalysis, inLabScope, ruleBasedProvider } from './analysis.js';
 import {
+  Role,
   ActionType, INCIDENT_STATUSES, Incident, IncidentStatus, Principal, ResponseAction, SEVERITIES, Severity, sevRank,
 } from './types.js';
 import { createHash, randomUUID } from 'node:crypto';
@@ -24,7 +28,7 @@ import path from 'node:path';
 import { existsSync } from 'node:fs';
 
 declare module 'express-serve-static-core' {
-  interface Request { principal?: Principal }
+  interface Request { principal?: Principal; mustChangePassword?: boolean }
 }
 
 class HttpError extends Error {
@@ -98,29 +102,42 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
 
   // --- authentication + rate limiting ---------------------------------------
   const api = express.Router();
-  const findUser = (orgId: string, userId: string) => config.users.find((u) => u.orgId === orgId && u.userId === userId);   // live lookup: removing a user revokes their sessions
+  /** One view over API-managed users (stored per org) and config users (AEGIS_USERS/demo). Lookups are live, so disabling or removing a user revokes sessions. */
+  interface Account { userId: string; orgId: string; role: Role; passwordHash: string; totpSecret?: string; mustChangePassword: boolean; changedAtSec: number; source: 'store' | 'config'; rec?: UserRecord }
+  const findUser = (orgId: string, userId: string): Account | undefined => {
+    const rec = store.has(orgId) ? store.org(orgId).users.get(userId) : undefined;
+    if (rec) return rec.disabled ? undefined : { userId, orgId, role: rec.role, passwordHash: rec.passwordHash, totpSecret: rec.totpSecret ? unseal(rec.totpSecret, config.dataKey) : undefined, mustChangePassword: rec.mustChangePassword, changedAtSec: Math.floor(Date.parse(rec.passwordChangedAt) / 1000), source: 'store', rec };
+    const c = config.users.find((u) => u.orgId === orgId && u.userId === userId);
+    return c && { userId, orgId, role: c.role, passwordHash: c.passwordHash, totpSecret: c.totpSecret, mustChangePassword: false, changedAtSec: 0, source: 'config' };
+  };
   const throttle = new LoginThrottle(limiter);
   const lastTotpStep = new Map<string, number>();
-  const dummyHash = config.users[0]?.passwordHash;
+  const dummyHash = config.users[0]?.passwordHash ?? hashPassword('x');
 
   api.post('/auth/login', wrap(async (req, res) => {
-    const { orgId, userId, password, code } = z.object({ orgId: z.string().max(64), userId: z.string().max(64), password: z.string().max(200), code: z.string().max(10).optional() }).parse(req.body);
+    const { orgId, userId, password, code } = z.object({ orgId: z.string().max(64), userId: z.string().max(64), password: z.string().max(200), code: z.string().max(16).optional() }).parse(req.body);
     const id = `${orgId}|${userId}`, now = config.now().getTime();
     const user = findUser(orgId, userId);
     const logFail = (why: string) => { if (user) appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: userId, role: user.role, action: 'auth.login', resourceType: 'session', resourceId: userId, outcome: 'denied', detail: why }); };
     if (await throttle.locked(id)) { logFail('locked out'); throw new HttpError(429, 'locked', 'Too many failed attempts; try again later'); }
     const ok = user ? verifyPassword(password, user.passwordHash) : (dummyHash ? verifyPassword(password, dummyHash) && false : false);   // constant-ish work for unknown users
     if (!user || !ok) { await throttle.fail(id); logFail('bad credentials'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
+    let mfaUsed = '';
     if (user.totpSecret) {
       // Password was right; now the second factor. A missing code is not counted as a failure (the UI asks for it next).
       if (!code) throw new HttpError(401, 'mfa_required', 'A one-time code is required');
-      const step = verifyTotp(user.totpSecret, code, now, lastTotpStep.get(id) ?? -1);
-      if (step === undefined) { await throttle.fail(id); logFail('bad MFA code'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
-      lastTotpStep.set(id, step);   // a code can be used once
+      let used = 'totp';
+      if (looksLikeRecoveryCode(code) && user.rec && consumeRecoveryCode(user.rec, code)) used = 'recovery-code';
+      else {
+        const step = verifyTotp(user.totpSecret, code, now, lastTotpStep.get(id) ?? -1);
+        if (step === undefined) { await throttle.fail(id); logFail('bad MFA code'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
+        lastTotpStep.set(id, step);   // a code can be used once
+      }
+      mfaUsed = used;
     }
     await throttle.reset(id);
-    appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: userId, role: user.role, action: 'auth.login', resourceType: 'session', resourceId: userId, outcome: 'success', detail: user.totpSecret ? 'password+totp' : 'password' });
-    const finish = () => res.json({ token: signToken(user, config.sessionKey, config.tokenTtlSec, now), expiresInSec: config.tokenTtlSec, user: { userId, orgId, role: user.role } });
+    appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: userId, role: user.role, action: 'auth.login', resourceType: 'session', resourceId: userId, outcome: 'success', detail: mfaUsed ? `password+${mfaUsed}` : 'password' });
+    const finish = () => res.json({ token: signToken(user, config.sessionKey, config.tokenTtlSec, now, false, user.mustChangePassword), expiresInSec: config.tokenTtlSec, user: { userId, orgId, role: user.role }, mustChangePassword: user.mustChangePassword });
     if (persistence) persistence.flush(store, orgId).then(finish, () => res.status(500).json({ error: 'persistence_failed' })); else finish();
   }));
 
@@ -155,12 +172,13 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
     if (bearer) {
       const t = verifyToken(bearer, config.sessionKey, config.now().getTime());
       const u = t && !t.sso && findUser(t.org, t.sub);
-      if (u) principal = { userId: u.userId, orgId: u.orgId, role: u.role };
+      if (u && t && t.iat >= u.changedAtSec) { principal = { userId: u.userId, orgId: u.orgId, role: u.role }; if (t.pwc && u.mustChangePassword) req.mustChangePassword = true; }   // tokens issued before a password change are void
       else if (t?.sso && t.role) principal = { userId: t.sub, orgId: t.org, role: t.role };
       limitId = hashKey(bearer);
     } else if (key) { principal = keyIndex.get(hashKey(key)); limitId = hashKey(key); }
     if (!principal) { counters.denied++; return next(new HttpError(401, 'unauthenticated', 'Missing or invalid credentials')); }
     req.principal = principal;
+    if (req.mustChangePassword && !['/auth/password', '/auth/me'].includes(req.path)) return next(new HttpError(403, 'password_change_required', 'You must change your temporary password first'));
     if ((await limiter.hit('rl:' + limitId, 60_000)) > config.rateLimitPerMinute) { counters.rateLimited++; res.setHeader('Retry-After', '60'); return next(new HttpError(429, 'rate_limited', 'Too many requests')); }
     next();
   }));
@@ -202,7 +220,152 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
     inc.updatedAt = at;
   };
 
-  api.get('/auth/me', (req, res) => { res.json(req.principal); });
+  api.get('/auth/me', (req, res) => {
+    const u = findUser(req.principal!.orgId, req.principal!.userId);
+    res.json({ ...req.principal, source: u?.source ?? 'sso', mfa: !!u?.totpSecret, mustChangePassword: !!req.mustChangePassword });
+  });
+
+  // --- user management (admin) and self-service credentials ----------------------
+  const publicUser = (u: UserRecord) => ({ userId: u.userId, role: u.role, disabled: u.disabled, mfa: !!u.totpSecret, mustChangePassword: u.mustChangePassword, createdAt: u.createdAt, source: 'store' as const });
+  const activeAdmins = (orgId: string) => new Set([
+    ...config.users.filter((u) => u.orgId === orgId && u.role === 'admin').map((u) => u.userId),
+    ...[...store.org(orgId).users.values()].filter((u) => u.role === 'admin' && !u.disabled).map((u) => u.userId)]).size;
+  const managed = (req: Request) => {
+    const u = org(req).users.get(String(req.params.userId));
+    if (u) return u;
+    if (config.users.some((c) => c.orgId === req.principal!.orgId && c.userId === req.params.userId)) throw new HttpError(409, 'managed_by_config', 'This user is defined in configuration and cannot be changed through the API');
+    throw new HttpError(404, 'not_found', 'User not found');
+  };
+  const markChanged = (u: UserRecord) => { u.passwordChangedAt = nowIso(); };   // voids every earlier session token
+  const roleEnum = z.enum(['viewer', 'ingestor', 'analyst', 'approver', 'auditor', 'admin']);
+
+  api.get('/users', need('users:manage', 'user.list'), wrap((req, res) => {
+    audit(req, 'user.list', 'user', 'all');
+    res.json({ items: [...config.users.filter((u) => u.orgId === req.principal!.orgId).map((u) => ({ userId: u.userId, role: u.role, disabled: false, mfa: !!u.totpSecret, mustChangePassword: false, source: 'config' })), ...[...org(req).users.values()].map(publicUser)] });
+  }));
+
+  api.post('/users', need('users:manage', 'user.create'), wrap((req, res) => {
+    const b = z.object({ userId: z.string().toLowerCase().regex(USER_ID), role: roleEnum, password: z.string().max(200).optional() }).parse(req.body);
+    const data = org(req);
+    if (data.users.has(b.userId) || config.users.some((c) => c.orgId === req.principal!.orgId && c.userId === b.userId)) throw new HttpError(409, 'exists', 'User already exists');
+    const temp = b.password === undefined;
+    const pw = b.password ?? tempPassword();
+    const bad = checkPasswordPolicy(pw, b.userId);
+    if (bad) throw new HttpError(422, 'weak_password', bad);
+    const now = nowIso();
+    const rec: UserRecord = { userId: b.userId, orgId: req.principal!.orgId, role: b.role, passwordHash: hashPassword(pw), recoveryHashes: [], mustChangePassword: true, disabled: false, createdAt: now, passwordChangedAt: now };
+    data.users.set(rec.userId, rec);
+    audit(req, 'user.create', 'user', rec.userId, 'success', `role=${rec.role}`);
+    res.status(201).json({ user: publicUser(rec), ...(temp ? { temporaryPassword: pw } : {}) });
+  }));
+
+  api.post('/users/:userId/reset-password', need('users:manage', 'user.reset_password'), wrap((req, res) => {
+    const u = managed(req);
+    const pw = tempPassword();
+    u.passwordHash = hashPassword(pw); u.mustChangePassword = true; markChanged(u);
+    audit(req, 'user.reset_password', 'user', u.userId);
+    res.json({ user: publicUser(u), temporaryPassword: pw });
+  }));
+
+  api.post('/users/:userId/reset-mfa', need('users:manage', 'user.reset_mfa'), wrap((req, res) => {
+    const u = managed(req);
+    u.totpSecret = undefined; u.pendingTotpSecret = undefined; u.recoveryHashes = []; markChanged(u);
+    audit(req, 'user.reset_mfa', 'user', u.userId);
+    res.json(publicUser(u));
+  }));
+
+  api.post('/users/:userId/role', need('users:manage', 'user.role'), wrap((req, res) => {
+    const { role } = z.object({ role: roleEnum }).parse(req.body);
+    const u = managed(req);
+    if (u.userId === req.principal!.userId) throw new HttpError(409, 'self_change', 'You cannot change your own role');
+    if (u.role === 'admin' && role !== 'admin' && !u.disabled && activeAdmins(u.orgId) <= 1) throw new HttpError(409, 'last_admin', 'The organization needs at least one active admin');
+    audit(req, 'user.role', 'user', u.userId, 'success', `${u.role}->${role}`);
+    u.role = role;
+    res.json(publicUser(u));
+  }));
+
+  for (const [action, disabled] of [['disable', true], ['enable', false]] as const) {
+    api.post(`/users/:userId/${action}`, need('users:manage', `user.${action}`), wrap((req, res) => {
+      const u = managed(req);
+      if (disabled && u.userId === req.principal!.userId) throw new HttpError(409, 'self_change', 'You cannot disable yourself');
+      if (disabled && u.role === 'admin' && !u.disabled && activeAdmins(u.orgId) <= 1) throw new HttpError(409, 'last_admin', 'The organization needs at least one active admin');
+      u.disabled = disabled;
+      if (disabled) markChanged(u);
+      audit(req, `user.${action}`, 'user', u.userId);
+      res.json(publicUser(u));
+    }));
+  }
+
+  const self = (req: Request) => {
+    const u = org(req).users.get(req.principal!.userId);
+    if (!u) throw new HttpError(409, 'managed_by_config', 'Your account is managed outside the API (configuration or SSO)');
+    return u;
+  };
+  const verifyOwn = async (req: Request, u: UserRecord, password: string) => {
+    const id = `pwd|${u.orgId}|${u.userId}`;
+    if (await throttle.locked(id)) throw new HttpError(429, 'locked', 'Too many failed attempts; try again later');
+    if (!verifyPassword(password, u.passwordHash)) { await throttle.fail(id); audit(req, 'auth.verify_password', 'user', u.userId, 'denied'); throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
+    await throttle.reset(id);
+  };
+
+  api.post('/auth/password', wrap(async (req, res) => {
+    const { currentPassword, newPassword } = z.object({ currentPassword: z.string().max(200), newPassword: z.string().max(200) }).parse(req.body);
+    const u = self(req);
+    await verifyOwn(req, u, currentPassword);
+    const bad = checkPasswordPolicy(newPassword, u.userId);
+    if (bad) throw new HttpError(422, 'weak_password', bad);
+    if (verifyPassword(newPassword, u.passwordHash)) throw new HttpError(422, 'weak_password', 'The new password must be different');
+    u.passwordHash = hashPassword(newPassword); u.mustChangePassword = false; markChanged(u);
+    audit(req, 'auth.change_password', 'user', u.userId);
+    // Other sessions are void now; hand back a fresh token whose iat is after the change.
+    res.json({ token: signToken(u, config.sessionKey, config.tokenTtlSec, config.now().getTime() + 1000) });
+  }));
+
+  api.post('/auth/mfa/enroll', wrap(async (req, res) => {
+    const { password } = z.object({ password: z.string().max(200) }).parse(req.body);
+    const u = self(req);
+    if (u.totpSecret) throw new HttpError(409, 'mfa_enabled', 'MFA is already enabled');
+    await verifyOwn(req, u, password);
+    const secret = newTotpSecret();
+    u.pendingTotpSecret = seal(secret, config.dataKey);
+    audit(req, 'auth.mfa_enroll', 'user', u.userId);
+    res.json({ secret, otpauthUri: otpauthUri(secret, `${u.userId}@${u.orgId}`) });
+  }));
+
+  api.post('/auth/mfa/confirm', wrap((req, res) => {
+    const { code } = z.object({ code: z.string().max(10) }).parse(req.body);
+    const u = self(req);
+    if (!u.pendingTotpSecret) throw new HttpError(409, 'no_enrollment', 'Start enrollment first');
+    const step = verifyTotp(unseal(u.pendingTotpSecret, config.dataKey), code, config.now().getTime());
+    if (step === undefined) { audit(req, 'auth.mfa_confirm', 'user', u.userId, 'denied'); throw new HttpError(401, 'invalid_code', 'Invalid code'); }
+    const rc = newRecoveryCodes();
+    u.totpSecret = u.pendingTotpSecret; u.pendingTotpSecret = undefined; u.recoveryHashes = rc.hashes;
+    audit(req, 'auth.mfa_confirm', 'user', u.userId);
+    res.json({ recoveryCodes: rc.codes, note: 'Store these now; each works once and they are not shown again.' });
+  }));
+
+  api.post('/auth/mfa/disable', wrap(async (req, res) => {
+    const { password, code } = z.object({ password: z.string().max(200), code: z.string().max(16) }).parse(req.body);
+    const u = self(req);
+    if (!u.totpSecret) throw new HttpError(409, 'mfa_disabled', 'MFA is not enabled');
+    await verifyOwn(req, u, password);
+    const ok = (looksLikeRecoveryCode(code) && consumeRecoveryCode(u, code)) || verifyTotp(unseal(u.totpSecret, config.dataKey), code, config.now().getTime()) !== undefined;
+    if (!ok) { audit(req, 'auth.mfa_disable', 'user', u.userId, 'denied'); throw new HttpError(401, 'invalid_code', 'Invalid code'); }
+    u.totpSecret = undefined; u.recoveryHashes = [];
+    audit(req, 'auth.mfa_disable', 'user', u.userId);
+    res.json({ mfa: false });
+  }));
+
+  // --- retention ---------------------------------------------------------------------
+  const runRetention = (orgId: string, dryRun: boolean) => applyRetention(store.org(orgId), config.retention!, config.now().getTime(), dryRun);
+  api.post('/admin/retention/run', need('retention:run', 'retention.run'), wrap((req, res) => {
+    if (!config.retention) throw new HttpError(409, 'not_configured', 'Set AEGIS_RETENTION_DAYS to enable retention');
+    const { dryRun } = z.object({ dryRun: z.boolean().default(true) }).parse(req.body ?? {});
+    const r = runRetention(req.principal!.orgId, dryRun);
+    audit(req, 'retention.run', 'organization', req.principal!.orgId, 'success', `${dryRun ? 'dry-run ' : ''}events=${r.events} alerts=${r.alerts} incidents=${r.incidents}`);
+    res.json(r);
+  }));
+
 
   // --- events ---------------------------------------------------------------
   api.post('/events', need('events:write', 'event.ingest'), wrap(async (req, res) => {
@@ -477,6 +640,19 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
     config.log({ msg: 'unhandled_error', error: String((err as Error)?.stack ?? err), path: req.path });
     res.status(500).json({ error: 'internal', message: 'Internal error' });
   });
+
+  // Scheduled retention (every org), if configured. unref'd so it never keeps the process alive; the caller owns shutdown.
+  const retentionTimer = config.retention ? setInterval(() => {
+    for (const orgId of store.ids()) {
+      const r = runRetention(orgId, false);
+      if (r.events + r.alerts + r.incidents > 0) {
+        config.log({ msg: 'retention', orgId, ...r });
+        appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: 'system', role: 'system', action: 'retention.run', resourceType: 'organization', resourceId: orgId, outcome: 'success', detail: `scheduled events=${r.events} alerts=${r.alerts} incidents=${r.incidents}` });
+        persistence?.flush(store, orgId).catch((e) => config.log({ msg: 'persist_failed', error: String(e) }));
+      }
+    }
+  }, 6 * 3600_000) : undefined;
+  retentionTimer?.unref();
 
   return { app, store };
 }

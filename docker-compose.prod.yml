@@ -1,0 +1,59 @@
+# Production-shaped stack: TLS (Caddy) -> API+UI -> PostgreSQL / Redis / analytics. Nothing but 80/443 is published.
+#   cp .env.example .env && edit it && docker compose -f docker-compose.prod.yml up -d --build
+# NODE_ENV=production: demo credentials are refused, secrets are mandatory.
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment: { AEGIS_DOMAIN: "${AEGIS_DOMAIN:?set AEGIS_DOMAIN in .env}" }
+    volumes: ["./deploy/Caddyfile:/etc/caddy/Caddyfile:ro", "caddy_data:/data", "caddy_config:/config"]
+    depends_on: [api]
+  api:
+    build: { context: ., dockerfile: api/Dockerfile }
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      AEGIS_HSTS: "1"
+      AEGIS_TRUST_PROXY: "1"
+      DATABASE_URL: "postgres://aegis:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@db:5432/aegis"
+      REDIS_URL: redis://redis:6379
+      ANALYTICS_URL: http://analytics:8000
+      AEGIS_AUDIT_ANCHOR_FILE: /anchor/audit-anchor.log     # mount storage the API cannot rewrite from another host/volume for real protection
+      AEGIS_SESSION_KEY: "${AEGIS_SESSION_KEY:?}"
+      AEGIS_AUDIT_KEY: "${AEGIS_AUDIT_KEY:?}"
+      AEGIS_DATA_KEY: "${AEGIS_DATA_KEY:?}"
+      AEGIS_API_KEYS: "${AEGIS_API_KEYS:?}"
+      AEGIS_USERS: "${AEGIS_USERS:?}"
+      AEGIS_RETENTION_DAYS: "${AEGIS_RETENTION_DAYS:-90}"
+      AEGIS_SERVICE_ACCOUNTS: "${AEGIS_SERVICE_ACCOUNTS:-}"
+      AEGIS_CHANGE_APPROVERS: "${AEGIS_CHANGE_APPROVERS:-}"
+      AEGIS_ANALYSIS_PROVIDER: "${AEGIS_ANALYSIS_PROVIDER:-}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      AEGIS_LLM_MODEL: "${AEGIS_LLM_MODEL:-}"
+    volumes: ["anchor:/anchor"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/ready"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+  analytics:
+    build: ./analytics
+    restart: unless-stopped
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment: { POSTGRES_USER: aegis, POSTGRES_DB: aegis, POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?}" }
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U aegis -d aegis"], interval: 5s, retries: 10 }
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no"]   # limits only; nothing here needs to survive a restart
+    healthcheck: { test: ["CMD", "redis-cli", "ping"], interval: 5s, retries: 10 }
+volumes: { pgdata: {}, anchor: {}, caddy_data: {}, caddy_config: {} }

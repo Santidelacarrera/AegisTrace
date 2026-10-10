@@ -79,7 +79,7 @@ describe('OIDC single sign-on', () => {
     expect(cb.status).toBe(302);
     const token = cb.headers.location!.match(/#token=(.+)$/)![1]!;
     const me = await request(app).get('/api/v1/auth/me').set('Authorization', `Bearer ${token}`);
-    expect(me.body).toEqual({ userId: 'sam@example.com', orgId: 'org-acme', role: 'admin' });
+    expect(me.body).toMatchObject({ userId: 'sam@example.com', orgId: 'org-acme', role: 'admin', source: 'sso', mfa: false });
     expect((await request(app).post('/api/v1/events').set('Authorization', `Bearer ${token}`).send(bruteForceEvents())).status).toBe(202);
     const audit = (await request(app).get('/api/v1/audit').set('Authorization', `Bearer ${token}`)).body.items;
     expect(audit.find((a: { action: string; detail?: string }) => a.action === 'auth.login' && a.detail === 'oidc')).toBeTruthy();

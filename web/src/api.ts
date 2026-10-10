@@ -1,5 +1,6 @@
 export type Severity = 'info' | 'low' | 'medium' | 'high' | 'critical';
-export interface User { userId: string; orgId: string; role: string }
+export interface User { userId: string; orgId: string; role: string; source?: string; mfa?: boolean; mustChangePassword?: boolean }
+export interface ManagedUser { userId: string; role: string; disabled: boolean; mfa: boolean; mustChangePassword: boolean; source: string }
 export interface Incident { id: string; title: string; severity: Severity; status: string; assignee?: string; labels: string[]; eventIds: string[]; users: string[]; ips: string[]; linkReasons: string[]; firstSeen: string; lastSeen: string; alertIds: string[] }
 export interface Ev { id: string; timestamp: string; source: string; type: string; user?: string; ip?: string; resource?: string }
 export interface TimelineItem { at: string; kind: string; actor: string; text: string; refs: string[] }
@@ -27,5 +28,5 @@ export async function api<T>(path: string, init: { method?: string; body?: unkno
   return json as T;
 }
 
-export const can = (role: string, perm: 'propose' | 'approve' | 'write' | 'audit') =>
-  ({ propose: ['analyst', 'approver', 'admin'], approve: ['approver', 'admin'], write: ['analyst', 'approver', 'admin'], audit: ['auditor', 'admin'] })[perm].includes(role);
+export const can = (role: string, perm: 'propose' | 'approve' | 'write' | 'audit' | 'users') =>
+  ({ propose: ['analyst', 'approver', 'admin'], approve: ['approver', 'admin'], write: ['analyst', 'approver', 'admin'], audit: ['auditor', 'admin'], users: ['admin'] })[perm].includes(role);

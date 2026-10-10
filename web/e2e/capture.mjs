@@ -43,6 +43,14 @@ await logout();
 await login('aude', 'auditor');
 await page.getByRole('button', { name: 'Auditoría' }).click(); await pause();
 await page.getByRole('button', { name: 'Verificar integridad' }).click(); await pause(1200); await shot('07-audit');
+await logout();
+
+// 4. admin: user management; own account (MFA)
+await login('root-admin', 'admin');
+await page.getByRole('button', { name: 'Usuarios' }).click(); await pause();
+await page.getByLabel('Identificador').fill('carla'); await page.getByLabel('Rol').selectOption('analyst');
+await page.getByRole('button', { name: 'Crear con contraseña temporal' }).click(); await pause(1200); await shot('08-users');
+await page.getByRole('button', { name: 'Mi cuenta' }).click(); await pause(); await shot('09-account');
 await ctx.close(); await browser.close();
 const f = readdirSync(VID).find((x) => x.endsWith('.webm'));
 renameSync(VID + f, OUT + 'demo.webm');
