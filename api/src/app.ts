@@ -2,6 +2,9 @@ import express, { NextFunction, Request, RequestHandler, Response } from 'expres
 import { z } from 'zod';
 import { appendAudit as appendAuditBase, readAnchor, verifyAudit } from './audit.js';
 import { Config, hashKey } from './config.js';
+import { stepOf, verifyTotp } from './totp.js';
+import { createOidc, OidcError } from './oidc.js';
+import { Limiter, MemoryLimiter } from './limits.js';
 import { LoginThrottle, signToken, verifyPassword, verifyToken } from './auth.js';
 import { normalizeEvent, parseCsv } from './normalize.js';
 import { runDetection } from './pipeline.js';
@@ -35,19 +38,18 @@ const TRANSITIONS: Record<IncidentStatus, IncidentStatus[]> = {
   false_positive: ['triaging'],
 };
 
-const wrap = (fn: (req: Request, res: Response) => Promise<void> | void): RequestHandler => (req, res, next) => {
-  Promise.resolve(fn(req, res)).catch(next);
+const wrap = (fn: (req: Request, res: Response, next: NextFunction) => Promise<void> | void): RequestHandler => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
 };
 
-export interface AppOptions { config: Config; store?: Store; provider?: AnalysisProvider; persistence?: PgPersistence; analytics?: AnalyticsClient }
+export interface AppOptions { config: Config; limiter?: Limiter; fetchImpl?: typeof fetch; store?: Store; provider?: AnalysisProvider; persistence?: PgPersistence; analytics?: AnalyticsClient }
 
-export function createApp({ config, store = new Store(), provider = ruleBasedProvider, persistence, analytics }: AppOptions) {
+export function createApp({ config, store = new Store(), provider = ruleBasedProvider, persistence, analytics, fetchImpl, limiter = new MemoryLimiter(() => config.now().getTime()) }: AppOptions) {
   const app = express();
   const appendAudit: typeof appendAuditBase = (org, key, at, e) => appendAuditBase(org, key, at, e, config.anchorFile, (err) => { counters.anchorErrors++; config.log({ msg: 'audit_anchor_write_failed', error: String(err) }); });
   app.disable('x-powered-by');
   const keyIndex = new Map(config.keys.map((k) => [hashKey(k.key), { userId: k.userId, orgId: k.orgId, role: k.role } as Principal]));
   const counters = { requests: 0, denied: 0, eventsIngested: 0, rateLimited: 0, anchorErrors: 0 };
-  const windows = new Map<string, { start: number; n: number }>();
   const nowIso = () => config.now().toISOString();
 
   app.use((req, res, next) => {
@@ -72,43 +74,71 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
   // --- authentication + rate limiting ---------------------------------------
   const api = express.Router();
   const findUser = (orgId: string, userId: string) => config.users.find((u) => u.orgId === orgId && u.userId === userId);   // live lookup: removing a user revokes their sessions
-  const throttle = new LoginThrottle();
+  const throttle = new LoginThrottle(limiter);
+  const lastTotpStep = new Map<string, number>();
   const dummyHash = config.users[0]?.passwordHash;
 
-  api.post('/auth/login', wrap((req, res) => {
-    const { orgId, userId, password } = z.object({ orgId: z.string().max(64), userId: z.string().max(64), password: z.string().max(200) }).parse(req.body);
+  api.post('/auth/login', wrap(async (req, res) => {
+    const { orgId, userId, password, code } = z.object({ orgId: z.string().max(64), userId: z.string().max(64), password: z.string().max(200), code: z.string().max(10).optional() }).parse(req.body);
     const id = `${orgId}|${userId}`, now = config.now().getTime();
     const user = findUser(orgId, userId);
     const logFail = (why: string) => { if (user) appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: userId, role: user.role, action: 'auth.login', resourceType: 'session', resourceId: userId, outcome: 'denied', detail: why }); };
-    if (throttle.locked(id, now)) { logFail('locked out'); throw new HttpError(429, 'locked', 'Too many failed attempts; try again later'); }
+    if (await throttle.locked(id)) { logFail('locked out'); throw new HttpError(429, 'locked', 'Too many failed attempts; try again later'); }
     const ok = user ? verifyPassword(password, user.passwordHash) : (dummyHash ? verifyPassword(password, dummyHash) && false : false);   // constant-ish work for unknown users
-    if (!user || !ok) { throttle.fail(id, now); logFail('bad credentials'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
-    throttle.reset(id);
-    appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: userId, role: user.role, action: 'auth.login', resourceType: 'session', resourceId: userId, outcome: 'success' });
+    if (!user || !ok) { await throttle.fail(id); logFail('bad credentials'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
+    if (user.totpSecret) {
+      // Password was right; now the second factor. A missing code is not counted as a failure (the UI asks for it next).
+      if (!code) throw new HttpError(401, 'mfa_required', 'A one-time code is required');
+      const step = verifyTotp(user.totpSecret, code, now, lastTotpStep.get(id) ?? -1);
+      if (step === undefined) { await throttle.fail(id); logFail('bad MFA code'); counters.denied++; throw new HttpError(401, 'invalid_credentials', 'Invalid credentials'); }
+      lastTotpStep.set(id, step);   // a code can be used once
+    }
+    await throttle.reset(id);
+    appendAudit(store.org(orgId), config.auditKey, nowIso(), { orgId, actor: userId, role: user.role, action: 'auth.login', resourceType: 'session', resourceId: userId, outcome: 'success', detail: user.totpSecret ? 'password+totp' : 'password' });
     const finish = () => res.json({ token: signToken(user, config.sessionKey, config.tokenTtlSec, now), expiresInSec: config.tokenTtlSec, user: { userId, orgId, role: user.role } });
     if (persistence) persistence.flush(store, orgId).then(finish, () => res.status(500).json({ error: 'persistence_failed' })); else finish();
   }));
 
-  api.use((req, res, next) => {
+  // --- SSO (OIDC) -------------------------------------------------------------
+  const oidc = config.oidc ? createOidc(config.oidc, () => config.now().getTime(), fetchImpl) : undefined;
+  api.get('/auth/config', (_req, res) => { res.json({ password: true, oidc: !!oidc }); });
+  api.get('/auth/oidc/login', wrap(async (_req, res) => {
+    if (!oidc) throw new HttpError(404, 'not_found', 'SSO is not configured');
+    res.redirect(302, await oidc.start());
+  }));
+  api.get('/auth/oidc/callback', wrap(async (req, res) => {
+    if (!oidc) throw new HttpError(404, 'not_found', 'SSO is not configured');
+    const { code, state } = z.object({ code: z.string().max(2000), state: z.string().max(200) }).parse(req.query);
+    const now = config.now().getTime();
+    try {
+      const u = await oidc.finish(code, state);
+      appendAudit(store.org(u.orgId), config.auditKey, nowIso(), { orgId: u.orgId, actor: u.userId, role: u.role, action: 'auth.login', resourceType: 'session', resourceId: u.userId, outcome: 'success', detail: 'oidc' });
+      const token = signToken(u, config.sessionKey, config.ssoTokenTtlSec, now, true);
+      const done = () => res.redirect(302, `/ui/#token=${token}`);       // fragment: never sent to any server or logged
+      if (persistence) persistence.flush(store, u.orgId).then(done, () => res.status(500).json({ error: 'persistence_failed' })); else done();
+    } catch (e) {
+      if (e instanceof OidcError) { counters.denied++; throw new HttpError(e.status, 'sso_failed', e.message); }
+      throw e;
+    }
+  }));
+
+  api.use(wrap(async (req, res, next) => {
     const key = req.header('x-api-key');
     const bearer = req.header('authorization')?.match(/^Bearer (.+)$/i)?.[1];
     let principal: Principal | undefined;
     let limitId = '';
     if (bearer) {
       const t = verifyToken(bearer, config.sessionKey, config.now().getTime());
-      const u = t && findUser(t.org, t.sub);
+      const u = t && !t.sso && findUser(t.org, t.sub);
       if (u) principal = { userId: u.userId, orgId: u.orgId, role: u.role };
+      else if (t?.sso && t.role) principal = { userId: t.sub, orgId: t.org, role: t.role };
       limitId = hashKey(bearer);
     } else if (key) { principal = keyIndex.get(hashKey(key)); limitId = hashKey(key); }
     if (!principal) { counters.denied++; return next(new HttpError(401, 'unauthenticated', 'Missing or invalid credentials')); }
     req.principal = principal;
-    const id = limitId;
-    const now = config.now().getTime();
-    const w = windows.get(id);
-    if (!w || now - w.start >= 60_000) windows.set(id, { start: now, n: 1 });
-    else if (++w.n > config.rateLimitPerMinute) { counters.rateLimited++; res.setHeader('Retry-After', '60'); return next(new HttpError(429, 'rate_limited', 'Too many requests')); }
+    if ((await limiter.hit('rl:' + limitId, 60_000)) > config.rateLimitPerMinute) { counters.rateLimited++; res.setHeader('Retry-After', '60'); return next(new HttpError(429, 'rate_limited', 'Too many requests')); }
     next();
-  });
+  }));
 
   // Durability: flush state to PostgreSQL before any mutating response (or audited read) leaves the server.
   if (persistence) {
@@ -146,6 +176,8 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
     inc.activity.push({ at, kind, actor, text, refs });
     inc.updatedAt = at;
   };
+
+  api.get('/auth/me', (req, res) => { res.json(req.principal); });
 
   // --- events ---------------------------------------------------------------
   api.post('/events', need('events:write', 'event.ingest'), wrap(async (req, res) => {

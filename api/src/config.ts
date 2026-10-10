@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { Principal } from './types.js';
 import { hashPassword, UserEntry } from './auth.js';
+import { OidcConfig, oidcConfigFromEnv } from './oidc.js';
 
 export interface KeyEntry extends Principal { key: string }
 
@@ -10,6 +11,8 @@ export interface Config {
   sessionKey: string;
   tokenTtlSec: number;
   anchorFile?: string;
+  oidc?: OidcConfig;
+  ssoTokenTtlSec: number;
   auditKey: string;
   rateLimitPerMinute: number;
   maxBatch: number;
@@ -44,7 +47,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   const auditKey = env.AEGIS_AUDIT_KEY ?? (prod ? '' : 'dev-only-audit-key');
   if (!auditKey) throw new Error('AEGIS_AUDIT_KEY is required when NODE_ENV=production');
   return {
-    keys, users, sessionKey, tokenTtlSec: Number(env.AEGIS_TOKEN_TTL ?? 8 * 3600), anchorFile: env.AEGIS_AUDIT_ANCHOR_FILE,
+    keys, users, sessionKey, tokenTtlSec: Number(env.AEGIS_TOKEN_TTL ?? 8 * 3600), anchorFile: env.AEGIS_AUDIT_ANCHOR_FILE, oidc: oidcConfigFromEnv(env), ssoTokenTtlSec: Number(env.AEGIS_SSO_TOKEN_TTL ?? 3600),
     auditKey,
     rateLimitPerMinute: Number(env.AEGIS_RATE_LIMIT ?? 600),
     maxBatch: Number(env.AEGIS_MAX_BATCH ?? 1000),

@@ -75,3 +75,46 @@ describe('OpenAI provider', () => {
     expect((await go(oa('{}', 429))).body.message).toMatch(/HTTP 429/);
   });
 });
+
+describe('LLM providers over real HTTP (local server, no mocked fetch)', () => {
+  const serve = async (handler: (req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse, body: string) => void) => {
+    const http = await import('node:http');
+    const srv = http.createServer(async (req, res) => { let b = ''; for await (const c of req) b += c; handler(req, res, b); });
+    await new Promise<void>((r) => srv.listen(0, '127.0.0.1', r));
+    return { url: `http://127.0.0.1:${(srv.address() as import('node:net').AddressInfo).port}`, close: () => srv.close() };
+  };
+  const run = async (provider: ReturnType<typeof openaiProvider>) => {
+    const { as } = makeApp({ provider });
+    await as('demo-ingestor').post('/events', bruteForceEvents());
+    const id = (await as('demo-analyst').get('/incidents')).body.items[0].id;
+    return as('demo-analyst').post(`/incidents/${id}/analysis`);
+  };
+  it('OpenAI-compatible endpoint: path, auth header and JSON body are what a real server receives', async () => {
+    let seen = { url: '', auth: '', body: '' };
+    const s = await serve((req, res, body) => { seen = { url: req.url!, auth: String(req.headers.authorization), body }; res.setHeader('content-type', 'application/json'); res.end(JSON.stringify({ choices: [{ message: { content: JSON.stringify(good) } }] })); });
+    const r = await run(openaiProvider({ apiKey: 'sk-test', model: 'm', baseUrl: s.url }));
+    s.close();
+    expect(r.status).toBe(201);
+    expect(seen.url).toBe('/v1/chat/completions');
+    expect(seen.auth).toBe('Bearer sk-test');
+    expect(JSON.parse(seen.body).messages[0].role).toBe('system');
+  });
+  it('Anthropic endpoint: sends x-api-key and anthropic-version headers', async () => {
+    let headers: Record<string, unknown> = {};
+    const s = await serve((req, res) => { headers = req.headers; res.setHeader('content-type', 'application/json'); res.end(JSON.stringify({ content: [{ type: 'text', text: JSON.stringify(good) }] })); });
+    const r = await run(anthropicProvider({ apiKey: 'sk-ant-test', baseUrl: s.url }) as never);
+    s.close();
+    expect(r.status).toBe(201);
+    expect(headers['x-api-key']).toBe('sk-ant-test');
+    expect(headers['anthropic-version']).toBe('2023-06-01');
+  });
+  it('times out a hung provider and returns 502 instead of hanging the request', async () => {
+    const s = await serve(() => { /* never answers */ });
+    const t0 = Date.now();
+    const r = await run(openaiProvider({ apiKey: 'k', model: 'm', baseUrl: s.url, timeoutMs: 300 }));
+    s.close();
+    expect(r.status).toBe(502);
+    expect(r.body.error).toBe('analysis_unavailable');
+    expect(Date.now() - t0).toBeLessThan(3000);
+  });
+});

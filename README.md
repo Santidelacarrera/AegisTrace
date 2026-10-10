@@ -20,10 +20,11 @@ Vídeo del flujo completo (analista → aprobador → auditor): [`docs/media/dem
 | Investigación asistida | `POST /incidents/{id}/analysis` con proveedor determinista o LLM (Anthropic u OpenAI, `AEGIS_ANALYSIS_PROVIDER=anthropic|openai`): resumen, hipótesis con confianza, alternativas benignas, recomendaciones y **lagunas de datos**. Cada cita se valida contra los eventos del incidente; si no, se descarta (502). |
 | Gestión de incidentes | Estados con transiciones válidas, responsable, etiquetas, comentarios, línea de tiempo, filtros, búsqueda y paginación. |
 | Respuesta controlada | Solo **simuladas** (`block_ip`, `disable_user`), limitadas a un ámbito de laboratorio (`192.0.2/24`, `198.51.100/24`, `203.0.113/24`, `10/8`, usuarios `lab.*`). Propuesta → aprobación por otra persona → ejecución simulada. |
-| Autenticación | Login con contraseña (scrypt) → token firmado HMAC con caducidad; bloqueo tras 5 fallos; claves API para cuentas de servicio. Quitar un usuario revoca sus sesiones. |
-| Persistencia | PostgreSQL con escritura antes de responder y recarga al arrancar (`DATABASE_URL`); sin ella, memoria. |
+| Autenticación | Contraseña (scrypt) + **MFA TOTP** opcional por usuario (RFC 6238, códigos de un solo uso) → token HMAC con caducidad; bloqueo tras 5 fallos; **SSO OIDC** (código + PKCE, `state`, `nonce`, `id_token` verificado con JWKS, grupos → roles); claves API para cuentas de servicio. Quitar un usuario local revoca sus sesiones. |
+| Persistencia | PostgreSQL con escritura antes de responder y recarga al arrancar (`DATABASE_URL`); sin ella, memoria. Eventos en inserción por lotes. |
+| Límites compartidos | Rate limiting y bloqueo de login en memoria o en **Redis** (`REDIS_URL`), compartidos entre instancias. |
 | Auditoría | Cadena HMAC por organización: consultas, denegaciones, logins, aprobaciones y ejecuciones. `GET /audit/verify` detecta ediciones y borrados; con ancla externa (`AEGIS_AUDIT_ANCHOR_FILE`) también el truncado del final. |
-| Interfaz | React + TypeScript en `/ui/`: login, panel (alertas por severidad, incidentes abiertos, mediana de triage, falsos positivos), búsqueda y filtros, detalle con línea de tiempo y análisis, aprobaciones, auditoría. |
+| Interfaz | React + TypeScript en `/ui/`: login (con código MFA y botón SSO), panel (alertas por severidad, incidentes abiertos, mediana de triage, falsos positivos), búsqueda y filtros, detalle con línea de tiempo y análisis, aprobaciones, auditoría. |
 | Operación | Logs JSON estructurados, `/health`, `/metrics` (contadores), rate limiting por clave. |
 
 ## Arquitectura
@@ -55,7 +56,7 @@ Capas: `api/src` — `normalize` → `rules` (+ `analytics`) → `pipeline` (ale
 ## Puesta en marcha
 
 ```bash
-docker compose up --build            # API+UI en http://localhost:3000/ui/ , PostgreSQL, analítica (sin verificar aquí: ver limitaciones)
+docker compose up --build            # API+UI en http://localhost:3000/ui/ , PostgreSQL, Redis, analítica
 ```
 
 Sin Docker:
@@ -71,15 +72,18 @@ cd web && node e2e/capture.mjs                               # regenera capturas
 Pruebas y evaluación:
 
 ```bash
-cd api && TEST_DATABASE_URL=postgres://… npm test   # 64 pruebas (sin la variable se omite la de PostgreSQL)
+cd api && TEST_DATABASE_URL=postgres://… TEST_REDIS_URL=redis://… npm test   # 88 pruebas (sin esas variables se omiten las de PostgreSQL y Redis)
 cd api && npm run eval                              # reglas sobre el dataset de desarrollo y el holdout
-cd web && npm test                                  # 3 pruebas de la interfaz
+cd web && npm test                                  # 5 pruebas de componentes
+cd web && npm run e2e                               # E2E en navegador real (API en :3000 con el dataset cargado; se ejecuta en el CI)
 cd analytics && pytest && python evaluate.py        # 7 pruebas y evaluación de los detectores estadísticos
 ```
 
 **Credenciales de demostración** (solo con `NODE_ENV != production`): usuarios `ana` (analyst), `alex` (approver), `aude` (auditor), `vera` (viewer), `root-admin` (admin) en `org-acme` y `olivia` en `org-globex`, con contraseña `demo-<rol>`; claves API `demo-ingestor`, `demo-analyst`, … en la cabecera `x-api-key`. En producción hay que definir `AEGIS_API_KEYS`, `AEGIS_USERS` (hash scrypt), `AEGIS_AUDIT_KEY` y `AEGIS_SESSION_KEY`; si falta alguna, el servidor no arranca.
 
-Variables: `DATABASE_URL`, `ANALYTICS_URL`, `AEGIS_ANALYSIS_PROVIDER=anthropic` + `ANTHROPIC_API_KEY` (+ `AEGIS_LLM_MODEL`), o `AEGIS_ANALYSIS_PROVIDER=openai` + `OPENAI_API_KEY` + `AEGIS_LLM_MODEL` (obligatorio; `OPENAI_BASE_URL` para endpoints compatibles), `AEGIS_AUDIT_ANCHOR_FILE`, `AEGIS_RATE_LIMIT`, `AEGIS_MAX_BATCH`, `AEGIS_TOKEN_TTL`.
+MFA: `npm run user-tool -- <contraseña> --mfa <usuario>` genera el hash scrypt y el secreto TOTP para una entrada de `AEGIS_USERS`.
+
+Variables: `DATABASE_URL`, `REDIS_URL`, `ANALYTICS_URL`, SSO (`OIDC_ISSUER`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, `OIDC_REDIRECT_URI`, `OIDC_ORG_ID`, `OIDC_ROLE_MAP`, `OIDC_GROUPS_CLAIM`, `AEGIS_SSO_TOKEN_TTL`), `ANALYTICS_URL`, `AEGIS_ANALYSIS_PROVIDER=anthropic` + `ANTHROPIC_API_KEY` (+ `AEGIS_LLM_MODEL`), o `AEGIS_ANALYSIS_PROVIDER=openai` + `OPENAI_API_KEY` + `AEGIS_LLM_MODEL` (obligatorio; `OPENAI_BASE_URL` para endpoints compatibles), `AEGIS_AUDIT_ANCHOR_FILE`, `AEGIS_RATE_LIMIT`, `AEGIS_MAX_BATCH`, `AEGIS_TOKEN_TTL`.
 
 ### Roles
 
@@ -102,7 +106,7 @@ Variables: `DATABASE_URL`, `ANALYTICS_URL`, `AEGIS_ANALYSIS_PROVIDER=anthropic` 
 - **Aislamiento entre organizaciones**: el `orgId` sale de la credencial, nunca del cliente; ver IDs ajenos da 404 (`› organization isolation`).
 - **IA separada de la ejecución**: el análisis solo escribe recomendaciones; no existe ruta que ejecute una acción sin `actions:approve` y sin ser otra persona (`› controlled response`).
 - **Logs = datos no confiables**: el proveedor determinista solo lee campos estructurados, nunca el texto libre; hay prueba con un mensaje con instrucciones inyectadas (`› treats log content as data`). Un proveedor LLM futuro pasaría por el mismo validador de citas.
-- **Sesiones**: scrypt, tokens HMAC con caducidad, bloqueo por intentos, revocación al quitar el usuario (`test/auth.test.ts`).
+- **Sesiones**: scrypt, tokens HMAC con caducidad, bloqueo por intentos, revocación al quitar el usuario, MFA TOTP con vectores del RFC 6238 y anti-reutilización de códigos (`test/auth.test.ts`); SSO con PKCE/state/nonce y rechazo de firma, audiencia, caducidad y nonce incorrectos (`test/oidc.test.ts`).
 - **Entradas**: validación con zod/normalizador, límites (512 KB JSON, 1 MB CSV, 1000 eventos por lote), rate limiting.
 - **Secretos**: sin claves en código para producción; el servidor se niega a arrancar con credenciales demo. El modelo LLM recibe solo campos estructurados dentro de un delimitador `<incident_data>` y nunca el texto libre de los logs.
 - **Datos**: solo sintéticos (`data/synthetic`, regenerables con `npm run dataset`).
@@ -128,14 +132,16 @@ Detectores estadísticos (`python evaluate.py`): `rate_spike` acierta 11 de 15 m
 Implementado: ingesta, reglas, analítica estadística, correlación, análisis con citas (determinista y LLM), incidentes, acciones simuladas con aprobación, auditoría con ancla, login con sesiones, persistencia en PostgreSQL, interfaz React, Docker, CI, capturas y vídeo.
 
 **Sigue sin hacerse, o con salvedades:**
-- **Redis/BullMQ**: no se usa. No hay trabajo asíncrono que lo justifique (análisis y detección son rápidos y síncronos) y la propuesta lo marcaba como "si hace falta". Haría falta para múltiples instancias (rate limit compartido) o análisis LLM largos.
-- **SSO (OIDC/SAML)**: no implementado; hay usuarios y contraseñas locales. Sin MFA ni recuperación de contraseña. Sin gestión de usuarios por API (se definen por configuración).
-- **PostgreSQL**: persistencia por documentos JSONB con escritura antes de responder, no el esquema relacional de `db/schema.sql` (que queda como diseño objetivo). Cada petición que modifica datos recorre las colecciones de la organización (O(n)); la memoria sigue siendo el conjunto de trabajo, así que no escala a volúmenes grandes ni a varias instancias. Sin RLS.
-- **LLM**: los proveedores Anthropic y OpenAI están probados con respuestas simuladas, **no contra la API real** (no hay clave en este entorno). El validador garantiza que las citas existan, no que respalden la afirmación.
-- **Auditoría**: el ancla externa solo protege si `AEGIS_AUDIT_ANCHOR_FILE` está en almacenamiento que la aplicación no pueda reescribir; quien tenga la clave HMAC y escriba en la base de datos puede rehacer la cadena.
-- **Interfaz**: cubre el flujo principal; sin paginación visual, sin gestión de etiquetas/comentarios más allá de lo básico, sin pruebas E2E automáticas en CI (la captura es manual).
+- **LLM contra la API real**: no probado, porque no hay clave en este entorno. Lo que sí se probó: el contrato HTTP de ambos proveedores (ruta, cabeceras, cuerpo, timeout) contra servidores locales reales, y todo lo demás con respuestas simuladas. El validador garantiza que las citas existan, no que respalden la afirmación.
+- **SSO**: probado contra un proveedor OIDC simulado que corre en HTTP real (discovery, JWKS, PKCE), **no contra un IdP real** (Keycloak, Okta, Entra…). No hay SAML. Una sesión SSO lleva el rol dentro del token (caducidad corta, 1 h por defecto) y **no se puede revocar** antes de caducar salvo rotando `AEGIS_SESSION_KEY`.
+- **Recuperación de contraseña y gestión de usuarios**: no implementadas. Los usuarios locales se definen por configuración; cambiar una contraseña o registrar MFA es editar `AEGIS_USERS` (ver `user-tool`). El MFA TOTP no tiene códigos de recuperación.
+- **BullMQ**: no se usa. Redis se emplea solo para límites compartidos; no hay trabajo asíncrono que justifique una cola. Si Redis cae, los límites degradan a memoria local con un aviso en el log.
+- **Varias instancias**: los límites ya se comparten, pero **el estado no**: cada instancia mantiene su copia en memoria y dos procesos escribiendo en la misma base divergirían. La persistencia es por documentos JSONB (no el esquema relacional de `db/schema.sql`), sin RLS. Medido en local: ~18 ms por lote de 500 eventos con 6 000 en memoria y ~35 ms con 30 000; la detección sigue recorriendo todos los eventos de la organización en cada ingesta, así que crece linealmente.
+- **Docker**: las imágenes y `docker compose` (API+UI, PostgreSQL, Redis, analítica) se construyeron y ejecutaron aquí, incluido el E2E del navegador contra los contenedores, pero con el espejo `mirror.gcr.io` porque Docker Hub devolvía 429 (`--build-arg REGISTRY=mirror.gcr.io/library`). **El workflow de GitHub Actions no se ha visto ejecutar**: solo se dispara en `main` y en pull requests.
+- **Auditoría**: el ancla externa solo protege si `AEGIS_AUDIT_ANCHOR_FILE` está en almacenamiento que la aplicación no pueda reescribir; quien tenga la clave HMAC y escriba en la base de datos puede rehacer la cadena. Si falla la escritura del ancla, la API sigue funcionando, lo registra y lo cuenta en `/metrics` (`aegistrace_anchorErrors_total`).
+- **Interfaz**: cubre el flujo principal; sin paginación visual ni gestión avanzada de etiquetas/comentarios.
 - Sin trazas distribuidas; las métricas son contadores simples.
 
 ## Documentación
 
-[0001 Reglas deterministas primero](docs/adr/0001-deterministic-rules-first.md) · [0002 Persistencia](docs/adr/0002-in-memory-store-for-mvp.md) · [0003 IA solo recomienda](docs/adr/0003-ai-recommends-humans-approve.md) · [0004 Auditoría encadenada](docs/adr/0004-hash-chained-audit.md) · [0005 Servicio de analítica](docs/adr/0005-analytics-service.md) · [0006 Autenticación y sesiones](docs/adr/0006-auth-and-sessions.md)
+[0001 Reglas deterministas primero](docs/adr/0001-deterministic-rules-first.md) · [0002 Persistencia](docs/adr/0002-in-memory-store-for-mvp.md) · [0003 IA solo recomienda](docs/adr/0003-ai-recommends-humans-approve.md) · [0004 Auditoría encadenada](docs/adr/0004-hash-chained-audit.md) · [0005 Servicio de analítica](docs/adr/0005-analytics-service.md) · [0006 Autenticación, MFA y SSO](docs/adr/0006-auth-and-sessions.md) · [0007 Redis para límites](docs/adr/0007-redis-for-shared-limits.md)

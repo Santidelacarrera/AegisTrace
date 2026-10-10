@@ -4,11 +4,12 @@ import { IncidentDetail } from './IncidentDetail';
 import { Badge, ErrorBox } from './ui';
 
 function Login({ onLogin }: { onLogin: (u: User) => void }) {
-  const [orgId, setOrg] = useState('org-acme'), [userId, setUser] = useState('ana'), [password, setPw] = useState(''), [err, setErr] = useState('');
+  const [orgId, setOrg] = useState('org-acme'), [userId, setUser] = useState('ana'), [password, setPw] = useState(''), [code, setCode] = useState(''), [needCode, setNeedCode] = useState(false), [sso, setSso] = useState(false), [err, setErr] = useState('');
+  useEffect(() => { api<{ oidc: boolean }>('/auth/config').then((c) => setSso(c.oidc)).catch(() => undefined); }, []);
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setErr('');
-    try { const r = await api<{ token: string; user: User }>('/auth/login', { method: 'POST', body: { orgId, userId, password } }); setToken(r.token); onLogin(r.user); }
-    catch (x) { setErr((x as Error).message); }
+    try { const r = await api<{ token: string; user: User }>('/auth/login', { method: 'POST', body: { orgId, userId, password, ...(code ? { code } : {}) } }); setToken(r.token); onLogin(r.user); }
+    catch (x) { if (x instanceof ApiError && x.code === 'mfa_required') { setNeedCode(true); setErr('Introduce el código de tu app de autenticación.'); } else setErr((x as Error).message); }
   };
   return (
     <form className="login card" onSubmit={submit} aria-label="Iniciar sesión">
@@ -16,7 +17,9 @@ function Login({ onLogin }: { onLogin: (u: User) => void }) {
       <label>Organización<input value={orgId} onChange={(e) => setOrg(e.target.value)} /></label>
       <label>Usuario<input value={userId} onChange={(e) => setUser(e.target.value)} autoComplete="username" /></label>
       <label>Contraseña<input type="password" value={password} onChange={(e) => setPw(e.target.value)} autoComplete="current-password" /></label>
+      {needCode && <label>Código de verificación<input inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} onChange={(e) => setCode(e.target.value)} /></label>}
       <button className="primary">Entrar</button>
+      {sso && <a className="sso" href="/api/v1/auth/oidc/login">Entrar con SSO</a>}
       <ErrorBox msg={err} />
       <p className="muted">Demo (solo desarrollo): contraseña <code>demo-&lt;rol&gt;</code>, p. ej. <code>demo-analyst</code>.</p>
     </form>
@@ -101,7 +104,18 @@ function AuditView() {
 
 export function App() {
   const [user, setUser] = useState<User>(); const [tab, setTab] = useState<'dash' | 'inc' | 'appr' | 'audit'>('dash'); const [open, setOpen] = useState<string>();
-  useEffect(() => { if (hasToken()) { /* validate session */ api<Dash>('/dashboard').then(() => { try { const u = JSON.parse(sessionStorage.getItem('aegis.user') ?? 'null'); if (u) setUser(u); } catch { /* ignore */ } }).catch(() => setToken('')); } }, []);
+  useEffect(() => {
+    // SSO callback returns to /ui/#token=...; take it, clear it from the address bar, and load who we are.
+    const m = window.location.hash.match(/^#token=(.+)$/);
+    if (m) {
+      history.replaceState(null, '', window.location.pathname);
+      setToken(m[1]!);
+      api<User>('/auth/me').then(login).catch(() => setToken(''));
+      return;
+    }
+    if (hasToken()) { /* validate session */ api<User>('/auth/me').then(login).catch(() => setToken('')); }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const login = (u: User) => { try { sessionStorage.setItem('aegis.user', JSON.stringify(u)); } catch { /* ignore */ } setUser(u); };
   if (!user) return <Login onLogin={login} />;
   const tabs: [typeof tab, string][] = [['dash', 'Panel'], ['inc', 'Incidentes'], ['appr', 'Aprobaciones'], ...(can(user.role, 'audit') ? [['audit', 'Auditoría'] as [typeof tab, string]] : [])];

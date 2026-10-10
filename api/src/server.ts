@@ -2,6 +2,7 @@ import { createApp } from './app.js';
 import { loadConfig } from './config.js';
 import { PgPersistence } from './persistence.js';
 import { Store } from './store.js';
+import { MemoryLimiter, RedisLimiter } from './limits.js';
 import { httpAnalyticsClient } from './analytics.js';
 import { anthropicProvider, openaiProvider } from './llm.js';
 import { ruleBasedProvider } from './analysis.js';
@@ -21,6 +22,15 @@ const provider = process.env.AEGIS_ANALYSIS_PROVIDER === 'anthropic' ? anthropic
   : process.env.AEGIS_ANALYSIS_PROVIDER === 'openai' ? openaiProvider({ apiKey: need('OPENAI_API_KEY'), model: need('AEGIS_LLM_MODEL'), baseUrl: process.env.OPENAI_BASE_URL })
   : ruleBasedProvider;
 config.log({ msg: 'analysis_provider', name: provider.name });
-const { app } = createApp({ config, store, persistence, provider, analytics: process.env.ANALYTICS_URL ? httpAnalyticsClient(process.env.ANALYTICS_URL, { log: config.log }) : undefined });
+let limiter = new MemoryLimiter();
+if (process.env.REDIS_URL) {
+  const { createClient } = await import('redis');
+  const client = createClient({ url: process.env.REDIS_URL });
+  client.on('error', (e) => config.log({ msg: 'redis_error', error: String(e.message) }));
+  await client.connect();
+  limiter = new RedisLimiter(client as never, limiter, config.log) as never;
+  config.log({ msg: 'limits', backend: 'redis' });
+}
+const { app } = createApp({ config, store, persistence, provider, limiter, analytics: process.env.ANALYTICS_URL ? httpAnalyticsClient(process.env.ANALYTICS_URL, { log: config.log }) : undefined });
 const port = Number(process.env.PORT ?? 3000);
 app.listen(port, () => config.log({ msg: 'listening', port, demoKeys: !process.env.AEGIS_API_KEYS }));

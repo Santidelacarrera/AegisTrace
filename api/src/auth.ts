@@ -1,7 +1,8 @@
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
+import { Limiter } from './limits.js';
 import { Principal, Role } from './types.js';
 
-export interface UserEntry extends Principal { passwordHash: string }
+export interface UserEntry extends Principal { passwordHash: string; /** base32 TOTP secret; when set, login also requires a valid code */ totpSecret?: string }
 
 export function hashPassword(password: string): string {
   const salt = randomBytes(16);
@@ -17,12 +18,13 @@ export function verifyPassword(password: string, stored: string): boolean {
 }
 
 /** Compact signed session token: base64url(payload).base64url(HMAC-SHA256). Stateless; revocation = removing the user. */
-export function signToken(p: Principal, key: string, ttlSec: number, nowMs: number): string {
-  const payload = Buffer.from(JSON.stringify({ sub: p.userId, org: p.orgId, exp: Math.floor(nowMs / 1000) + ttlSec })).toString('base64url');
+export function signToken(p: Principal, key: string, ttlSec: number, nowMs: number, sso = false): string {
+  // SSO tokens carry the role (the IdP is the source of truth, there is no local user row to look up), so keep their TTL short.
+  const payload = Buffer.from(JSON.stringify({ sub: p.userId, org: p.orgId, exp: Math.floor(nowMs / 1000) + ttlSec, ...(sso ? { sso: 1, role: p.role } : {}) })).toString('base64url');
   return `${payload}.${createHmac('sha256', key).update(payload).digest('base64url')}`;
 }
 
-export function verifyToken(token: string, key: string, nowMs: number): { sub: string; org: string } | undefined {
+export function verifyToken(token: string, key: string, nowMs: number): { sub: string; org: string; sso?: boolean; role?: Role } | undefined {
   const [payload, sig] = token.split('.');
   if (!payload || !sig) return undefined;
   const good = createHmac('sha256', key).update(payload).digest();
@@ -31,18 +33,16 @@ export function verifyToken(token: string, key: string, nowMs: number): { sub: s
   try {
     const body = JSON.parse(Buffer.from(payload, 'base64url').toString());
     if (typeof body.exp !== 'number' || body.exp * 1000 < nowMs) return undefined;
-    return { sub: String(body.sub), org: String(body.org) };
+    return { sub: String(body.sub), org: String(body.org), ...(body.sso ? { sso: true, role: body.role as Role } : {}) };
   } catch { return undefined; }
 }
 
 export const ROLES: readonly Role[] = ['viewer', 'ingestor', 'analyst', 'approver', 'auditor', 'admin'];
 
-/** Failed-login throttling: 5 failures per (org,user) within 15 minutes locks further attempts until the window ends. */
+/** Failed-login throttling: `max` failures per (org,user) within the window lock further attempts until it ends. */
 export class LoginThrottle {
-  private fails = new Map<string, number[]>();
-  constructor(private max = 5, private windowMs = 15 * 60_000) {}
-  locked(id: string, now: number) { return this.recent(id, now).length >= this.max; }
-  fail(id: string, now: number) { this.fails.set(id, [...this.recent(id, now), now]); }
-  reset(id: string) { this.fails.delete(id); }
-  private recent(id: string, now: number) { return (this.fails.get(id) ?? []).filter((t) => now - t < this.windowMs); }
+  constructor(private limiter: Limiter, private max = 5, private windowMs = 15 * 60_000) {}
+  async locked(id: string) { return (await this.limiter.peek('login:' + id)) >= this.max; }
+  async fail(id: string) { await this.limiter.hit('login:' + id, this.windowMs); }
+  async reset(id: string) { await this.limiter.reset('login:' + id); }
 }

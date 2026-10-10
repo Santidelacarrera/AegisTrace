@@ -23,3 +23,4 @@ tr.row { cursor:pointer; } tr.row:hover, tr.row:focus { background:color-mix(in 
 .muted { color:var(--muted); } .error { color:var(--err); } code { background:color-mix(in srgb, var(--muted) 18%, transparent); padding:0 4px; border-radius:4px; margin-right:3px; }
 .login { max-width:340px; margin:12vh auto; display:grid; gap:10px; } .login label { display:grid; gap:3px; }
 @media (max-width: 640px) { main { padding:10px; } th:nth-child(4), td:nth-child(4) { display:none; } }
+.sso { text-align:center; padding:6px; border:1px solid var(--line); border-radius:6px; color:var(--accent); text-decoration:none; }

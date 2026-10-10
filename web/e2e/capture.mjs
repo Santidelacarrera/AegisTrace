@@ -1,13 +1,13 @@
 // Captures README screenshots and a walkthrough video against a running stack (API on :3000 with seeded data).
 // Usage: node e2e/capture.mjs   (set CHROMIUM=/path/to/chromium if not at the default)
 import { chromium } from 'playwright-core';
-import { mkdirSync, renameSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync, renameSync, readdirSync } from 'node:fs';
 
 const BASE = process.env.BASE ?? 'http://localhost:3000/ui/';
 const OUT = new URL('../../docs/media/', import.meta.url).pathname;
 const VID = OUT + 'video-tmp/';
 mkdirSync(VID, { recursive: true });
-const browser = await chromium.launch({ executablePath: process.env.CHROMIUM ?? '/opt/pw-browsers/chromium', args: ['--no-sandbox'] });
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM ?? (existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined), args: ['--no-sandbox'] });
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, colorScheme: 'light', recordVideo: { dir: VID, size: { width: 1280, height: 800 } } });
 const page = await ctx.newPage();
 const pause = (ms = 900) => page.waitForTimeout(ms);

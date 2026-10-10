@@ -85,3 +85,41 @@ describe('audit anchor failures', () => {
     expect((await request(app).get('/metrics')).text).toMatch(/aegistrace_anchorErrors_total [1-9]/);
   });
 });
+
+import { base32Decode, base32Encode, newTotpSecret, totpAt, verifyTotp, stepOf } from '../src/totp.js';
+
+describe('TOTP', () => {
+  const rfcSecret = base32Encode(Buffer.from('12345678901234567890'));
+  it('matches the RFC 6238 SHA-1 test vectors', () => {
+    expect(totpAt(rfcSecret, Math.floor(59 / 30), 8)).toBe('94287082');
+    expect(totpAt(rfcSecret, Math.floor(1111111109 / 30), 8)).toBe('07081804');
+    expect(totpAt(rfcSecret, Math.floor(20000000000 / 30), 8)).toBe('65353130');
+  });
+  it('round-trips base32 and accepts ±1 step, rejects replay and garbage', () => {
+    const s = newTotpSecret();
+    expect(base32Encode(base32Decode(s))).toBe(s);
+    const now = 1_700_000_000_000, step = stepOf(now);
+    expect(verifyTotp(s, totpAt(s, step), now)).toBe(step);
+    expect(verifyTotp(s, totpAt(s, step - 1), now)).toBe(step - 1);
+    expect(verifyTotp(s, totpAt(s, step + 2), now)).toBeUndefined();
+    expect(verifyTotp(s, totpAt(s, step), now, step)).toBeUndefined();     // replay
+    expect(verifyTotp(s, 'abcdef', now)).toBeUndefined();
+  });
+  it('login requires the code for MFA users, after the password, and codes are single-use', async () => {
+    const secret = newTotpSecret();
+    const cfg = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS };
+    cfg.users.find((u) => u.userId === 'alex')!.totpSecret = secret;
+    let t = Date.parse('2024-06-01T12:00:00Z');
+    cfg.now = () => new Date(t);
+    const { app } = createApp({ config: cfg });
+    const go = (body: object) => request(app).post('/api/v1/auth/login').send({ orgId: 'org-acme', userId: 'alex', ...body });
+    expect((await go({ password: 'wrong' })).body.error).toBe('invalid_credentials');          // wrong password never reveals MFA
+    expect((await go({ password: 'demo-approver' })).body.error).toBe('mfa_required');
+    expect((await go({ password: 'demo-approver', code: '000000' })).status).toBe(401);
+    const code = totpAt(secret, stepOf(t));
+    expect((await go({ password: 'demo-approver', code })).status).toBe(200);
+    expect((await go({ password: 'demo-approver', code })).status).toBe(401);                   // replay
+    t += 30_000;
+    expect((await go({ password: 'demo-approver', code: totpAt(secret, stepOf(t)) })).status).toBe(200);
+  });
+});

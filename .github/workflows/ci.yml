@@ -13,7 +13,14 @@ jobs:
         ports: ["5432:5432"]
         options: >-
           --health-cmd "pg_isready -U postgres" --health-interval 5s --health-retries 10
-    env: { TEST_DATABASE_URL: "postgres://postgres:ci@localhost:5432/aegis_test" }
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 5s --health-retries 10
+    env:
+      TEST_DATABASE_URL: "postgres://postgres:ci@localhost:5432/aegis_test"
+      TEST_REDIS_URL: "redis://localhost:6379"
     defaults: { run: { working-directory: api } }
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +43,28 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm audit --omit=dev --audit-level=high
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci && npm run build
+        working-directory: api
+      - run: npm ci && npm run build        # emits ../api/public
+        working-directory: web
+      - name: Start API with the synthetic dataset
+        run: |
+          NODE_ENV=development PORT=3000 node api/dist/server.js > api.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf localhost:3000/health && break; sleep 1; done
+          node -e "console.log(JSON.stringify(require('./data/synthetic/events.json')))" > /tmp/events.json
+          curl -sf -X POST -H 'x-api-key: demo-ingestor' -H 'content-type: application/json' --data @/tmp/events.json localhost:3000/api/v1/events | head -c 80
+      - run: npx playwright-core install --with-deps chromium
+        working-directory: web
+      - run: npm run e2e
+        working-directory: web
+      - if: failure()
+        run: cat api.log
   analytics:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: analytics } }
