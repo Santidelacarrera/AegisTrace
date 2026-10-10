@@ -8,6 +8,8 @@ import { runDetection } from './pipeline.js';
 import { can, Permission } from './rbac.js';
 import { Store } from './store.js';
 import { PgPersistence } from './persistence.js';
+import { ProviderError } from './llm.js';
+import { AnalyticsClient } from './analytics.js';
 import { AnalysisProvider, AnalysisValidationError, buildAnalysis, inLabScope, ruleBasedProvider } from './analysis.js';
 import {
   ActionType, INCIDENT_STATUSES, Incident, IncidentStatus, Principal, ResponseAction, SEVERITIES, Severity, sevRank,
@@ -37,9 +39,9 @@ const wrap = (fn: (req: Request, res: Response) => Promise<void> | void): Reques
   Promise.resolve(fn(req, res)).catch(next);
 };
 
-export interface AppOptions { config: Config; store?: Store; provider?: AnalysisProvider; persistence?: PgPersistence }
+export interface AppOptions { config: Config; store?: Store; provider?: AnalysisProvider; persistence?: PgPersistence; analytics?: AnalyticsClient }
 
-export function createApp({ config, store = new Store(), provider = ruleBasedProvider, persistence }: AppOptions) {
+export function createApp({ config, store = new Store(), provider = ruleBasedProvider, persistence, analytics }: AppOptions) {
   const app = express();
   const appendAudit: typeof appendAuditBase = (org, key, at, e) => appendAuditBase(org, key, at, e, config.anchorFile);
   app.disable('x-powered-by');
@@ -146,7 +148,7 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
   };
 
   // --- events ---------------------------------------------------------------
-  api.post('/events', need('events:write', 'event.ingest'), wrap((req, res) => {
+  api.post('/events', need('events:write', 'event.ingest'), wrap(async (req, res) => {
     const p = req.principal!;
     let items: unknown[];
     if (typeof req.body === 'string') items = parseCsv(req.body);
@@ -169,7 +171,8 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
       accepted++;
     });
     counters.eventsIngested += accepted;
-    const det = accepted ? runDetection(data, p.orgId, nowIso()) : { newAlerts: 0, updatedAlerts: 0 };
+    const extra = accepted && analytics ? await analytics([...data.events.values()]) : [];
+    const det = accepted ? runDetection(data, p.orgId, nowIso(), extra) : { newAlerts: 0, updatedAlerts: 0 };
     audit(req, 'event.ingest', 'event', `batch:${accepted}`, 'success', `accepted=${accepted} duplicates=${duplicates} rejected=${rejected.length}`);
     res.status(rejected.length && !accepted && !duplicates ? 422 : 202).json({ accepted, duplicates, rejected, acceptedIds, ...det });
   }));
@@ -288,6 +291,10 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
       if (e instanceof AnalysisValidationError) {
         audit(req, 'analysis.request', 'incident', inc.id, 'error', `rejected: ${e.message}`);
         throw new HttpError(502, 'analysis_invalid', `Analysis discarded: ${e.message}`);
+      }
+      if (e instanceof ProviderError) {
+        audit(req, 'analysis.request', 'incident', inc.id, 'error', e.message);
+        throw new HttpError(502, 'analysis_unavailable', e.message);
       }
       throw e;
     }

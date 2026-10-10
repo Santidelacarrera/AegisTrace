@@ -1,18 +1,26 @@
-FROM node:22-alpine AS build
-WORKDIR /app
-COPY package*.json tsconfig*.json ./
+# Build context is the repository root:  docker build -f api/Dockerfile .
+FROM node:22-alpine AS web
+WORKDIR /app/web
+COPY web/package*.json web/tsconfig.json web/vite.config.ts web/index.html ./
 RUN npm ci
-COPY src ./src
+COPY web/src ./src
+RUN npm run build            # emits ../api/public
+
+FROM node:22-alpine AS build
+WORKDIR /app/api
+COPY api/package*.json api/tsconfig*.json ./
+RUN npm ci
+COPY api/src ./src
 RUN npm run build
 
 FROM node:22-alpine
 WORKDIR /app
 ENV NODE_ENV=production
-COPY package*.json ./
+COPY api/package*.json ./
 RUN npm ci --omit=dev && npm cache clean --force
-COPY --from=build /app/dist ./dist
-COPY public ./public
-COPY migrations ./migrations
+COPY --from=build /app/api/dist ./dist
+COPY --from=web /app/api/public ./public
+COPY api/migrations ./migrations
 USER node
 EXPOSE 3000
 HEALTHCHECK CMD wget -qO- http://127.0.0.1:3000/health || exit 1

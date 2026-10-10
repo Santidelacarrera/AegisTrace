@@ -297,3 +297,33 @@ describe('E2E: event -> alert -> incident -> analysis -> approval -> simulated a
     expect((await as('demo-auditor').get('/audit/verify')).body.valid).toBe(true);
   });
 });
+
+describe('analytics service integration', () => {
+  it('turns anomalies into alerts, ignores invented event IDs, and fails open', async () => {
+    const { httpAnalyticsClient } = await import('../src/analytics.js');
+    const { createApp } = await import('../src/app.js');
+    const { DEMO_KEYS, loadConfig } = await import('../src/config.js');
+    const request = (await import('supertest')).default;
+    const mk = (fetchImpl: typeof fetch) => {
+      const config = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS };
+      const { app } = createApp({ config, analytics: httpAnalyticsClient('http://analytics', { fetchImpl }) });
+      return Object.assign((p: string, b?: unknown) => request(app).post('/api/v1' + p).set('x-api-key', 'demo-ingestor').send(b as object),
+        { incidents: async () => (await request(app).get('/api/v1/incidents').set('x-api-key', 'demo-viewer')).body.total as number });
+    };
+    const four = Array.from({ length: 4 }, (_, i) => ({ id: `q${i}`, timestamp: iso(i), source: 'auth', type: 'login_failed', user: 'lab.zed', ip: '203.0.113.3' }));
+    const ok = (async () => new Response(JSON.stringify({ analyzed: 4, anomalies: [
+      { kind: 'rate_spike', subject: 'user:lab.zed', score: 6.1, eventIds: ['q0', 'q1', 'q2', 'q3'], explanation: 'burst' },
+      { kind: 'rate_spike', subject: 'user:ghost', score: 9, eventIds: ['nope'], explanation: 'invented' },
+    ] }))) as typeof fetch;
+    const r = await mk(ok)('/events', four);
+    expect(r.body.newAlerts).toBe(1);                       // R001 needs 5; only the statistical alert fires
+    // A110 (new source IP) is signal-only: it must not open an incident by itself
+    const sig = (async () => new Response(JSON.stringify({ analyzed: 1, anomalies: [{ kind: 'new_source_ip', subject: 'user:lab.zed', score: 1, eventIds: ['q0'], explanation: 'new ip' }] }))) as typeof fetch;
+    const sigApp = mk(sig);
+    expect((await sigApp('/events', [four[0]])).body.newAlerts).toBe(1);
+    expect(await sigApp.incidents()).toBe(0);
+    const down = await mk((async () => { throw new Error('refused'); }) as typeof fetch)('/events', four);
+    expect(down.status).toBe(202);                          // ingestion survives analytics outage
+    expect(down.body.newAlerts).toBe(0);
+  });
+});

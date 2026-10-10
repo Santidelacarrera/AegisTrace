@@ -68,6 +68,11 @@ export const ruleBasedProvider: AnalysisProvider = {
       for (const u of users) recs.push({ kind: 'disable_user', target: u, rationale: 'A successful login followed a burst of failures; containing the account prevents further use while it is reviewed.', evidenceIds: idsOf([...failed.filter((e) => e.user === u), ...success.filter((e) => e.user === u)]) });
       gaps.push('No MFA, device or geolocation data is available to tell whether the successful login was the legitimate user.');
     }
+    if (has('A100') || has('A110')) {
+      const stat = events.filter((e) => alerts.some((a) => ['A100', 'A110'].includes(a.ruleId) && a.eventIds.includes(e.id)));
+      hypotheses.push({ statement: 'A statistical detector flagged activity that deviates from this account\'s own baseline. This is a weak signal and is more likely than rules to be a false positive.', confidence: 'low', evidenceIds: idsOf(stat) });
+      gaps.push('Anomaly scores are statistical and depend on the history available; short baselines make them unreliable.');
+    }
     if (has('R010')) {
       const res = uniq(authz.map((e) => e.resource).filter(Boolean));
       hypotheses.push({ statement: `Probing for access beyond the account's permissions: ${authz.length} authorization denials across ${res.length} resource(s).`, confidence: res.length >= 3 ? 'medium' : 'low', evidenceIds: idsOf(authz) });

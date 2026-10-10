@@ -4,6 +4,8 @@ import { OrgData } from './store.js';
 import { Alert, Incident, maxSeverity } from './types.js';
 
 export const CORRELATION_WINDOW_MS = 30 * 60_000;
+/** Rules whose alerts are shown but never create incidents (measured precision on labeled data was too low). */
+const SIGNAL_ONLY = new Set(['A110']);
 const OPEN = new Set(['open', 'triaging', 'contained']);
 const h = (s: string) => createHash('sha256').update(s).digest('hex').slice(0, 16);
 const uniq = <T>(xs: T[]) => [...new Set(xs)].sort() as T[];
@@ -78,6 +80,8 @@ function correlate(org: OrgData, orgId: string, alert: Alert, now: string) {
     target.updatedAt = now;
     return;
   }
+  // Weak statistical signals (A110) may enrich an existing incident but never open one on their own.
+  if (SIGNAL_ONLY.has(alert.ruleId)) return;
   const inc: Incident = {
     id: 'inc_' + h(`${orgId}|${alert.id}`), orgId, title: alert.title, severity: alert.severity, status: 'open',
     labels: [], alertIds: [alert.id], eventIds: [], users: [], ips: [], resources: [],
@@ -91,10 +95,10 @@ function correlate(org: OrgData, orgId: string, alert: Alert, now: string) {
 }
 
 /** Re-run deterministic detection over the org's events and correlate new or grown alerts. */
-export function runDetection(org: OrgData, orgId: string, now: string): { newAlerts: number; updatedAlerts: number } {
+export function runDetection(org: OrgData, orgId: string, now: string, extra: AlertCandidate[] = []): { newAlerts: number; updatedAlerts: number } {
   const events = [...org.events.values()];
   let newAlerts = 0, updatedAlerts = 0;
-  const candidates = detect(events).sort((a, b) => a.events[0]!.timestamp.localeCompare(b.events[0]!.timestamp) || a.ruleId.localeCompare(b.ruleId));
+  const candidates = [...detect(events), ...extra].sort((a, b) => a.events[0]!.timestamp.localeCompare(b.events[0]!.timestamp) || a.ruleId.localeCompare(b.ruleId));
   for (const c of candidates) {
     const before = org.alerts.size;
     const { alert, changed } = upsertAlert(org, orgId, c);

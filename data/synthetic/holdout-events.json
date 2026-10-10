@@ -1,0 +1,3175 @@
+[
+ {
+  "event_id": "h-00001",
+  "@timestamp": "2024-09-14T00:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "203.0.113.52"
+ },
+ {
+  "event_id": "h-00002",
+  "@timestamp": "2024-09-14T00:00:25.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.236"
+ },
+ {
+  "event_id": "h-00003",
+  "@timestamp": "2024-09-14T00:00:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "198.51.100.118"
+ },
+ {
+  "event_id": "h-00004",
+  "@timestamp": "2024-09-14T00:01:15.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "203.0.113.61"
+ },
+ {
+  "event_id": "h-00005",
+  "@timestamp": "2024-09-14T00:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "203.0.113.250"
+ },
+ {
+  "event_id": "h-00006",
+  "@timestamp": "2024-09-14T00:02:05.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.230"
+ },
+ {
+  "event_id": "h-00007",
+  "@timestamp": "2024-09-14T00:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "203.0.113.100"
+ },
+ {
+  "event_id": "h-00008",
+  "@timestamp": "2024-09-14T00:02:55.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.103"
+ },
+ {
+  "event_id": "h-00009",
+  "@timestamp": "2024-09-14T00:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "203.0.113.213"
+ },
+ {
+  "event_id": "h-00010",
+  "@timestamp": "2024-09-14T03:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.4"
+ },
+ {
+  "event_id": "h-00011",
+  "@timestamp": "2024-09-14T03:00:25.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.227"
+ },
+ {
+  "event_id": "h-00012",
+  "@timestamp": "2024-09-14T03:00:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "198.51.100.168"
+ },
+ {
+  "event_id": "h-00013",
+  "@timestamp": "2024-09-14T03:01:15.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "198.51.100.153"
+ },
+ {
+  "event_id": "h-00014",
+  "@timestamp": "2024-09-14T03:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "203.0.113.188"
+ },
+ {
+  "event_id": "h-00015",
+  "@timestamp": "2024-09-14T03:02:05.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.46"
+ },
+ {
+  "event_id": "h-00016",
+  "@timestamp": "2024-09-14T03:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.122"
+ },
+ {
+  "event_id": "h-00017",
+  "@timestamp": "2024-09-14T03:02:55.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "203.0.113.249"
+ },
+ {
+  "event_id": "h-00018",
+  "@timestamp": "2024-09-14T03:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.229"
+ },
+ {
+  "event_id": "h-00019",
+  "@timestamp": "2024-09-14T06:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.55"
+ },
+ {
+  "event_id": "h-00020",
+  "@timestamp": "2024-09-14T06:00:25.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "192.0.2.108"
+ },
+ {
+  "event_id": "h-00021",
+  "@timestamp": "2024-09-14T06:00:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "192.0.2.197"
+ },
+ {
+  "event_id": "h-00022",
+  "@timestamp": "2024-09-14T06:01:15.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.83"
+ },
+ {
+  "event_id": "h-00023",
+  "@timestamp": "2024-09-14T06:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "198.51.100.198"
+ },
+ {
+  "event_id": "h-00024",
+  "@timestamp": "2024-09-14T06:02:05.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.30"
+ },
+ {
+  "event_id": "h-00025",
+  "@timestamp": "2024-09-14T06:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.176"
+ },
+ {
+  "event_id": "h-00026",
+  "@timestamp": "2024-09-14T06:02:55.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "198.51.100.134"
+ },
+ {
+  "event_id": "h-00027",
+  "@timestamp": "2024-09-14T06:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "198.51.100.232"
+ },
+ {
+  "event_id": "h-00028",
+  "@timestamp": "2024-09-14T09:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "203.0.113.123"
+ },
+ {
+  "event_id": "h-00029",
+  "@timestamp": "2024-09-14T09:00:25.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "203.0.113.142"
+ },
+ {
+  "event_id": "h-00030",
+  "@timestamp": "2024-09-14T09:00:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.242"
+ },
+ {
+  "event_id": "h-00031",
+  "@timestamp": "2024-09-14T09:01:15.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.98"
+ },
+ {
+  "event_id": "h-00032",
+  "@timestamp": "2024-09-14T09:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "203.0.113.82"
+ },
+ {
+  "event_id": "h-00033",
+  "@timestamp": "2024-09-14T09:02:05.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "198.51.100.136"
+ },
+ {
+  "event_id": "h-00034",
+  "@timestamp": "2024-09-14T09:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.219"
+ },
+ {
+  "event_id": "h-00035",
+  "@timestamp": "2024-09-14T09:02:55.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.107"
+ },
+ {
+  "event_id": "h-00036",
+  "@timestamp": "2024-09-14T09:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "203.0.113.113"
+ },
+ {
+  "event_id": "h-00037",
+  "@timestamp": "2024-09-14T12:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00038",
+  "@timestamp": "2024-09-14T12:01:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00039",
+  "@timestamp": "2024-09-14T12:03:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00040",
+  "@timestamp": "2024-09-14T12:05:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00041",
+  "@timestamp": "2024-09-14T12:07:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00042",
+  "@timestamp": "2024-09-14T12:09:10.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00043",
+  "@timestamp": "2024-09-14T12:11:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00044",
+  "@timestamp": "2024-09-14T12:12:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00045",
+  "@timestamp": "2024-09-14T12:14:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00046",
+  "@timestamp": "2024-09-14T12:16:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00047",
+  "@timestamp": "2024-09-14T12:18:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00048",
+  "@timestamp": "2024-09-14T12:20:10.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.163"
+ },
+ {
+  "event_id": "h-00049",
+  "@timestamp": "2024-09-14T15:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00050",
+  "@timestamp": "2024-09-14T15:01:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00051",
+  "@timestamp": "2024-09-14T15:03:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00052",
+  "@timestamp": "2024-09-14T15:05:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00053",
+  "@timestamp": "2024-09-14T15:07:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00054",
+  "@timestamp": "2024-09-14T15:09:10.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00055",
+  "@timestamp": "2024-09-14T15:11:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00056",
+  "@timestamp": "2024-09-14T15:12:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00057",
+  "@timestamp": "2024-09-14T15:14:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00058",
+  "@timestamp": "2024-09-14T15:16:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00059",
+  "@timestamp": "2024-09-14T15:18:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00060",
+  "@timestamp": "2024-09-14T15:20:10.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.247"
+ },
+ {
+  "event_id": "h-00061",
+  "@timestamp": "2024-09-14T18:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00062",
+  "@timestamp": "2024-09-14T18:01:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00063",
+  "@timestamp": "2024-09-14T18:03:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00064",
+  "@timestamp": "2024-09-14T18:05:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00065",
+  "@timestamp": "2024-09-14T18:07:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00066",
+  "@timestamp": "2024-09-14T18:09:10.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00067",
+  "@timestamp": "2024-09-14T18:11:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00068",
+  "@timestamp": "2024-09-14T18:12:50.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00069",
+  "@timestamp": "2024-09-14T18:14:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00070",
+  "@timestamp": "2024-09-14T18:16:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00071",
+  "@timestamp": "2024-09-14T18:18:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00072",
+  "@timestamp": "2024-09-14T18:20:10.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user24",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00073",
+  "@timestamp": "2024-09-14T21:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "192.0.2.152"
+ },
+ {
+  "event_id": "h-00074",
+  "@timestamp": "2024-09-14T21:00:08.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "203.0.113.114"
+ },
+ {
+  "event_id": "h-00075",
+  "@timestamp": "2024-09-14T21:00:16.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "192.0.2.112"
+ },
+ {
+  "event_id": "h-00076",
+  "@timestamp": "2024-09-14T21:00:24.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.173"
+ },
+ {
+  "event_id": "h-00077",
+  "@timestamp": "2024-09-14T21:00:32.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "203.0.113.210"
+ },
+ {
+  "event_id": "h-00078",
+  "@timestamp": "2024-09-14T21:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "198.51.100.1"
+ },
+ {
+  "event_id": "h-00079",
+  "@timestamp": "2024-09-14T21:00:48.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user06",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00080",
+  "@timestamp": "2024-09-14T21:00:56.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user07",
+  "client_ip": "203.0.113.167"
+ },
+ {
+  "event_id": "h-00081",
+  "@timestamp": "2024-09-14T21:01:04.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "198.51.100.154"
+ },
+ {
+  "event_id": "h-00082",
+  "@timestamp": "2024-09-14T21:01:12.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user09",
+  "client_ip": "198.51.100.59"
+ },
+ {
+  "event_id": "h-00083",
+  "@timestamp": "2024-09-14T21:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "203.0.113.47"
+ },
+ {
+  "event_id": "h-00084",
+  "@timestamp": "2024-09-14T21:01:28.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.10"
+ },
+ {
+  "event_id": "h-00085",
+  "@timestamp": "2024-09-14T21:01:36.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user12",
+  "client_ip": "203.0.113.51"
+ },
+ {
+  "event_id": "h-00086",
+  "@timestamp": "2024-09-14T21:01:44.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.221"
+ },
+ {
+  "event_id": "h-00087",
+  "@timestamp": "2024-09-14T21:01:52.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user14",
+  "client_ip": "192.0.2.29"
+ },
+ {
+  "event_id": "h-00088",
+  "@timestamp": "2024-09-14T21:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user15",
+  "client_ip": "198.51.100.162"
+ },
+ {
+  "event_id": "h-00089",
+  "@timestamp": "2024-09-14T21:02:08.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user16",
+  "client_ip": "192.0.2.72"
+ },
+ {
+  "event_id": "h-00090",
+  "@timestamp": "2024-09-14T21:02:16.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "203.0.113.186"
+ },
+ {
+  "event_id": "h-00091",
+  "@timestamp": "2024-09-14T21:02:24.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user18",
+  "client_ip": "192.0.2.30"
+ },
+ {
+  "event_id": "h-00092",
+  "@timestamp": "2024-09-14T21:02:32.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.229"
+ },
+ {
+  "event_id": "h-00093",
+  "@timestamp": "2024-09-15T00:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "198.51.100.238"
+ },
+ {
+  "event_id": "h-00094",
+  "@timestamp": "2024-09-15T00:00:08.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "192.0.2.167"
+ },
+ {
+  "event_id": "h-00095",
+  "@timestamp": "2024-09-15T00:00:16.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "192.0.2.59"
+ },
+ {
+  "event_id": "h-00096",
+  "@timestamp": "2024-09-15T00:00:24.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.98"
+ },
+ {
+  "event_id": "h-00097",
+  "@timestamp": "2024-09-15T00:00:32.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "198.51.100.55"
+ },
+ {
+  "event_id": "h-00098",
+  "@timestamp": "2024-09-15T00:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "198.51.100.10"
+ },
+ {
+  "event_id": "h-00099",
+  "@timestamp": "2024-09-15T00:00:48.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user06",
+  "client_ip": "198.51.100.115"
+ },
+ {
+  "event_id": "h-00100",
+  "@timestamp": "2024-09-15T00:00:56.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user07",
+  "client_ip": "198.51.100.53"
+ },
+ {
+  "event_id": "h-00101",
+  "@timestamp": "2024-09-15T00:01:04.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.177"
+ },
+ {
+  "event_id": "h-00102",
+  "@timestamp": "2024-09-15T00:01:12.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user09",
+  "client_ip": "192.0.2.131"
+ },
+ {
+  "event_id": "h-00103",
+  "@timestamp": "2024-09-15T00:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.218"
+ },
+ {
+  "event_id": "h-00104",
+  "@timestamp": "2024-09-15T00:01:28.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.1"
+ },
+ {
+  "event_id": "h-00105",
+  "@timestamp": "2024-09-15T00:01:36.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user12",
+  "client_ip": "198.51.100.159"
+ },
+ {
+  "event_id": "h-00106",
+  "@timestamp": "2024-09-15T00:01:44.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.230"
+ },
+ {
+  "event_id": "h-00107",
+  "@timestamp": "2024-09-15T00:01:52.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user14",
+  "client_ip": "203.0.113.34"
+ },
+ {
+  "event_id": "h-00108",
+  "@timestamp": "2024-09-15T00:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user15",
+  "client_ip": "192.0.2.249"
+ },
+ {
+  "event_id": "h-00109",
+  "@timestamp": "2024-09-15T00:02:08.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user16",
+  "client_ip": "198.51.100.246"
+ },
+ {
+  "event_id": "h-00110",
+  "@timestamp": "2024-09-15T00:02:16.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "192.0.2.193"
+ },
+ {
+  "event_id": "h-00111",
+  "@timestamp": "2024-09-15T00:02:24.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user18",
+  "client_ip": "198.51.100.32"
+ },
+ {
+  "event_id": "h-00112",
+  "@timestamp": "2024-09-15T00:02:32.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "203.0.113.62"
+ },
+ {
+  "event_id": "h-00113",
+  "@timestamp": "2024-09-15T03:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "192.0.2.174"
+ },
+ {
+  "event_id": "h-00114",
+  "@timestamp": "2024-09-15T03:00:08.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "192.0.2.43"
+ },
+ {
+  "event_id": "h-00115",
+  "@timestamp": "2024-09-15T03:00:16.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "192.0.2.185"
+ },
+ {
+  "event_id": "h-00116",
+  "@timestamp": "2024-09-15T03:00:24.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "198.51.100.63"
+ },
+ {
+  "event_id": "h-00117",
+  "@timestamp": "2024-09-15T03:00:32.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.195"
+ },
+ {
+  "event_id": "h-00118",
+  "@timestamp": "2024-09-15T03:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.48"
+ },
+ {
+  "event_id": "h-00119",
+  "@timestamp": "2024-09-15T03:00:48.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user06",
+  "client_ip": "192.0.2.153"
+ },
+ {
+  "event_id": "h-00120",
+  "@timestamp": "2024-09-15T03:00:56.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user07",
+  "client_ip": "192.0.2.14"
+ },
+ {
+  "event_id": "h-00121",
+  "@timestamp": "2024-09-15T03:01:04.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "203.0.113.124"
+ },
+ {
+  "event_id": "h-00122",
+  "@timestamp": "2024-09-15T03:01:12.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user09",
+  "client_ip": "198.51.100.221"
+ },
+ {
+  "event_id": "h-00123",
+  "@timestamp": "2024-09-15T03:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.126"
+ },
+ {
+  "event_id": "h-00124",
+  "@timestamp": "2024-09-15T03:01:28.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.127"
+ },
+ {
+  "event_id": "h-00125",
+  "@timestamp": "2024-09-15T03:01:36.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user12",
+  "client_ip": "198.51.100.239"
+ },
+ {
+  "event_id": "h-00126",
+  "@timestamp": "2024-09-15T03:01:44.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user13",
+  "client_ip": "192.0.2.172"
+ },
+ {
+  "event_id": "h-00127",
+  "@timestamp": "2024-09-15T03:01:52.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user14",
+  "client_ip": "203.0.113.210"
+ },
+ {
+  "event_id": "h-00128",
+  "@timestamp": "2024-09-15T03:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user15",
+  "client_ip": "198.51.100.239"
+ },
+ {
+  "event_id": "h-00129",
+  "@timestamp": "2024-09-15T03:02:08.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user16",
+  "client_ip": "192.0.2.181"
+ },
+ {
+  "event_id": "h-00130",
+  "@timestamp": "2024-09-15T03:02:16.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.137"
+ },
+ {
+  "event_id": "h-00131",
+  "@timestamp": "2024-09-15T03:02:24.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user18",
+  "client_ip": "192.0.2.210"
+ },
+ {
+  "event_id": "h-00132",
+  "@timestamp": "2024-09-15T03:02:32.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.86"
+ },
+ {
+  "event_id": "h-00133",
+  "@timestamp": "2024-09-15T06:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00134",
+  "@timestamp": "2024-09-15T06:00:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00135",
+  "@timestamp": "2024-09-15T06:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00136",
+  "@timestamp": "2024-09-15T06:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00137",
+  "@timestamp": "2024-09-15T06:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00138",
+  "@timestamp": "2024-09-15T06:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00139",
+  "@timestamp": "2024-09-15T06:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00140",
+  "@timestamp": "2024-09-15T06:02:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00141",
+  "@timestamp": "2024-09-15T06:02:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00142",
+  "@timestamp": "2024-09-15T06:03:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00143",
+  "@timestamp": "2024-09-15T06:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00144",
+  "@timestamp": "2024-09-15T06:03:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "192.0.2.114"
+ },
+ {
+  "event_id": "h-00145",
+  "@timestamp": "2024-09-15T09:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00146",
+  "@timestamp": "2024-09-15T09:00:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00147",
+  "@timestamp": "2024-09-15T09:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00148",
+  "@timestamp": "2024-09-15T09:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00149",
+  "@timestamp": "2024-09-15T09:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00150",
+  "@timestamp": "2024-09-15T09:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00151",
+  "@timestamp": "2024-09-15T09:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00152",
+  "@timestamp": "2024-09-15T09:02:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00153",
+  "@timestamp": "2024-09-15T09:02:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00154",
+  "@timestamp": "2024-09-15T09:03:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00155",
+  "@timestamp": "2024-09-15T09:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00156",
+  "@timestamp": "2024-09-15T09:03:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.6"
+ },
+ {
+  "event_id": "h-00157",
+  "@timestamp": "2024-09-15T12:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00158",
+  "@timestamp": "2024-09-15T12:00:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00159",
+  "@timestamp": "2024-09-15T12:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00160",
+  "@timestamp": "2024-09-15T12:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00161",
+  "@timestamp": "2024-09-15T12:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00162",
+  "@timestamp": "2024-09-15T12:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00163",
+  "@timestamp": "2024-09-15T12:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00164",
+  "@timestamp": "2024-09-15T12:02:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00165",
+  "@timestamp": "2024-09-15T12:02:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user02",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00166",
+  "@timestamp": "2024-09-15T12:03:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00167",
+  "@timestamp": "2024-09-15T12:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user04",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00168",
+  "@timestamp": "2024-09-15T12:03:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.195"
+ },
+ {
+  "event_id": "h-00169",
+  "@timestamp": "2024-09-15T15:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.162"
+ },
+ {
+  "event_id": "h-00170",
+  "@timestamp": "2024-09-15T15:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.162"
+ },
+ {
+  "event_id": "h-00171",
+  "@timestamp": "2024-09-15T15:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.162"
+ },
+ {
+  "event_id": "h-00172",
+  "@timestamp": "2024-09-15T15:01:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.162"
+ },
+ {
+  "event_id": "h-00173",
+  "@timestamp": "2024-09-15T15:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.162"
+ },
+ {
+  "event_id": "h-00174",
+  "@timestamp": "2024-09-15T15:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.162"
+ },
+ {
+  "event_id": "h-00175",
+  "@timestamp": "2024-09-15T15:04:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.162"
+ },
+ {
+  "event_id": "h-00176",
+  "@timestamp": "2024-09-15T18:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.90"
+ },
+ {
+  "event_id": "h-00177",
+  "@timestamp": "2024-09-15T18:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.90"
+ },
+ {
+  "event_id": "h-00178",
+  "@timestamp": "2024-09-15T18:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.90"
+ },
+ {
+  "event_id": "h-00179",
+  "@timestamp": "2024-09-15T18:01:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.90"
+ },
+ {
+  "event_id": "h-00180",
+  "@timestamp": "2024-09-15T18:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.90"
+ },
+ {
+  "event_id": "h-00181",
+  "@timestamp": "2024-09-15T18:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.90"
+ },
+ {
+  "event_id": "h-00182",
+  "@timestamp": "2024-09-15T18:04:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user03",
+  "client_ip": "192.0.2.90"
+ },
+ {
+  "event_id": "h-00183",
+  "@timestamp": "2024-09-15T21:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.195"
+ },
+ {
+  "event_id": "h-00184",
+  "@timestamp": "2024-09-15T21:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.195"
+ },
+ {
+  "event_id": "h-00185",
+  "@timestamp": "2024-09-15T21:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.195"
+ },
+ {
+  "event_id": "h-00186",
+  "@timestamp": "2024-09-15T21:01:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.195"
+ },
+ {
+  "event_id": "h-00187",
+  "@timestamp": "2024-09-15T21:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.195"
+ },
+ {
+  "event_id": "h-00188",
+  "@timestamp": "2024-09-15T21:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.195"
+ },
+ {
+  "event_id": "h-00189",
+  "@timestamp": "2024-09-15T21:04:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user08",
+  "client_ip": "192.0.2.195"
+ },
+ {
+  "id": "h-00190",
+  "ts": 1726444800,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1000"
+ },
+ {
+  "id": "h-00191",
+  "ts": 1726444812,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1001"
+ },
+ {
+  "id": "h-00192",
+  "ts": 1726444824,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1002"
+ },
+ {
+  "id": "h-00193",
+  "ts": 1726444836,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1003"
+ },
+ {
+  "id": "h-00194",
+  "ts": 1726444848,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1004"
+ },
+ {
+  "id": "h-00195",
+  "ts": 1726444860,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1005"
+ },
+ {
+  "id": "h-00196",
+  "ts": 1726444872,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1006"
+ },
+ {
+  "id": "h-00197",
+  "ts": 1726444884,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1007"
+ },
+ {
+  "id": "h-00198",
+  "ts": 1726444896,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1008"
+ },
+ {
+  "id": "h-00199",
+  "ts": 1726444908,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1009"
+ },
+ {
+  "id": "h-00200",
+  "ts": 1726444920,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1010"
+ },
+ {
+  "id": "h-00201",
+  "ts": 1726444932,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1011"
+ },
+ {
+  "id": "h-00202",
+  "ts": 1726444944,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1012"
+ },
+ {
+  "id": "h-00203",
+  "ts": 1726444956,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1013"
+ },
+ {
+  "id": "h-00204",
+  "ts": 1726444968,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user17",
+  "src_ip": "203.0.113.13",
+  "path": "/orders/1014"
+ },
+ {
+  "id": "h-00205",
+  "ts": 1726455600,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1000"
+ },
+ {
+  "id": "h-00206",
+  "ts": 1726455612,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1001"
+ },
+ {
+  "id": "h-00207",
+  "ts": 1726455624,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1002"
+ },
+ {
+  "id": "h-00208",
+  "ts": 1726455636,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1003"
+ },
+ {
+  "id": "h-00209",
+  "ts": 1726455648,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1004"
+ },
+ {
+  "id": "h-00210",
+  "ts": 1726455660,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1005"
+ },
+ {
+  "id": "h-00211",
+  "ts": 1726455672,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1006"
+ },
+ {
+  "id": "h-00212",
+  "ts": 1726455684,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1007"
+ },
+ {
+  "id": "h-00213",
+  "ts": 1726455696,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1008"
+ },
+ {
+  "id": "h-00214",
+  "ts": 1726455708,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1009"
+ },
+ {
+  "id": "h-00215",
+  "ts": 1726455720,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1010"
+ },
+ {
+  "id": "h-00216",
+  "ts": 1726455732,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1011"
+ },
+ {
+  "id": "h-00217",
+  "ts": 1726455744,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1012"
+ },
+ {
+  "id": "h-00218",
+  "ts": 1726455756,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1013"
+ },
+ {
+  "id": "h-00219",
+  "ts": 1726455768,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user12",
+  "src_ip": "198.51.100.141",
+  "path": "/orders/1014"
+ },
+ {
+  "id": "h-00220",
+  "ts": 1726466400,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1000"
+ },
+ {
+  "id": "h-00221",
+  "ts": 1726466412,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1001"
+ },
+ {
+  "id": "h-00222",
+  "ts": 1726466424,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1002"
+ },
+ {
+  "id": "h-00223",
+  "ts": 1726466436,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1003"
+ },
+ {
+  "id": "h-00224",
+  "ts": 1726466448,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1004"
+ },
+ {
+  "id": "h-00225",
+  "ts": 1726466460,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1005"
+ },
+ {
+  "id": "h-00226",
+  "ts": 1726466472,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1006"
+ },
+ {
+  "id": "h-00227",
+  "ts": 1726466484,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1007"
+ },
+ {
+  "id": "h-00228",
+  "ts": 1726466496,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1008"
+ },
+ {
+  "id": "h-00229",
+  "ts": 1726466508,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1009"
+ },
+ {
+  "id": "h-00230",
+  "ts": 1726466520,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1010"
+ },
+ {
+  "id": "h-00231",
+  "ts": 1726466532,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1011"
+ },
+ {
+  "id": "h-00232",
+  "ts": 1726466544,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1012"
+ },
+ {
+  "id": "h-00233",
+  "ts": 1726466556,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1013"
+ },
+ {
+  "id": "h-00234",
+  "ts": 1726466568,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.54",
+  "path": "/orders/1014"
+ },
+ {
+  "id": "h-00235",
+  "time": "2024-09-16T09:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user10",
+  "performed_by": "lab.contractor",
+  "role": "Owner"
+ },
+ {
+  "id": "h-00236",
+  "time": "2024-09-16T12:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user14",
+  "performed_by": "lab.contractor",
+  "role": "Owner"
+ },
+ {
+  "id": "h-00237",
+  "time": "2024-09-16T15:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user24",
+  "performed_by": "lab.contractor",
+  "role": "power_user_full_access"
+ },
+ {
+  "id": "h-00238",
+  "time": "2024-09-16T18:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user16",
+  "performed_by": "lab.contractor",
+  "role": "power_user_full_access"
+ },
+ {
+  "event_id": "h-00239",
+  "@timestamp": "2024-09-16T21:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00240",
+  "@timestamp": "2024-09-16T21:00:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00241",
+  "@timestamp": "2024-09-16T21:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00242",
+  "@timestamp": "2024-09-16T21:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00243",
+  "@timestamp": "2024-09-16T21:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00244",
+  "@timestamp": "2024-09-16T21:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00245",
+  "@timestamp": "2024-09-16T21:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00246",
+  "@timestamp": "2024-09-16T21:02:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00247",
+  "@timestamp": "2024-09-17T00:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00248",
+  "@timestamp": "2024-09-17T00:00:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00249",
+  "@timestamp": "2024-09-17T00:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00250",
+  "@timestamp": "2024-09-17T00:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00251",
+  "@timestamp": "2024-09-17T00:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00252",
+  "@timestamp": "2024-09-17T00:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00253",
+  "@timestamp": "2024-09-17T00:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00254",
+  "@timestamp": "2024-09-17T00:02:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00255",
+  "@timestamp": "2024-09-17T03:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00256",
+  "@timestamp": "2024-09-17T03:00:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00257",
+  "@timestamp": "2024-09-17T03:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00258",
+  "@timestamp": "2024-09-17T03:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00259",
+  "@timestamp": "2024-09-17T03:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00260",
+  "@timestamp": "2024-09-17T03:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00261",
+  "@timestamp": "2024-09-17T03:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00262",
+  "@timestamp": "2024-09-17T03:02:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00263",
+  "@timestamp": "2024-09-17T06:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00264",
+  "@timestamp": "2024-09-17T06:00:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00265",
+  "@timestamp": "2024-09-17T06:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00266",
+  "@timestamp": "2024-09-17T06:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00267",
+  "@timestamp": "2024-09-17T06:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00268",
+  "@timestamp": "2024-09-17T06:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00269",
+  "@timestamp": "2024-09-17T06:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00270",
+  "@timestamp": "2024-09-17T06:02:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00271",
+  "@timestamp": "2024-09-17T09:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00272",
+  "@timestamp": "2024-09-17T09:00:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00273",
+  "@timestamp": "2024-09-17T09:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00274",
+  "@timestamp": "2024-09-17T09:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00275",
+  "@timestamp": "2024-09-17T09:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00276",
+  "@timestamp": "2024-09-17T09:01:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00277",
+  "@timestamp": "2024-09-17T09:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00278",
+  "@timestamp": "2024-09-17T09:02:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.svc-sync",
+  "client_ip": "10.0.0.5"
+ },
+ {
+  "event_id": "h-00279",
+  "@timestamp": "2024-09-17T12:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.182"
+ },
+ {
+  "event_id": "h-00280",
+  "@timestamp": "2024-09-17T12:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.182"
+ },
+ {
+  "event_id": "h-00281",
+  "@timestamp": "2024-09-17T12:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.182"
+ },
+ {
+  "event_id": "h-00282",
+  "@timestamp": "2024-09-17T12:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.182"
+ },
+ {
+  "event_id": "h-00283",
+  "@timestamp": "2024-09-17T12:02:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.182"
+ },
+ {
+  "event_id": "h-00284",
+  "@timestamp": "2024-09-17T12:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.182"
+ },
+ {
+  "event_id": "h-00285",
+  "@timestamp": "2024-09-17T12:09:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.182"
+ },
+ {
+  "event_id": "h-00286",
+  "@timestamp": "2024-09-17T15:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.202"
+ },
+ {
+  "event_id": "h-00287",
+  "@timestamp": "2024-09-17T15:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.202"
+ },
+ {
+  "event_id": "h-00288",
+  "@timestamp": "2024-09-17T15:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.202"
+ },
+ {
+  "event_id": "h-00289",
+  "@timestamp": "2024-09-17T15:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.202"
+ },
+ {
+  "event_id": "h-00290",
+  "@timestamp": "2024-09-17T15:02:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.202"
+ },
+ {
+  "event_id": "h-00291",
+  "@timestamp": "2024-09-17T15:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.202"
+ },
+ {
+  "event_id": "h-00292",
+  "@timestamp": "2024-09-17T15:09:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user11",
+  "client_ip": "198.51.100.202"
+ },
+ {
+  "event_id": "h-00293",
+  "@timestamp": "2024-09-17T18:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.66"
+ },
+ {
+  "event_id": "h-00294",
+  "@timestamp": "2024-09-17T18:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.66"
+ },
+ {
+  "event_id": "h-00295",
+  "@timestamp": "2024-09-17T18:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.66"
+ },
+ {
+  "event_id": "h-00296",
+  "@timestamp": "2024-09-17T18:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.66"
+ },
+ {
+  "event_id": "h-00297",
+  "@timestamp": "2024-09-17T18:02:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.66"
+ },
+ {
+  "event_id": "h-00298",
+  "@timestamp": "2024-09-17T18:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.66"
+ },
+ {
+  "event_id": "h-00299",
+  "@timestamp": "2024-09-17T18:09:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user17",
+  "client_ip": "198.51.100.66"
+ },
+ {
+  "event_id": "h-00300",
+  "@timestamp": "2024-09-17T21:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user23",
+  "client_ip": "192.0.2.130"
+ },
+ {
+  "event_id": "h-00301",
+  "@timestamp": "2024-09-17T21:00:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user23",
+  "client_ip": "192.0.2.130"
+ },
+ {
+  "event_id": "h-00302",
+  "@timestamp": "2024-09-17T21:01:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user23",
+  "client_ip": "192.0.2.130"
+ },
+ {
+  "event_id": "h-00303",
+  "@timestamp": "2024-09-17T21:02:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user23",
+  "client_ip": "192.0.2.130"
+ },
+ {
+  "event_id": "h-00304",
+  "@timestamp": "2024-09-17T21:02:40.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user23",
+  "client_ip": "192.0.2.130"
+ },
+ {
+  "event_id": "h-00305",
+  "@timestamp": "2024-09-17T21:03:20.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user23",
+  "client_ip": "192.0.2.130"
+ },
+ {
+  "event_id": "h-00306",
+  "@timestamp": "2024-09-17T21:09:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user23",
+  "client_ip": "192.0.2.130"
+ },
+ {
+  "id": "h-00307",
+  "ts": 1726617600,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user14",
+  "src_ip": "198.51.100.158",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00308",
+  "ts": 1726617615,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user14",
+  "src_ip": "198.51.100.230",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00309",
+  "ts": 1726617630,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user14",
+  "src_ip": "198.51.100.182",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00310",
+  "ts": 1726617645,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user14",
+  "src_ip": "192.0.2.100",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00311",
+  "ts": 1726628400,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user07",
+  "src_ip": "192.0.2.105",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00312",
+  "ts": 1726628415,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user07",
+  "src_ip": "198.51.100.31",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00313",
+  "ts": 1726628430,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user07",
+  "src_ip": "203.0.113.18",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00314",
+  "ts": 1726628445,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user07",
+  "src_ip": "198.51.100.97",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00315",
+  "ts": 1726639200,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "198.51.100.158",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00316",
+  "ts": 1726639215,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "198.51.100.151",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00317",
+  "ts": 1726639230,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "192.0.2.56",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00318",
+  "ts": 1726639245,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user01",
+  "src_ip": "203.0.113.38",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00319",
+  "ts": 1726650000,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user08",
+  "src_ip": "192.0.2.178",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00320",
+  "ts": 1726650015,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user08",
+  "src_ip": "203.0.113.181",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00321",
+  "ts": 1726650030,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user08",
+  "src_ip": "198.51.100.37",
+  "path": "/reports/export"
+ },
+ {
+  "id": "h-00322",
+  "ts": 1726650045,
+  "system": "orders-api",
+  "action": "HTTP_403",
+  "username": "lab.user08",
+  "src_ip": "203.0.113.250",
+  "path": "/reports/export"
+ },
+ {
+  "event_id": "h-00323",
+  "@timestamp": "2024-09-18T12:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "203.0.113.113"
+ },
+ {
+  "event_id": "h-00324",
+  "@timestamp": "2024-09-18T12:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user00",
+  "client_ip": "203.0.113.113"
+ },
+ {
+  "event_id": "h-00325",
+  "@timestamp": "2024-09-18T12:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user00",
+  "client_ip": "203.0.113.113"
+ },
+ {
+  "event_id": "h-00326",
+  "@timestamp": "2024-09-18T15:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user07",
+  "client_ip": "203.0.113.89"
+ },
+ {
+  "event_id": "h-00327",
+  "@timestamp": "2024-09-18T15:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user07",
+  "client_ip": "203.0.113.89"
+ },
+ {
+  "event_id": "h-00328",
+  "@timestamp": "2024-09-18T15:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user07",
+  "client_ip": "203.0.113.89"
+ },
+ {
+  "event_id": "h-00329",
+  "@timestamp": "2024-09-18T18:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user20",
+  "client_ip": "198.51.100.3"
+ },
+ {
+  "event_id": "h-00330",
+  "@timestamp": "2024-09-18T18:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user20",
+  "client_ip": "198.51.100.3"
+ },
+ {
+  "event_id": "h-00331",
+  "@timestamp": "2024-09-18T18:01:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user20",
+  "client_ip": "198.51.100.3"
+ },
+ {
+  "event_id": "h-00332",
+  "@timestamp": "2024-09-18T18:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user20",
+  "client_ip": "198.51.100.3"
+ },
+ {
+  "event_id": "h-00333",
+  "@timestamp": "2024-09-18T21:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user18",
+  "client_ip": "198.51.100.111"
+ },
+ {
+  "event_id": "h-00334",
+  "@timestamp": "2024-09-18T21:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user18",
+  "client_ip": "198.51.100.111"
+ },
+ {
+  "event_id": "h-00335",
+  "@timestamp": "2024-09-18T21:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user18",
+  "client_ip": "198.51.100.111"
+ },
+ {
+  "event_id": "h-00336",
+  "@timestamp": "2024-09-19T00:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user01",
+  "client_ip": "203.0.113.1"
+ },
+ {
+  "event_id": "h-00337",
+  "@timestamp": "2024-09-19T00:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user01",
+  "client_ip": "203.0.113.1"
+ },
+ {
+  "event_id": "h-00338",
+  "@timestamp": "2024-09-19T03:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user16",
+  "client_ip": "198.51.100.13"
+ },
+ {
+  "event_id": "h-00339",
+  "@timestamp": "2024-09-19T03:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user16",
+  "client_ip": "198.51.100.13"
+ },
+ {
+  "event_id": "h-00340",
+  "@timestamp": "2024-09-19T03:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user16",
+  "client_ip": "198.51.100.13"
+ },
+ {
+  "event_id": "h-00341",
+  "@timestamp": "2024-09-19T06:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.41"
+ },
+ {
+  "event_id": "h-00342",
+  "@timestamp": "2024-09-19T06:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.41"
+ },
+ {
+  "event_id": "h-00343",
+  "@timestamp": "2024-09-19T09:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.242"
+ },
+ {
+  "event_id": "h-00344",
+  "@timestamp": "2024-09-19T09:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.242"
+ },
+ {
+  "event_id": "h-00345",
+  "@timestamp": "2024-09-19T09:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user19",
+  "client_ip": "192.0.2.242"
+ },
+ {
+  "event_id": "h-00346",
+  "@timestamp": "2024-09-19T12:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user09",
+  "client_ip": "192.0.2.172"
+ },
+ {
+  "event_id": "h-00347",
+  "@timestamp": "2024-09-19T12:00:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user09",
+  "client_ip": "192.0.2.172"
+ },
+ {
+  "event_id": "h-00348",
+  "@timestamp": "2024-09-19T12:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user09",
+  "client_ip": "192.0.2.172"
+ },
+ {
+  "event_id": "h-00349",
+  "@timestamp": "2024-09-19T15:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTHENTICATION_FAILED",
+  "account": "lab.user06",
+  "client_ip": "192.0.2.132"
+ },
+ {
+  "event_id": "h-00350",
+  "@timestamp": "2024-09-19T15:02:30.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user06",
+  "client_ip": "192.0.2.132"
+ },
+ {
+  "id": "h-00351",
+  "time": "2024-09-19T18:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user16",
+  "performed_by": "lab.hr-admin",
+  "role": "viewer"
+ },
+ {
+  "id": "h-00352",
+  "time": "2024-09-19T21:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user22",
+  "performed_by": "lab.hr-admin",
+  "role": "viewer"
+ },
+ {
+  "id": "h-00353",
+  "time": "2024-09-20T00:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user24",
+  "performed_by": "lab.hr-admin",
+  "role": "viewer"
+ },
+ {
+  "id": "h-00354",
+  "time": "2024-09-20T03:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user06",
+  "performed_by": "lab.hr-admin",
+  "role": "viewer"
+ },
+ {
+  "id": "h-00355",
+  "time": "2024-09-20T06:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user24",
+  "performed_by": "lab.hr-admin",
+  "role": "viewer"
+ },
+ {
+  "id": "h-00356",
+  "time": "2024-09-20T09:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user05",
+  "performed_by": "lab.hr-admin",
+  "role": "viewer"
+ },
+ {
+  "id": "h-00357",
+  "time": "2024-09-20T12:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user03",
+  "performed_by": "lab.cto",
+  "role": "admin"
+ },
+ {
+  "id": "h-00358",
+  "time": "2024-09-20T15:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user16",
+  "performed_by": "lab.cto",
+  "role": "admin"
+ },
+ {
+  "id": "h-00359",
+  "time": "2024-09-20T18:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user05",
+  "performed_by": "lab.cto",
+  "role": "admin"
+ },
+ {
+  "id": "h-00360",
+  "time": "2024-09-20T21:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user12",
+  "performed_by": "lab.cto",
+  "role": "admin"
+ },
+ {
+  "id": "h-00361",
+  "time": "2024-09-21T00:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user07",
+  "performed_by": "lab.cto",
+  "role": "admin"
+ },
+ {
+  "id": "h-00362",
+  "time": "2024-09-21T03:00:00.000+00:00",
+  "source": "iam",
+  "type": "IAM_POLICY_CHANGE",
+  "user": "lab.user10",
+  "performed_by": "lab.cto",
+  "role": "admin"
+ },
+ {
+  "event_id": "h-00363",
+  "@timestamp": "2024-09-21T06:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user13",
+  "client_ip": "203.0.113.163"
+ },
+ {
+  "event_id": "h-00364",
+  "@timestamp": "2024-09-21T09:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user14",
+  "client_ip": "198.51.100.196"
+ },
+ {
+  "event_id": "h-00365",
+  "@timestamp": "2024-09-21T12:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user05",
+  "client_ip": "192.0.2.150"
+ },
+ {
+  "event_id": "h-00366",
+  "@timestamp": "2024-09-21T15:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user24",
+  "client_ip": "203.0.113.246"
+ },
+ {
+  "event_id": "h-00367",
+  "@timestamp": "2024-09-21T18:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user08",
+  "client_ip": "198.51.100.148"
+ },
+ {
+  "event_id": "h-00368",
+  "@timestamp": "2024-09-21T21:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user18",
+  "client_ip": "192.0.2.137"
+ },
+ {
+  "event_id": "h-00369",
+  "@timestamp": "2024-09-22T00:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user09",
+  "client_ip": "192.0.2.55"
+ },
+ {
+  "event_id": "h-00370",
+  "@timestamp": "2024-09-22T03:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user04",
+  "client_ip": "198.51.100.207"
+ },
+ {
+  "event_id": "h-00371",
+  "@timestamp": "2024-09-22T06:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user21",
+  "client_ip": "198.51.100.210"
+ },
+ {
+  "event_id": "h-00372",
+  "@timestamp": "2024-09-22T09:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user16",
+  "client_ip": "192.0.2.196"
+ },
+ {
+  "event_id": "h-00373",
+  "@timestamp": "2024-09-22T12:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user00",
+  "client_ip": "192.0.2.161"
+ },
+ {
+  "event_id": "h-00374",
+  "@timestamp": "2024-09-22T15:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user21",
+  "client_ip": "203.0.113.124"
+ },
+ {
+  "event_id": "h-00375",
+  "@timestamp": "2024-09-22T18:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user11",
+  "client_ip": "192.0.2.82"
+ },
+ {
+  "event_id": "h-00376",
+  "@timestamp": "2024-09-22T21:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user08",
+  "client_ip": "198.51.100.92"
+ },
+ {
+  "event_id": "h-00377",
+  "@timestamp": "2024-09-23T00:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user10",
+  "client_ip": "192.0.2.65"
+ },
+ {
+  "event_id": "h-00378",
+  "@timestamp": "2024-09-23T03:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user09",
+  "client_ip": "203.0.113.207"
+ },
+ {
+  "event_id": "h-00379",
+  "@timestamp": "2024-09-23T06:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user04",
+  "client_ip": "192.0.2.179"
+ },
+ {
+  "event_id": "h-00380",
+  "@timestamp": "2024-09-23T09:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user03",
+  "client_ip": "203.0.113.234"
+ },
+ {
+  "event_id": "h-00381",
+  "@timestamp": "2024-09-23T12:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user23",
+  "client_ip": "198.51.100.78"
+ },
+ {
+  "event_id": "h-00382",
+  "@timestamp": "2024-09-23T15:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user17",
+  "client_ip": "192.0.2.234"
+ },
+ {
+  "event_id": "h-00383",
+  "@timestamp": "2024-09-23T18:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user13",
+  "client_ip": "198.51.100.78"
+ },
+ {
+  "event_id": "h-00384",
+  "@timestamp": "2024-09-23T21:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user09",
+  "client_ip": "203.0.113.140"
+ },
+ {
+  "event_id": "h-00385",
+  "@timestamp": "2024-09-24T00:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user06",
+  "client_ip": "192.0.2.31"
+ },
+ {
+  "event_id": "h-00386",
+  "@timestamp": "2024-09-24T03:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user12",
+  "client_ip": "203.0.113.145"
+ },
+ {
+  "event_id": "h-00387",
+  "@timestamp": "2024-09-24T06:00:00.000Z",
+  "service": "sso-gateway",
+  "event": "AUTH_SUCCESS",
+  "account": "lab.user05",
+  "client_ip": "203.0.113.218"
+ }
+]

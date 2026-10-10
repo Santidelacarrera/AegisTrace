@@ -1,11 +1,35 @@
-# Development stack. Demo credentials are used only because NODE_ENV is not "production".
+# Development stack: API + React UI (served at /ui/), PostgreSQL, FastAPI analytics.
+# Demo credentials/passwords are active only because NODE_ENV is not "production".
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: aegis-dev-only
+      POSTGRES_DB: aegis
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d aegis"]
+      interval: 5s
+      retries: 10
+  analytics:
+    build: ./analytics
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
   api:
-    build: ./api
+    build: { context: ., dockerfile: api/Dockerfile }
+    depends_on:
+      db: { condition: service_healthy }
+      analytics: { condition: service_started }
     ports: ["3000:3000"]
     environment:
       NODE_ENV: development
       PORT: "3000"
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"]
-      interval: 10s
+      DATABASE_URL: postgres://postgres:aegis-dev-only@db:5432/aegis
+      ANALYTICS_URL: http://analytics:8000
+      AEGIS_AUDIT_ANCHOR_FILE: /anchor/audit-anchor.log      # in production, point this at storage the app cannot rewrite
+      # AEGIS_ANALYSIS_PROVIDER: anthropic                    # optional LLM analysis; also set ANTHROPIC_API_KEY
+    volumes: ["anchor:/anchor"]
+volumes:
+  pgdata: {}
+  anchor: {}
