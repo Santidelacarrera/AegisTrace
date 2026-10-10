@@ -82,7 +82,9 @@ jobs:
       - run: docker build -f api/Dockerfile -t aegistrace-api .
       - run: docker build -t aegistrace-analytics ./analytics
   dependency-review:
-    if: github.event_name == 'pull_request'
+    # Needs the repository's Dependency graph enabled (Settings > Code security). Set the repo variable
+    # DEPENDENCY_REVIEW=true once it is, otherwise this job is skipped instead of failing.
+    if: github.event_name == 'pull_request' && vars.DEPENDENCY_REVIEW == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

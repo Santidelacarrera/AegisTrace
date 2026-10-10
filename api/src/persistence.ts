@@ -18,6 +18,8 @@ export class PgPersistence {
   private eventsSaved = new Map<string, Set<string>>();  // events are immutable: insert once, never re-hash
   constructor(private db: Queryable) {}
 
+  async ping(): Promise<void> { await this.db.query('SELECT 1'); }
+
   async migrate(): Promise<void> {
     const sql = readFileSync(new URL('../migrations/001_init.sql', import.meta.url), 'utf8').replace(/--.*$/gm, '');
     for (const stmt of sql.split(';').map((x) => x.trim()).filter(Boolean)) await this.db.query(stmt);

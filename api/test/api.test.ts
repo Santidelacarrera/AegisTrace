@@ -327,3 +327,40 @@ describe('analytics service integration', () => {
     expect(down.body.newAlerts).toBe(0);
   });
 });
+
+describe('hardening and operability', () => {
+  it('sets security headers, never caches API responses, and echoes/mints a request id', async () => {
+    const { app } = makeApp();
+    const r = await (await import('supertest')).default(app).get('/api/v1/alerts').set('x-api-key', 'demo-viewer').set('x-request-id', 'trace-12345678');
+    expect(r.headers['x-request-id']).toBe('trace-12345678');
+    expect(r.headers['content-security-policy']).toMatch(/script-src 'self'/);
+    expect(r.headers['x-frame-options']).toBe('DENY');
+    expect(r.headers['cache-control']).toBe('no-store');
+    expect(r.headers['strict-transport-security']).toBeUndefined();
+    const bad = await (await import('supertest')).default(app).get('/health').set('x-request-id', 'bad id');
+    expect(bad.headers['x-request-id']).toMatch(/^[0-9a-f-]{36}$/);        // unsafe inbound ids are replaced
+  });
+  it('exposes readiness and a latency histogram', async () => {
+    const { app } = makeApp();
+    const request = (await import('supertest')).default;
+    expect((await request(app).get('/ready')).body.status).toBe('ready');
+    await request(app).get('/health');
+    const m = (await request(app).get('/metrics')).text;
+    expect(m).toMatch(/aegistrace_request_duration_ms_bucket\{le="\+Inf"\} \d+/);
+    expect(m).toMatch(/aegistrace_events_stored \d+/);
+  });
+});
+
+describe('analysis of the newer rules', () => {
+  it('explains credential stuffing and caps IP block recommendations at 5', async () => {
+    const { as } = makeApp();
+    const evs = Array.from({ length: 20 }, (_, i) => ({ id: `cs${i}`, timestamp: iso(i * 0.1), source: 'idp', type: 'login_failed', user: `lab.u${i}`, ip: `203.0.113.${10 + i}` }));
+    await as('demo-ingestor').post('/events', evs);
+    const incs = (await as('demo-analyst').get('/incidents')).body.items;
+    const target = incs.find((i: { title: string }) => /stuffing/i.test(i.title));
+    expect(target).toBeTruthy();
+    const a = (await as('demo-analyst').post(`/incidents/${target.id}/analysis`)).body;
+    expect(a.hypotheses[0].statement).toMatch(/Credential stuffing against .* and \d+ more accounts from 20 IPs/);
+    expect(a.recommendations.filter((r: { kind: string }) => r.kind === 'block_ip')).toHaveLength(5);
+  });
+});

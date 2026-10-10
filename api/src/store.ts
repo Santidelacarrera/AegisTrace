@@ -20,6 +20,7 @@ export class OrgData {
  */
 export class Store {
   private orgs = new Map<string, OrgData>();
+  all(): IterableIterator<OrgData> { return this.orgs.values(); }
   org(orgId: string): OrgData {
     let o = this.orgs.get(orgId);
     if (!o) this.orgs.set(orgId, (o = new OrgData()));

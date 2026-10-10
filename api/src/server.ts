@@ -33,4 +33,10 @@ if (process.env.REDIS_URL) {
 }
 const { app } = createApp({ config, store, persistence, provider, limiter, analytics: process.env.ANALYTICS_URL ? httpAnalyticsClient(process.env.ANALYTICS_URL, { log: config.log }) : undefined });
 const port = Number(process.env.PORT ?? 3000);
-app.listen(port, () => config.log({ msg: 'listening', port, demoKeys: !process.env.AEGIS_API_KEYS }));
+const server = app.listen(port, () => config.log({ msg: 'listening', port, demoKeys: !process.env.AEGIS_API_KEYS }));
+// Graceful shutdown: stop accepting, let in-flight requests (and their DB flushes) finish, then exit.
+for (const sig of ['SIGTERM', 'SIGINT'] as const) process.on(sig, () => {
+  config.log({ msg: 'shutting_down', signal: sig });
+  server.close(() => process.exit(0));
+  setTimeout(() => process.exit(1), 10_000).unref();
+});

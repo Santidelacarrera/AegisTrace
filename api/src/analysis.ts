@@ -52,16 +52,17 @@ export const ruleBasedProvider: AnalysisProvider = {
     const gaps: string[] = [];
     const has = (r: string) => alerts.some((a) => a.ruleId === r);
 
-    if (has('R001') || has('R003')) {
+    if (has('R001') || has('R003') || has('R004') || has('R005')) {
       const single = uniq(failed.map((e) => e.ip)).length === 1;
       hypotheses.push({
-        statement: `Credential guessing against ${users.join(', ') || 'unknown accounts'} from ${ips.join(', ') || 'unknown IPs'} (${failed.length} failed logins).`,
+        statement: `${has('R005') ? 'Credential stuffing' : has('R004') ? 'Slow credential guessing' : 'Credential guessing'} against ${users.slice(0, 6).join(', ')}${users.length > 6 ? ` and ${users.length - 6} more accounts` : ''} from ${ips.length > 4 ? `${ips.length} IPs` : ips.join(', ') || 'unknown IPs'} (${failed.length} failed logins).`,
         confidence: failed.length >= 8 || has('R003') ? 'high' : 'medium', evidenceIds: idsOf(failed),
       });
       if (failed.length < 8 && single && !has('R002')) {
         hypotheses.push({ statement: 'Benign alternative: a legitimate user mistyping a password or a misconfigured client retrying with a stale credential.', confidence: 'low', evidenceIds: idsOf(failed) });
       }
-      for (const ip of ips) recs.push({ kind: 'block_ip', target: ip, rationale: `Source of ${failed.filter((e) => e.ip === ip).length} failed logins.`, evidenceIds: idsOf(failed.filter((e) => e.ip === ip)) });
+      const topIps = [...ips].sort((a, b) => failed.filter((e) => e.ip === b).length - failed.filter((e) => e.ip === a).length || a.localeCompare(b)).slice(0, 5);   // cap: stuffing can involve hundreds of IPs
+      for (const ip of topIps) recs.push({ kind: 'block_ip', target: ip, rationale: `Source of ${failed.filter((e) => e.ip === ip).length} failed logins.`, evidenceIds: idsOf(failed.filter((e) => e.ip === ip)) });
     }
     if (has('R002')) {
       hypotheses.push({ statement: `Possible account compromise: a successful login for ${users.join(', ')} followed the failed attempts.`, confidence: 'medium', evidenceIds: idsOf([...failed, ...success]) });

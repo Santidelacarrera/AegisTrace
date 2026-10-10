@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { detect, AlertCandidate } from './rules.js';
+import { detect, AlertCandidate, EMPTY_CONTEXT, RuleContext } from './rules.js';
 import { OrgData } from './store.js';
 import { Alert, Incident, maxSeverity } from './types.js';
 
@@ -95,10 +95,10 @@ function correlate(org: OrgData, orgId: string, alert: Alert, now: string) {
 }
 
 /** Re-run deterministic detection over the org's events and correlate new or grown alerts. */
-export function runDetection(org: OrgData, orgId: string, now: string, extra: AlertCandidate[] = []): { newAlerts: number; updatedAlerts: number } {
+export function runDetection(org: OrgData, orgId: string, now: string, extra: AlertCandidate[] = [], ctx: RuleContext = EMPTY_CONTEXT): { newAlerts: number; updatedAlerts: number } {
   const events = [...org.events.values()];
   let newAlerts = 0, updatedAlerts = 0;
-  const candidates = [...detect(events), ...extra].sort((a, b) => a.events[0]!.timestamp.localeCompare(b.events[0]!.timestamp) || a.ruleId.localeCompare(b.ruleId));
+  const candidates = [...detect(events, ctx), ...extra].sort((a, b) => a.events[0]!.timestamp.localeCompare(b.events[0]!.timestamp) || a.ruleId.localeCompare(b.ruleId));
   for (const c of candidates) {
     const before = org.alerts.size;
     const { alert, changed } = upsertAlert(org, orgId, c);

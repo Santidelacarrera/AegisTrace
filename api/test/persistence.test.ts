@@ -54,3 +54,14 @@ describe('PostgreSQL persistence', () => {
     await pool.end();
   });
 });
+
+describe.skipIf(!process.env.TEST_DATABASE_URL)('readiness with a database', () => {
+  it('reports 503 when PostgreSQL is unreachable', async () => {
+    const down = new PgPersistence({ query: async () => { throw new Error('connection refused'); } });
+    const config = { ...loadConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv), keys: DEMO_KEYS };
+    const { app } = createApp({ config, persistence: down });
+    const r = await request(app).get('/ready');
+    expect([r.status, r.body.checks.database]).toEqual([503, 'down']);
+    expect((await request(app).get('/health')).status).toBe(200);          // liveness is independent
+  });
+});

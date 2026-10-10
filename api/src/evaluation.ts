@@ -1,4 +1,4 @@
-import { detect } from './rules.js';
+import { detect, EMPTY_CONTEXT, RuleContext } from './rules.js';
 import { normalizeEvent } from './normalize.js';
 import { NormEvent, sevRank } from './types.js';
 
@@ -12,13 +12,13 @@ export interface EvalReport {
 }
 
 /** Scenario-level evaluation of alerts with severity >= medium against labeled synthetic data. */
-export function evaluate(rawEvents: unknown[], labels: Labels, minSeverity: 'medium' | 'low' = 'medium'): EvalReport {
+export function evaluate(rawEvents: unknown[], labels: Labels, minSeverity: 'medium' | 'low' = 'medium', ctx: RuleContext = EMPTY_CONTEXT): EvalReport {
   const events: NormEvent[] = rawEvents.map((r) => {
     const n = normalizeEvent(r, 'eval');
     if (!n.ok) throw new Error('dataset contains invalid event: ' + n.error);
     return n.event;
   });
-  const alerts = detect(events).filter((a) => sevRank(a.severity) >= sevRank(minSeverity));
+  const alerts = detect(events, ctx).filter((a) => sevRank(a.severity) >= sevRank(minSeverity));
   let tp = 0, fp = 0;
   const falseAlarmsByKind: Record<string, number> = {};
   const hit = new Set<string>();

@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { Principal } from './types.js';
 import { hashPassword, UserEntry } from './auth.js';
+import { RuleContext } from './rules.js';
 import { OidcConfig, oidcConfigFromEnv } from './oidc.js';
 
 export interface KeyEntry extends Principal { key: string }
@@ -11,6 +12,9 @@ export interface Config {
   sessionKey: string;
   tokenTtlSec: number;
   anchorFile?: string;
+  rules: RuleContext;
+  hsts: boolean;
+  trustProxy: boolean;
   oidc?: OidcConfig;
   ssoTokenTtlSec: number;
   auditKey: string;
@@ -33,6 +37,8 @@ export const DEMO_KEYS: KeyEntry[] = [
 
 const demoUsers = (): UserEntry[] => DEMO_KEYS.filter((k) => k.key !== 'demo-ingestor').map((k) => ({ userId: k.userId, orgId: k.orgId, role: k.role, passwordHash: hashPassword('demo-' + k.role) }));
 
+const csv = (v?: string) => (v ?? '').split(',').map((x) => x.trim()).filter(Boolean);
+
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   const prod = env.NODE_ENV === 'production';
   let keys: KeyEntry[];
@@ -47,7 +53,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   const auditKey = env.AEGIS_AUDIT_KEY ?? (prod ? '' : 'dev-only-audit-key');
   if (!auditKey) throw new Error('AEGIS_AUDIT_KEY is required when NODE_ENV=production');
   return {
-    keys, users, sessionKey, tokenTtlSec: Number(env.AEGIS_TOKEN_TTL ?? 8 * 3600), anchorFile: env.AEGIS_AUDIT_ANCHOR_FILE, oidc: oidcConfigFromEnv(env), ssoTokenTtlSec: Number(env.AEGIS_SSO_TOKEN_TTL ?? 3600),
+    keys, users, sessionKey, tokenTtlSec: Number(env.AEGIS_TOKEN_TTL ?? 8 * 3600), anchorFile: env.AEGIS_AUDIT_ANCHOR_FILE, rules: { serviceAccounts: csv(env.AEGIS_SERVICE_ACCOUNTS), changeApprovers: csv(env.AEGIS_CHANGE_APPROVERS) }, hsts: env.AEGIS_HSTS === '1', trustProxy: env.AEGIS_TRUST_PROXY === '1', oidc: oidcConfigFromEnv(env), ssoTokenTtlSec: Number(env.AEGIS_SSO_TOKEN_TTL ?? 3600),
     auditKey,
     rateLimitPerMinute: Number(env.AEGIS_RATE_LIMIT ?? 600),
     maxBatch: Number(env.AEGIS_MAX_BATCH ?? 1000),

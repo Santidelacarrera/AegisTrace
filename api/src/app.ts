@@ -5,6 +5,7 @@ import { Config, hashKey } from './config.js';
 import { stepOf, verifyTotp } from './totp.js';
 import { createOidc, OidcError } from './oidc.js';
 import { Limiter, MemoryLimiter } from './limits.js';
+import { Histogram } from './metrics.js';
 import { LoginThrottle, signToken, verifyPassword, verifyToken } from './auth.js';
 import { normalizeEvent, parseCsv } from './normalize.js';
 import { runDetection } from './pipeline.js';
@@ -17,7 +18,7 @@ import { AnalysisProvider, AnalysisValidationError, buildAnalysis, inLabScope, r
 import {
   ActionType, INCIDENT_STATUSES, Incident, IncidentStatus, Principal, ResponseAction, SEVERITIES, Severity, sevRank,
 } from './types.js';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { existsSync } from 'node:fs';
@@ -48,23 +49,47 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
   const app = express();
   const appendAudit: typeof appendAuditBase = (org, key, at, e) => appendAuditBase(org, key, at, e, config.anchorFile, (err) => { counters.anchorErrors++; config.log({ msg: 'audit_anchor_write_failed', error: String(err) }); });
   app.disable('x-powered-by');
+  if (config.trustProxy) app.set('trust proxy', 1);
   const keyIndex = new Map(config.keys.map((k) => [hashKey(k.key), { userId: k.userId, orgId: k.orgId, role: k.role } as Principal]));
   const counters = { requests: 0, denied: 0, eventsIngested: 0, rateLimited: 0, anchorErrors: 0 };
   const nowIso = () => config.now().toISOString();
+  const latency = new Histogram([5, 10, 25, 50, 100, 250, 500, 1000, 2500]);
 
   app.use((req, res, next) => {
     const t0 = process.hrtime.bigint();
     counters.requests++;
+    // Correlation id: honour a sane inbound one (from a proxy), otherwise mint one; returned and logged.
+    const inbound = req.header('x-request-id');
+    const rid = inbound && /^[\w.-]{8,64}$/.test(inbound) ? inbound : randomUUID();
+    res.setHeader('X-Request-Id', rid);
     res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.on('finish', () => config.log({ msg: 'request', method: req.method, path: req.path, status: res.statusCode, ms: Number(process.hrtime.bigint() - t0) / 1e6, user: req.principal?.userId, org: req.principal?.orgId }));
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Referrer-Policy', 'no-referrer');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
+    if (config.hsts) res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    if (req.path.startsWith('/api/')) res.setHeader('Cache-Control', 'no-store');
+    res.on('finish', () => {
+      const ms = Number(process.hrtime.bigint() - t0) / 1e6;
+      latency.observe(ms);
+      config.log({ msg: 'request', rid, method: req.method, path: req.path, status: res.statusCode, ms, user: req.principal?.userId, org: req.principal?.orgId });
+    });
     next();
   });
 
   const here = path.dirname(fileURLToPath(import.meta.url));
   const publicDir = [path.join(here, '..', 'public'), path.join(here, '..', '..', 'public')].find((d) => existsSync(d)) ?? here;
   app.get('/health', (_req, res) => { res.json({ status: 'ok' }); });
+  app.get('/ready', wrap(async (_req, res) => {
+    // Ready = dependencies reachable. Liveness (/health) stays dependency-free so orchestrators don't restart on a DB blip.
+    const checks: Record<string, string> = {};
+    if (persistence) checks.database = (await persistence.ping().then(() => 'ok', () => 'down'));
+    const ok = Object.values(checks).every((v) => v === 'ok');
+    res.status(ok ? 200 : 503).json({ status: ok ? 'ready' : 'degraded', checks });
+  }));
   app.get('/metrics', (_req, res) => {
-    res.type('text/plain').send(Object.entries(counters).map(([k, v]) => `aegistrace_${k}_total ${v}`).join('\n') + '\n');
+    const lines = Object.entries(counters).map(([k, v]) => `aegistrace_${k}_total ${v}`);
+    res.type('text/plain').send([...lines, ...latency.render('aegistrace_request_duration_ms'), `aegistrace_events_stored ${[...store.all()].reduce((n, o) => n + o.events.size, 0)}`].join('\n') + '\n');
   });
   app.use('/ui', express.static(publicDir));
 
@@ -204,7 +229,7 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
     });
     counters.eventsIngested += accepted;
     const extra = accepted && analytics ? await analytics([...data.events.values()]) : [];
-    const det = accepted ? runDetection(data, p.orgId, nowIso(), extra) : { newAlerts: 0, updatedAlerts: 0 };
+    const det = accepted ? runDetection(data, p.orgId, nowIso(), extra, config.rules) : { newAlerts: 0, updatedAlerts: 0 };
     audit(req, 'event.ingest', 'event', `batch:${accepted}`, 'success', `accepted=${accepted} duplicates=${duplicates} rejected=${rejected.length}`);
     res.status(rejected.length && !accepted && !duplicates ? 422 : 202).json({ accepted, duplicates, rejected, acceptedIds, ...det });
   }));
