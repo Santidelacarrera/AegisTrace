@@ -28,7 +28,7 @@ services:
       DATABASE_URL: postgres://postgres:aegis-dev-only@db:5432/aegis
       ANALYTICS_URL: http://analytics:8000
       AEGIS_AUDIT_ANCHOR_FILE: /anchor/audit-anchor.log      # in production, point this at storage the app cannot rewrite
-      # AEGIS_ANALYSIS_PROVIDER: anthropic                    # optional LLM analysis; also set ANTHROPIC_API_KEY
+      # AEGIS_ANALYSIS_PROVIDER: openai   # or anthropic. openai needs OPENAI_API_KEY + AEGIS_LLM_MODEL; anthropic needs ANTHROPIC_API_KEY
     volumes: ["anchor:/anchor"]
 volumes:
   pgdata: {}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { anthropicProvider, buildPromptData } from '../src/llm.js';
+import { anthropicProvider, buildPromptData, openaiProvider } from '../src/llm.js';
 import { bruteForceEvents, makeApp } from './helpers.js';
 
 const reply = (obj: unknown, status = 200): typeof fetch => (async () => new Response(JSON.stringify({ content: [{ type: 'text', text: typeof obj === 'string' ? obj : JSON.stringify(obj) }] }), { status })) as typeof fetch;
@@ -46,5 +46,32 @@ describe('Anthropic provider', () => {
     expect(user.match(/<\/incident_data>/g)).toHaveLength(1);       // only our closing tag
     expect(JSON.parse(sent).system).toMatch(/untrusted DATA/);
     expect(buildPromptData).toBeTypeOf('function');
+  });
+});
+
+describe('OpenAI provider', () => {
+  const oa = (content: string, status = 200): typeof fetch => (async () => new Response(JSON.stringify({ choices: [{ message: { content } }] }), { status })) as typeof fetch;
+  const go = async (f: typeof fetch) => {
+    const { as } = makeApp({ provider: openaiProvider({ apiKey: 'k', model: 'm', fetchImpl: f }) });
+    await as('demo-ingestor').post('/events', bruteForceEvents());
+    const id = (await as('demo-analyst').get('/incidents')).body.items[0].id;
+    return as('demo-analyst').post(`/incidents/${id}/analysis`);
+  };
+  it('accepts grounded output and sends bearer auth, JSON mode and delimited data', async () => {
+    let req: { url: string; init: RequestInit } | undefined;
+    const spy: typeof fetch = (async (url: string, init: RequestInit) => { req = { url, init }; return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify(good) } }] })); }) as never;
+    const r = await go(spy);
+    expect(r.status).toBe(201);
+    expect(r.body.provider).toBe('openai:m');
+    expect(req!.url).toBe('https://api.openai.com/v1/chat/completions');
+    expect((req!.init.headers as Record<string, string>).authorization).toBe('Bearer k');
+    const sent = JSON.parse(String(req!.init.body));
+    expect(sent.response_format).toEqual({ type: 'json_object' });
+    expect(sent.messages[1].content).toMatch(/^<incident_data>/);
+  });
+  it('discards hallucinated citations and maps failures to 502', async () => {
+    expect((await go(oa(JSON.stringify({ ...good, summaryEvidenceIds: ['e99'] })))).body.error).toBe('analysis_invalid');
+    expect((await go(oa('nope'))).body.error).toBe('analysis_unavailable');
+    expect((await go(oa('{}', 429))).body.message).toMatch(/HTTP 429/);
   });
 });

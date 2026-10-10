@@ -17,7 +17,7 @@ Vídeo del flujo completo (analista → aprobador → auditor): [`docs/media/dem
 | Detección por reglas | R001 fallos de login en ráfaga · R002 login exitoso tras fallos (crítica) · R003 password spraying · R010 errores de autorización · R020 cambio de permisos (admin / auto-concesión). Función pura y determinista. |
 | Detección estadística | Servicio FastAPI (`analytics/`): picos de fallos por usuario (z-score robusto) y login desde IP nueva. Opcional (`ANALYTICS_URL`) y *fail-open*. Mide peor que las reglas, ver [Evaluación](#evaluación). |
 | Correlación | Alertas → incidentes por usuario/IP compartidos en ventana de 30 min; cada incidente guarda `linkReasons` con el porqué. |
-| Investigación asistida | `POST /incidents/{id}/analysis` con proveedor determinista o LLM (Anthropic, `AEGIS_ANALYSIS_PROVIDER=anthropic`): resumen, hipótesis con confianza, alternativas benignas, recomendaciones y **lagunas de datos**. Cada cita se valida contra los eventos del incidente; si no, se descarta (502). |
+| Investigación asistida | `POST /incidents/{id}/analysis` con proveedor determinista o LLM (Anthropic u OpenAI, `AEGIS_ANALYSIS_PROVIDER=anthropic|openai`): resumen, hipótesis con confianza, alternativas benignas, recomendaciones y **lagunas de datos**. Cada cita se valida contra los eventos del incidente; si no, se descarta (502). |
 | Gestión de incidentes | Estados con transiciones válidas, responsable, etiquetas, comentarios, línea de tiempo, filtros, búsqueda y paginación. |
 | Respuesta controlada | Solo **simuladas** (`block_ip`, `disable_user`), limitadas a un ámbito de laboratorio (`192.0.2/24`, `198.51.100/24`, `203.0.113/24`, `10/8`, usuarios `lab.*`). Propuesta → aprobación por otra persona → ejecución simulada. |
 | Autenticación | Login con contraseña (scrypt) → token firmado HMAC con caducidad; bloqueo tras 5 fallos; claves API para cuentas de servicio. Quitar un usuario revoca sus sesiones. |
@@ -79,7 +79,7 @@ cd analytics && pytest && python evaluate.py        # 7 pruebas y evaluación de
 
 **Credenciales de demostración** (solo con `NODE_ENV != production`): usuarios `ana` (analyst), `alex` (approver), `aude` (auditor), `vera` (viewer), `root-admin` (admin) en `org-acme` y `olivia` en `org-globex`, con contraseña `demo-<rol>`; claves API `demo-ingestor`, `demo-analyst`, … en la cabecera `x-api-key`. En producción hay que definir `AEGIS_API_KEYS`, `AEGIS_USERS` (hash scrypt), `AEGIS_AUDIT_KEY` y `AEGIS_SESSION_KEY`; si falta alguna, el servidor no arranca.
 
-Variables: `DATABASE_URL`, `ANALYTICS_URL`, `AEGIS_ANALYSIS_PROVIDER=anthropic` + `ANTHROPIC_API_KEY` (+ `AEGIS_LLM_MODEL`), `AEGIS_AUDIT_ANCHOR_FILE`, `AEGIS_RATE_LIMIT`, `AEGIS_MAX_BATCH`, `AEGIS_TOKEN_TTL`.
+Variables: `DATABASE_URL`, `ANALYTICS_URL`, `AEGIS_ANALYSIS_PROVIDER=anthropic` + `ANTHROPIC_API_KEY` (+ `AEGIS_LLM_MODEL`), o `AEGIS_ANALYSIS_PROVIDER=openai` + `OPENAI_API_KEY` + `AEGIS_LLM_MODEL` (obligatorio; `OPENAI_BASE_URL` para endpoints compatibles), `AEGIS_AUDIT_ANCHOR_FILE`, `AEGIS_RATE_LIMIT`, `AEGIS_MAX_BATCH`, `AEGIS_TOKEN_TTL`.
 
 ### Roles
 
@@ -131,7 +131,7 @@ Implementado: ingesta, reglas, analítica estadística, correlación, análisis 
 - **Redis/BullMQ**: no se usa. No hay trabajo asíncrono que lo justifique (análisis y detección son rápidos y síncronos) y la propuesta lo marcaba como "si hace falta". Haría falta para múltiples instancias (rate limit compartido) o análisis LLM largos.
 - **SSO (OIDC/SAML)**: no implementado; hay usuarios y contraseñas locales. Sin MFA ni recuperación de contraseña. Sin gestión de usuarios por API (se definen por configuración).
 - **PostgreSQL**: persistencia por documentos JSONB con escritura antes de responder, no el esquema relacional de `db/schema.sql` (que queda como diseño objetivo). Cada petición que modifica datos recorre las colecciones de la organización (O(n)); la memoria sigue siendo el conjunto de trabajo, así que no escala a volúmenes grandes ni a varias instancias. Sin RLS.
-- **LLM**: el proveedor Anthropic está probado con respuestas simuladas, **no contra la API real** (no hay clave en este entorno). El validador garantiza que las citas existan, no que respalden la afirmación.
+- **LLM**: los proveedores Anthropic y OpenAI están probados con respuestas simuladas, **no contra la API real** (no hay clave en este entorno). El validador garantiza que las citas existan, no que respalden la afirmación.
 - **Auditoría**: el ancla externa solo protege si `AEGIS_AUDIT_ANCHOR_FILE` está en almacenamiento que la aplicación no pueda reescribir; quien tenga la clave HMAC y escriba en la base de datos puede rehacer la cadena.
 - **Docker**: `docker compose up --build` y los `docker build` del CI **no se han ejecutado aquí** (no hay daemon). La pila se probó arrancando PostgreSQL 16, uvicorn y la API directamente.
 - **Interfaz**: cubre el flujo principal; sin paginación visual, sin gestión de etiquetas/comentarios más allá de lo básico, sin pruebas E2E automáticas en CI (la captura es manual).

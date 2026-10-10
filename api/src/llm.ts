@@ -58,3 +58,31 @@ export function anthropicProvider(o: AnthropicOptions): AnalysisProvider {
     },
   };
 }
+
+export interface OpenAIOptions { apiKey: string; model: string; baseUrl?: string; fetchImpl?: Fetch; timeoutMs?: number }
+
+/** OpenAI Chat Completions (also works with OpenAI-compatible endpoints via baseUrl). Same prompt, schema and citation validation. */
+export function openaiProvider(o: OpenAIOptions): AnalysisProvider {
+  const doFetch = o.fetchImpl ?? fetch;
+  return {
+    name: `openai:${o.model}`,
+    async analyze(ctx): Promise<RawAnalysis> {
+      const data = JSON.stringify(buildPromptData(ctx)).replace(/<\/?incident_data>/gi, '');
+      let res: Response;
+      try {
+        res = await doFetch(`${o.baseUrl ?? 'https://api.openai.com'}/v1/chat/completions`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', authorization: `Bearer ${o.apiKey}` },
+          body: JSON.stringify({ model: o.model, response_format: { type: 'json_object' }, messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: `<incident_data>${data}</incident_data>` }] }),
+          signal: AbortSignal.timeout(o.timeoutMs ?? 30_000),
+        });
+      } catch (e) { throw new ProviderError(`LLM request failed: ${(e as Error).message}`); }
+      if (!res.ok) throw new ProviderError(`LLM provider returned HTTP ${res.status}`);
+      const body = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+      const json = (body.choices?.[0]?.message?.content ?? '').match(/\{[\s\S]*\}/)?.[0];
+      if (!json) throw new ProviderError('LLM response contained no JSON object');
+      try { return outputSchema.parse(JSON.parse(json)); }
+      catch { throw new ProviderError('LLM response did not match the required schema'); }
+    },
+  };
+}
