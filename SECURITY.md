@@ -6,7 +6,7 @@ Usa los **avisos de seguridad privados de GitHub** del repositorio (pestaña *Se
 
 ## Alcance y garantías
 
-AegisTrace es un proyecto de laboratorio/portfolio, no un producto auditado. El análisis de amenazas, lo que está cubierto y los riesgos residuales conocidos están en [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md). No se ha realizado una auditoría ni un pentest independientes.
+AegisTrace es un proyecto de laboratorio/portfolio, no un producto auditado (la licencia [Apache-2.0](LICENSE) lo ofrece sin garantías). El análisis de amenazas, lo que está cubierto y los riesgos residuales conocidos están en [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md). No se ha realizado una auditoría ni un pentest independientes.
 
 ## Buenas prácticas ya aplicadas
 

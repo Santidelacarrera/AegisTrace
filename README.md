@@ -146,6 +146,10 @@ Implementado: ingesta, reglas, analítica estadística, correlación, análisis 
 - **Interfaz**: cubre el flujo principal; sin paginación visual ni gestión avanzada de etiquetas/comentarios.
 - Sin trazas distribuidas; las métricas son contadores simples.
 
+## Licencia
+
+[Apache License 2.0](LICENSE) (véase también [`NOTICE`](NOTICE)). Permite usar, modificar y redistribuir el proyecto, también en productos comerciales, conservando los avisos de copyright; incluye una **concesión expresa de patentes** y **no concede derechos sobre el nombre «AegisTrace»**. El software se ofrece **«tal cual», sin garantías**: es un proyecto de laboratorio sin auditoría independiente, así que evalúa los riesgos (ver [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md)) antes de usarlo con datos reales. Las dependencias son MIT, ISC o BSD, compatibles con esta licencia.
+
 ## Operación y seguridad
 
 [Guía de despliegue](docs/DEPLOYMENT.md) (TLS, secretos, copias de seguridad y restauración, retención, monitorización) · [Modelo de amenazas](docs/THREAT-MODEL.md) · [Política de seguridad](SECURITY.md) · `docker-compose.prod.yml` + `.env.example`.
