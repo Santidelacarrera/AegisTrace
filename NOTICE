@@ -3,7 +3,7 @@ Copyright 2026 Santidelacarrera and AegisTrace contributors
 
 This product is licensed under the Apache License, Version 2.0 (see LICENSE).
 
-AegisTrace is a laboratory-grade incident investigation tool. It has not been independently audited. It ships with
+AegisTrace is a project of Nexus Security & AI Lab. It is a laboratory-grade incident investigation tool. It has not been independently audited. It ships with
 synthetic demonstration data only, and its response actions are simulated. See docs/THREAT-MODEL.md before using it
 with real data.
 

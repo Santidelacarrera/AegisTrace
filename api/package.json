@@ -10,7 +10,9 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "dataset": "tsx scripts/gen-dataset.ts",
     "eval": "tsx scripts/evaluate.ts",
-    "user-tool": "tsx scripts/user-tool.ts"
+    "user-tool": "tsx scripts/user-tool.ts",
+    "verify-evidence": "tsx scripts/verify-evidence.ts",
+    "export-evidence-examples": "tsx scripts/export-example-evidence.ts"
   },
   "keywords": [],
   "author": "",
