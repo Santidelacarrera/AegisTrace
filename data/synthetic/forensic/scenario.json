@@ -1,0 +1,71 @@
+{
+  "description": "Synthetic forensic scenario (Nexus Security & AI Lab). Brute force from one IP, success two minutes after the last failure, then a self-granted admin role. Documentation IPs and lab.* identities only.",
+  "events": [
+    {
+      "id": "fx-001",
+      "timestamp": "2024-06-01T09:00:00Z",
+      "source": "auth-service",
+      "type": "login_failed",
+      "user": "lab.forensic",
+      "ip": "198.51.100.23",
+      "message": "Password incorrect for lab.forensic (client build 2.1.4)"
+    },
+    {
+      "id": "fx-002",
+      "timestamp": "2024-06-01T09:00:12Z",
+      "source": "auth-service",
+      "type": "login_failed",
+      "user": "lab.forensic",
+      "ip": "198.51.100.23"
+    },
+    {
+      "id": "fx-003",
+      "timestamp": "2024-06-01T09:00:24Z",
+      "source": "auth-service",
+      "type": "login_failed",
+      "user": "lab.forensic",
+      "ip": "198.51.100.23"
+    },
+    {
+      "id": "fx-004",
+      "timestamp": "2024-06-01T09:00:36Z",
+      "source": "auth-service",
+      "type": "login_failed",
+      "user": "lab.forensic",
+      "ip": "198.51.100.23"
+    },
+    {
+      "id": "fx-005",
+      "timestamp": "2024-06-01T09:00:48Z",
+      "source": "auth-service",
+      "type": "login_failed",
+      "user": "lab.forensic",
+      "ip": "198.51.100.23"
+    },
+    {
+      "id": "fx-006",
+      "timestamp": "2024-06-01T09:01:00Z",
+      "source": "auth-service",
+      "type": "login_failed",
+      "user": "lab.forensic",
+      "ip": "198.51.100.23"
+    },
+    {
+      "id": "fx-007",
+      "timestamp": "2024-06-01T09:02:00Z",
+      "source": "auth-service",
+      "type": "login_success",
+      "user": "lab.forensic",
+      "ip": "198.51.100.23"
+    },
+    {
+      "id": "fx-008",
+      "timestamp": "2024-06-01T09:05:00Z",
+      "source": "iam",
+      "type": "permission_change",
+      "user": "lab.forensic",
+      "actor": "lab.forensic",
+      "new_role": "admin"
+    }
+  ]
+}

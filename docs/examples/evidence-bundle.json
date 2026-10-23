@@ -1,0 +1,372 @@
+{
+  "format": "aegistrace.evidence.v1",
+  "orgId": "org-acme",
+  "incidentId": "inc_df29a32cc3f16646",
+  "generatedAt": "2024-06-01T09:30:00.000Z",
+  "generatedBy": "aude",
+  "sources": [
+    "events",
+    "alerts",
+    "analyses",
+    "activity"
+  ],
+  "missing": [],
+  "head": "80694e7c9ea8483446e0898e2f31645b8964b2b04fe1eaf72729c047a75fddb9",
+  "entries": 16,
+  "records": [
+    {
+      "at": "2024-06-01T09:00:00.000Z",
+      "kind": "event",
+      "source": "auth-service",
+      "actor": "auth-service",
+      "summary": "login_failed user=lab.forensic ip=198.51.100.23",
+      "refs": [
+        "fx-001"
+      ],
+      "data": {
+        "type": "login_failed",
+        "severity": "low",
+        "user": "lab.forensic",
+        "ip": "198.51.100.23",
+        "resource": null,
+        "attrs": {
+          "message": "Password incorrect for lab.forensic (client build 2.1.4)"
+        }
+      },
+      "seq": 1,
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "e2364a62aa199631a263da3ebdaf7f49e37786f6beea5cc07d2a1f7797907cc0"
+    },
+    {
+      "at": "2024-06-01T09:00:00.000Z",
+      "kind": "alert",
+      "source": "aegistrace.rules",
+      "actor": "system",
+      "summary": "R001 Repeated failed logins for user:lab.forensic",
+      "refs": [
+        "alr_6b515232bc1513f3",
+        "fx-001",
+        "fx-002",
+        "fx-003",
+        "fx-004",
+        "fx-005",
+        "fx-006"
+      ],
+      "data": {
+        "ruleId": "R001",
+        "severity": "high",
+        "subject": "user:lab.forensic",
+        "lastSeen": "2024-06-01T09:01:00.000Z",
+        "eventIds": [
+          "fx-001",
+          "fx-002",
+          "fx-003",
+          "fx-004",
+          "fx-005",
+          "fx-006"
+        ]
+      },
+      "seq": 2,
+      "prev": "e2364a62aa199631a263da3ebdaf7f49e37786f6beea5cc07d2a1f7797907cc0",
+      "hash": "65c46aab4c6e2fd523ee30595f43f66b07ab5daa5b5faabefe70dbd0697e4a17"
+    },
+    {
+      "at": "2024-06-01T09:00:00.000Z",
+      "kind": "alert",
+      "source": "aegistrace.rules",
+      "actor": "system",
+      "summary": "R002 Successful login after repeated failures for user:lab.forensic",
+      "refs": [
+        "alr_9818ca9f1f5e69f0",
+        "fx-001",
+        "fx-002",
+        "fx-003",
+        "fx-004",
+        "fx-005",
+        "fx-006",
+        "fx-007"
+      ],
+      "data": {
+        "ruleId": "R002",
+        "severity": "critical",
+        "subject": "user:lab.forensic",
+        "lastSeen": "2024-06-01T09:02:00.000Z",
+        "eventIds": [
+          "fx-001",
+          "fx-002",
+          "fx-003",
+          "fx-004",
+          "fx-005",
+          "fx-006",
+          "fx-007"
+        ]
+      },
+      "seq": 3,
+      "prev": "65c46aab4c6e2fd523ee30595f43f66b07ab5daa5b5faabefe70dbd0697e4a17",
+      "hash": "d2f0da33fea6e224fca6fe43fecceef692e605cb258f9d5046c59c559c050f52"
+    },
+    {
+      "at": "2024-06-01T09:00:12.000Z",
+      "kind": "event",
+      "source": "auth-service",
+      "actor": "auth-service",
+      "summary": "login_failed user=lab.forensic ip=198.51.100.23",
+      "refs": [
+        "fx-002"
+      ],
+      "data": {
+        "type": "login_failed",
+        "severity": "low",
+        "user": "lab.forensic",
+        "ip": "198.51.100.23",
+        "resource": null,
+        "attrs": {}
+      },
+      "seq": 4,
+      "prev": "d2f0da33fea6e224fca6fe43fecceef692e605cb258f9d5046c59c559c050f52",
+      "hash": "661f0b63481f56114778eb5383cb645276baf77cff4e2d44fa3d3329cc0a0ec6"
+    },
+    {
+      "at": "2024-06-01T09:00:24.000Z",
+      "kind": "event",
+      "source": "auth-service",
+      "actor": "auth-service",
+      "summary": "login_failed user=lab.forensic ip=198.51.100.23",
+      "refs": [
+        "fx-003"
+      ],
+      "data": {
+        "type": "login_failed",
+        "severity": "low",
+        "user": "lab.forensic",
+        "ip": "198.51.100.23",
+        "resource": null,
+        "attrs": {}
+      },
+      "seq": 5,
+      "prev": "661f0b63481f56114778eb5383cb645276baf77cff4e2d44fa3d3329cc0a0ec6",
+      "hash": "f23def3a653587b4182b31d7e7d39fe459e10a88bf9a41ca6209d143bbf05a96"
+    },
+    {
+      "at": "2024-06-01T09:00:36.000Z",
+      "kind": "event",
+      "source": "auth-service",
+      "actor": "auth-service",
+      "summary": "login_failed user=lab.forensic ip=198.51.100.23",
+      "refs": [
+        "fx-004"
+      ],
+      "data": {
+        "type": "login_failed",
+        "severity": "low",
+        "user": "lab.forensic",
+        "ip": "198.51.100.23",
+        "resource": null,
+        "attrs": {}
+      },
+      "seq": 6,
+      "prev": "f23def3a653587b4182b31d7e7d39fe459e10a88bf9a41ca6209d143bbf05a96",
+      "hash": "62671195ae212ac9d3fc799696d6e8bc04d48a835a46a01efd459c2ad3f832e1"
+    },
+    {
+      "at": "2024-06-01T09:00:48.000Z",
+      "kind": "event",
+      "source": "auth-service",
+      "actor": "auth-service",
+      "summary": "login_failed user=lab.forensic ip=198.51.100.23",
+      "refs": [
+        "fx-005"
+      ],
+      "data": {
+        "type": "login_failed",
+        "severity": "low",
+        "user": "lab.forensic",
+        "ip": "198.51.100.23",
+        "resource": null,
+        "attrs": {}
+      },
+      "seq": 7,
+      "prev": "62671195ae212ac9d3fc799696d6e8bc04d48a835a46a01efd459c2ad3f832e1",
+      "hash": "b7a01bb1ef882f862ec77a1986c14c9bdd03bcd7e330ea48ca2950a91c9d12c1"
+    },
+    {
+      "at": "2024-06-01T09:01:00.000Z",
+      "kind": "event",
+      "source": "auth-service",
+      "actor": "auth-service",
+      "summary": "login_failed user=lab.forensic ip=198.51.100.23",
+      "refs": [
+        "fx-006"
+      ],
+      "data": {
+        "type": "login_failed",
+        "severity": "low",
+        "user": "lab.forensic",
+        "ip": "198.51.100.23",
+        "resource": null,
+        "attrs": {}
+      },
+      "seq": 8,
+      "prev": "b7a01bb1ef882f862ec77a1986c14c9bdd03bcd7e330ea48ca2950a91c9d12c1",
+      "hash": "e82218f3a1aaee4db103f829aa67c248a1d75e2d54fd573574065f992ce2232f"
+    },
+    {
+      "at": "2024-06-01T09:02:00.000Z",
+      "kind": "event",
+      "source": "auth-service",
+      "actor": "auth-service",
+      "summary": "login_success user=lab.forensic ip=198.51.100.23",
+      "refs": [
+        "fx-007"
+      ],
+      "data": {
+        "type": "login_success",
+        "severity": "info",
+        "user": "lab.forensic",
+        "ip": "198.51.100.23",
+        "resource": null,
+        "attrs": {}
+      },
+      "seq": 9,
+      "prev": "e82218f3a1aaee4db103f829aa67c248a1d75e2d54fd573574065f992ce2232f",
+      "hash": "fcfa11ead879a393a00a65e0a50e3e4f88f8dae6e126b2995bb785b365493c3c"
+    },
+    {
+      "at": "2024-06-01T09:05:00.000Z",
+      "kind": "event",
+      "source": "iam",
+      "actor": "iam",
+      "summary": "permission_change user=lab.forensic",
+      "refs": [
+        "fx-008"
+      ],
+      "data": {
+        "type": "permission_change",
+        "severity": "medium",
+        "user": "lab.forensic",
+        "ip": null,
+        "resource": null,
+        "attrs": {
+          "actor": "lab.forensic",
+          "new_role": "admin"
+        }
+      },
+      "seq": 10,
+      "prev": "fcfa11ead879a393a00a65e0a50e3e4f88f8dae6e126b2995bb785b365493c3c",
+      "hash": "3a510a7caaf01c72e483d25dc5416da00e471cc39061586c0f7fa243974181fe"
+    },
+    {
+      "at": "2024-06-01T09:05:00.000Z",
+      "kind": "alert",
+      "source": "aegistrace.rules",
+      "actor": "system",
+      "summary": "R020 Permission change for lab.forensic",
+      "refs": [
+        "alr_50377244780bec10",
+        "fx-008"
+      ],
+      "data": {
+        "ruleId": "R020",
+        "severity": "high",
+        "subject": "event:fx-008",
+        "lastSeen": "2024-06-01T09:05:00.000Z",
+        "eventIds": [
+          "fx-008"
+        ]
+      },
+      "seq": 11,
+      "prev": "3a510a7caaf01c72e483d25dc5416da00e471cc39061586c0f7fa243974181fe",
+      "hash": "93eb2498e054dde5a593454e16be3154e19ab9994c88517a7c879c9a441f1cca"
+    },
+    {
+      "at": "2024-06-01T09:30:00.000Z",
+      "kind": "activity",
+      "source": "aegistrace.incident",
+      "actor": "ana",
+      "summary": "Confirm with the account owner before containment.",
+      "refs": [],
+      "data": {
+        "activityKind": "comment"
+      },
+      "seq": 12,
+      "prev": "93eb2498e054dde5a593454e16be3154e19ab9994c88517a7c879c9a441f1cca",
+      "hash": "be6e342e48a4254f40ee74f589bc115f5da65030e3825cae0a741777a079d85f"
+    },
+    {
+      "at": "2024-06-01T09:30:00.000Z",
+      "kind": "activity",
+      "source": "aegistrace.incident",
+      "actor": "ana",
+      "summary": "Status open -> triaging: forensic review opened",
+      "refs": [],
+      "data": {
+        "activityKind": "status"
+      },
+      "seq": 13,
+      "prev": "be6e342e48a4254f40ee74f589bc115f5da65030e3825cae0a741777a079d85f",
+      "hash": "2fc4c7b948a5b40699c2fa55c834128fd6b715d11a1098af74950affa63db108"
+    },
+    {
+      "at": "2024-06-01T09:30:00.000Z",
+      "kind": "activity",
+      "source": "aegistrace.incident",
+      "actor": "system",
+      "summary": "Alert alr_50377244780bec10 (R020) correlated. R020 linked to existing incident: shared user lab.forensic within 30 min.",
+      "refs": [
+        "alr_50377244780bec10",
+        "fx-008"
+      ],
+      "data": {
+        "activityKind": "alert"
+      },
+      "seq": 14,
+      "prev": "2fc4c7b948a5b40699c2fa55c834128fd6b715d11a1098af74950affa63db108",
+      "hash": "dc5962db5074bf952b31e1ddd8cf9fb993899886d3755ac4846a1d81502e28fb"
+    },
+    {
+      "at": "2024-06-01T09:30:00.000Z",
+      "kind": "activity",
+      "source": "aegistrace.incident",
+      "actor": "system",
+      "summary": "Incident opened from alert alr_6b515232bc1513f3 (R001)",
+      "refs": [
+        "alr_6b515232bc1513f3",
+        "fx-001",
+        "fx-002",
+        "fx-003",
+        "fx-004",
+        "fx-005",
+        "fx-006"
+      ],
+      "data": {
+        "activityKind": "alert"
+      },
+      "seq": 15,
+      "prev": "dc5962db5074bf952b31e1ddd8cf9fb993899886d3755ac4846a1d81502e28fb",
+      "hash": "6a6c96bfe5efb866235374112bfca0c6a469ff265036aa31fbcc9bda7be5b9f0"
+    },
+    {
+      "at": "2024-06-01T09:30:00.000Z",
+      "kind": "activity",
+      "source": "aegistrace.incident",
+      "actor": "system",
+      "summary": "Alert alr_9818ca9f1f5e69f0 (R002) correlated. R002 linked to existing incident: shared user lab.forensic, ip 198.51.100.23 within 30 min.",
+      "refs": [
+        "alr_9818ca9f1f5e69f0",
+        "fx-001",
+        "fx-002",
+        "fx-003",
+        "fx-004",
+        "fx-005",
+        "fx-006",
+        "fx-007"
+      ],
+      "data": {
+        "activityKind": "alert"
+      },
+      "seq": 16,
+      "prev": "6a6c96bfe5efb866235374112bfca0c6a469ff265036aa31fbcc9bda7be5b9f0",
+      "hash": "80694e7c9ea8483446e0898e2f31645b8964b2b04fe1eaf72729c047a75fddb9"
+    }
+  ]
+}

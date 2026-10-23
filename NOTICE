@@ -1,0 +1,17 @@
+AegisTrace
+Copyright 2026 Santidelacarrera and AegisTrace contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+AegisTrace is a project of Nexus Security & AI Lab. It is a laboratory-grade incident investigation tool. It has not been independently audited. It ships with
+synthetic demonstration data only, and its response actions are simulated. See docs/THREAT-MODEL.md before using it
+with real data.
+
+Third-party software
+--------------------
+This project depends on open-source packages, all under permissive licenses compatible with Apache-2.0:
+  - npm (api, web): MIT, ISC and BSD-3-Clause packages (for example Express, zod, React, jose, pg, redis).
+  - Python (analytics): FastAPI and Pydantic (MIT), Starlette and Uvicorn (BSD-3-Clause).
+  - Optional components used only for testing/deployment and not redistributed here: PostgreSQL (PostgreSQL License),
+    Redis, Caddy (Apache-2.0), Dex (Apache-2.0).
+Each package keeps its own license; consult the package metadata for the exact terms.

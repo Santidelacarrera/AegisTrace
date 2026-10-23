@@ -1,5 +1,7 @@
 # AegisTrace
 
+Proyecto de **Nexus Security & AI Lab**.
+
 Plataforma de investigación y respuesta asistida para incidentes de seguridad. Convierte eventos dispersos en incidentes priorizados, investigables y auditables. El análisis asistido explica la evidencia y sugiere acciones; **las respuestas sensibles requieren permisos y aprobación humana**.
 
 > **Estado:** MVP funcional con datos sintéticos: API, PostgreSQL, servicio de anomalías, interfaz React y análisis opcional con LLM. Ver [Alcance y limitaciones](#alcance-y-limitaciones) antes de usarlo en serio.
@@ -29,6 +31,17 @@ Vídeo del flujo completo (analista → aprobador → auditor): [`docs/media/dem
 | Auditoría | Cadena HMAC por organización: consultas, denegaciones, logins, aprobaciones y ejecuciones. `GET /audit/verify` detecta ediciones y borrados; con ancla externa (`AEGIS_AUDIT_ANCHOR_FILE`) también el truncado del final. |
 | Interfaz | React + TypeScript en `/ui/`: login (con código MFA y botón SSO), panel (alertas por severidad, incidentes abiertos, mediana de triage, falsos positivos), búsqueda y filtros, detalle con línea de tiempo y análisis, aprobaciones, auditoría. |
 | Operación | Logs JSON estructurados, `/health`, `/metrics` (contadores), rate limiting por clave. |
+
+## Línea de tiempo forense y evidencia verificable
+
+Cada incidente se puede exportar como paquete de evidencia (`GET /api/v1/incidents/{id}/evidence`, roles auditor y admin): eventos, alertas, análisis y actividad en orden temporal, encadenados con SHA-256. Cualquiera puede verificar el paquete **sin acceso al sistema**:
+
+```bash
+cd api && npm run verify-evidence -- ../docs/examples/evidence-bundle.json          # válido
+cd api && npm run verify-evidence -- ../docs/examples/evidence-bundle.tampered.json  # hash_mismatch en seq 4
+```
+
+Formato, algoritmo y límites (qué detecta la cadena y qué exige un ancla externa): [`docs/EVIDENCE-FORMAT.md`](docs/EVIDENCE-FORMAT.md). Los datos son sintéticos (`data/synthetic/forensic/scenario.json`).
 
 ## Arquitectura
 
@@ -75,9 +88,9 @@ cd web && node e2e/capture.mjs                               # regenera capturas
 Pruebas y evaluación:
 
 ```bash
-cd api && TEST_DATABASE_URL=postgres://… TEST_REDIS_URL=redis://… npm test   # 114 pruebas (sin esas variables se omiten las de PostgreSQL y Redis)
+cd api && TEST_DATABASE_URL=postgres://… TEST_REDIS_URL=redis://… npm test   # 141 pruebas (sin esas variables se omiten las de PostgreSQL y Redis)
 cd api && npm run eval                              # reglas sobre el dataset de desarrollo y el holdout
-cd web && npm test                                  # 9 pruebas de componentes
+cd web && npm test                                  # 10 pruebas de componentes
 cd web && npm run e2e                               # E2E en navegador real (API en :3000 con el dataset cargado; se ejecuta en el CI)
 cd analytics && pytest && python evaluate.py        # 7 pruebas y evaluación de los detectores estadísticos
 ```
@@ -146,10 +159,14 @@ Implementado: ingesta, reglas, analítica estadística, correlación, análisis 
 - **Interfaz**: cubre el flujo principal; sin paginación visual ni gestión avanzada de etiquetas/comentarios.
 - Sin trazas distribuidas; las métricas son contadores simples.
 
+## Licencia
+
+[Apache License 2.0](LICENSE) (véase también [`NOTICE`](NOTICE)). Permite usar, modificar y redistribuir el proyecto, también en productos comerciales, conservando los avisos de copyright; incluye una **concesión expresa de patentes** y **no concede derechos sobre el nombre «AegisTrace»**. El software se ofrece **«tal cual», sin garantías**: es un proyecto de laboratorio sin auditoría independiente, así que evalúa los riesgos (ver [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md)) antes de usarlo con datos reales. Las dependencias son MIT, ISC o BSD, compatibles con esta licencia.
+
 ## Operación y seguridad
 
 [Guía de despliegue](docs/DEPLOYMENT.md) (TLS, secretos, copias de seguridad y restauración, retención, monitorización) · [Modelo de amenazas](docs/THREAT-MODEL.md) · [Política de seguridad](SECURITY.md) · `docker-compose.prod.yml` + `.env.example`.
 
 ## Documentación
 
-[0001 Reglas deterministas primero](docs/adr/0001-deterministic-rules-first.md) · [0002 Persistencia](docs/adr/0002-in-memory-store-for-mvp.md) · [0003 IA solo recomienda](docs/adr/0003-ai-recommends-humans-approve.md) · [0004 Auditoría encadenada](docs/adr/0004-hash-chained-audit.md) · [0005 Servicio de analítica](docs/adr/0005-analytics-service.md) · [0006 Autenticación, MFA y SSO](docs/adr/0006-auth-and-sessions.md) · [0007 Redis para límites](docs/adr/0007-redis-for-shared-limits.md)
+[0001 Reglas deterministas primero](docs/adr/0001-deterministic-rules-first.md) · [0002 Persistencia](docs/adr/0002-in-memory-store-for-mvp.md) · [0003 IA solo recomienda](docs/adr/0003-ai-recommends-humans-approve.md) · [0004 Auditoría encadenada](docs/adr/0004-hash-chained-audit.md) · [0005 Servicio de analítica](docs/adr/0005-analytics-service.md) · [0006 Autenticación, MFA y SSO](docs/adr/0006-auth-and-sessions.md) · [0007 Redis para límites](docs/adr/0007-redis-for-shared-limits.md) · [0009 Evidencia forense](docs/adr/0009-forensic-evidence-chain.md) · [Formato de evidencia](docs/EVIDENCE-FORMAT.md)

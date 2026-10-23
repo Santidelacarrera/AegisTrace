@@ -5,6 +5,7 @@ import { Config, hashKey } from './config.js';
 import { newTotpSecret, otpauthUri, stepOf, verifyTotp } from './totp.js';
 import { createOidc, OidcError } from './oidc.js';
 import { applyRetention } from './retention.js';
+import { buildEvidenceBundle } from './forensic.js';
 import { Limiter, MemoryLimiter } from './limits.js';
 import { Histogram } from './metrics.js';
 import { hashPassword, LoginThrottle, signToken, verifyPassword, verifyToken } from './auth.js';
@@ -444,6 +445,14 @@ export function createApp({ config, store = new Store(), provider = ruleBasedPro
     if (term) list = list.filter((i) => JSON.stringify([i.title, i.users, i.ips, i.labels]).toLowerCase().includes(term));
     list.sort((a, b) => sevRank(b.severity) - sevRank(a.severity) || a.createdAt.localeCompare(b.createdAt) || a.id.localeCompare(b.id));
     res.json({ total: list.length, limit, offset, items: list.slice(offset, offset + limit) });
+  }));
+
+  // Forensic export: verifiable evidence bundle for one incident. Restricted to auditors/admins; each export is audited.
+  api.get('/incidents/:id/evidence', need('audit:read', 'incident.evidence'), wrap((req, res) => {
+    const inc = incidentOr404(req);
+    const bundle = buildEvidenceBundle(org(req), inc, req.principal!.orgId, nowIso(), req.principal!.userId);
+    audit(req, 'incident.evidence', 'incident', inc.id, 'success', `entries=${bundle.entries} head=${bundle.head.slice(0, 16)} missing=${bundle.missing.length}`);
+    res.json(bundle);
   }));
 
   api.get('/incidents/:id', need('incidents:read', 'incident.read'), wrap((req, res) => {

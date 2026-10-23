@@ -10,11 +10,13 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "dataset": "tsx scripts/gen-dataset.ts",
     "eval": "tsx scripts/evaluate.ts",
-    "user-tool": "tsx scripts/user-tool.ts"
+    "user-tool": "tsx scripts/user-tool.ts",
+    "verify-evidence": "tsx scripts/verify-evidence.ts",
+    "export-evidence-examples": "tsx scripts/export-example-evidence.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "express": "^5.3.0",
     "jose": "^6.2.12",
